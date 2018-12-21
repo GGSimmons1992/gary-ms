@@ -1,11 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
 namespace GenericConsole.Library.Models
 {
-  public class GenericModel<T>
-  {
-    public void Hello()
+    class GenericModel<T>
     {
-      System.Console.WriteLine("i am generic");
+        public void Hello()
+        {
+            Console.WriteLine("I am a generic!");
+        }
     }
-    
-  }
 }

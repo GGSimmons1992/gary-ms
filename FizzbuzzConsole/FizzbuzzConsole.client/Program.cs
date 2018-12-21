@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FizzbuzzConsole.Library;
+using System;
 using System.Collections.Generic;
 
 namespace FizzbuzzConsole.client
