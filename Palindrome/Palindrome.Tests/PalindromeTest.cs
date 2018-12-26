@@ -32,5 +32,15 @@ namespace Palindrome.Tests
             Expression sut4 = new Expression("Racecar");//If LoweringTest passess, this should pass.
             Assert.True(sut4.IsPalindrome());
         }
+
+        [Fact]
+        public void IsReverse()
+        {
+            //Double checking if really reverse value is the reverse of regular
+            Expression sut5 = new Expression("Something Random");
+            Expression sut6 = new Expression(sut5.reverse);
+            Assert.Equal(sut5.regular,sut6.reverse);
+        }
+
     }
 }
