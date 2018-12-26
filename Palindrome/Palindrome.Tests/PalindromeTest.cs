@@ -41,6 +41,5 @@ namespace Palindrome.Tests
             Expression sut6 = new Expression(sut5.reverse);
             Assert.Equal(sut5.regular,sut6.reverse);
         }
-
     }
 }
