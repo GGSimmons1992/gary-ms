@@ -8,9 +8,9 @@ namespace FizzbuzzConsole.client
   {
     static void Main(string[] args)
     {
-      FizzBuzzExercise(3,5,15,100);
+      
     }
-
+    /*
     public static void FizzBuzzExercise(int fizzNum,int buzzNum,int fizzbuzzNum,int final)
     {
 
@@ -48,8 +48,9 @@ namespace FizzbuzzConsole.client
       {
         Console.WriteLine("fizz and buzz need to be different numbers");
       }
+      
 
       
-    }
+    }*/
   }
 }

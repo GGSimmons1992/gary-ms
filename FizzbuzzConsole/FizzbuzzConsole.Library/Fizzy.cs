@@ -4,15 +4,23 @@ namespace FizzbuzzConsole.Library
 {
     public class Fizzy
     {
-        int counter { get; set; }
-        int factor { get; set; }
-        string name { get; set; }
+        public int counter { get; set; }
+        public int factor { get; set; }
+        public string name { get; set; }
 
         public Fizzy(string countName, int countNum)
         {
             counter = 0;
             factor = countNum;
             name = countName;
+        }
+
+        public Incrementer(int currentNumber)
+        {
+            if (currentNumber % factor == 0)
+            {
+
+            }
         }
     }
 }
