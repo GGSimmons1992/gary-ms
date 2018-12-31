@@ -7,7 +7,7 @@ namespace PizzaStore.Tests
 {
     public class LocationTests
     {
-        //Must manage its inventory
+        //Mandatory: Must manage its inventory
         [Fact]//Location can post items into an inventory
         public void PostItemTest()
         { }
@@ -33,7 +33,7 @@ namespace PizzaStore.Tests
         { }
 
         //----
-        //Must manage its users
+        //Mandatory: Must manage its users
         [Fact]//Location can post users into a userlist
         public void PostUserTest()
         { }
@@ -55,6 +55,10 @@ namespace PizzaStore.Tests
         { }
 
         //----
-        //Must manage its sales
+        //Mandatory: Must manage its sales
+        //Sales part 1: 
+
+        //Sales part 2:
+        //Orders cannot be cancelled once it’s processed (Thus no deletion of orders)
     }
 }

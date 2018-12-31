@@ -7,10 +7,10 @@ namespace PizzaStore.Tests
 {
     public class PizzaTest
     {
-        //Must be whole, No half order accepted (No test needed, for I'm not permitting it)
-        
+        //Mandatory: Must be whole, No half order accepted (No test needed, for I'm not permitting it)
+
         //----
-        //Can contain no more than 5 toppings all categories included
+        //Mandatory: Can contain no more than 5 toppings all categories included
         [Fact]//Can add toppings
         public void AddToppingTest()
         { }
@@ -26,9 +26,14 @@ namespace PizzaStore.Tests
         [Fact]//Pizza should display message if toppings exceed 5 toppings
         public void CreateMessageTest()
         { }
+
+        //----
+        [Fact]//Orders can be fulfilled only if enough available (prevent option, if not enough)
+        public void IngredientLimitTest()
+        { }
         
         //----
-        //Price is derived from toppings, size, and/or crust
+        //Mandatory: Price is derived from toppings, size, and/or crust
         [Fact]//Price=(CrustAndSizeCost+ToppingCosts)
         public void CalculateCostTest()
         { }

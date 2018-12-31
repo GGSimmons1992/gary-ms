@@ -6,8 +6,10 @@ namespace PizzaStore.Tests
 {
     public class OrderTests
     {
-        //Cannot be cancelled once it’s processed
-        //Can be fulfilled only if enough available
+        //Mandatory: Cannot be cancelled once it’s processed
+
+        //----
+        //Mandatory: Can be fulfilled only if enough available
 
     }
 }
