@@ -9,27 +9,27 @@ namespace PizzaStore.Tests
     {
         //Mandatory: Must manage its inventory
         [Fact]//Location can post items into an inventory
-        public void PostItemTest()
+        public void PostIngredientTest()
         { }
 
         [Fact]//Location can get all items of an inventory
-        public void GetItemsTest()
+        public void GetIngredientsTest()
         { }
 
         [Fact]//Location can get a single item from the inventory
-        public void GetItemTest()
+        public void GetIngredientTest()
         { }
 
         [Fact]//Location can change item cost (put item cost)
-        public void PutItemCostTest()
+        public void PutIngredientCostTest()
         { }
 
         [Fact]//Location can update item supply (put item supply)
-        public void PutItemSupplyTest()
+        public void PutIngredientSupplyTest()
         { }
 
         [Fact]//Location can remove item from inventory
-        public void RemoveItemTest()
+        public void RemoveIngredientTest()
         { }
 
         //----

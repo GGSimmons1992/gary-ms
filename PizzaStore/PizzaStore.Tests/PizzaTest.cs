@@ -22,20 +22,22 @@ namespace PizzaStore.Tests
         [Fact]//Pizza will prevent adding a new topping if 5 are already on it.
         public void StopAddingToppingTest()
         { }
-
-        [Fact]//Pizza should display message if toppings exceed 5 toppings
-        public void CreateMessageTest()
-        { }
-
-        //----
-        [Fact]//Orders can be fulfilled only if enough available (prevent option, if not enough)
-        public void IngredientLimitTest()
-        { }
         
         //----
         //Mandatory: Price is derived from toppings, size, and/or crust
-        [Fact]//Price=(CrustAndSizeCost+ToppingCosts)
+        [Fact]//Price=((CrustMuliplier*SizeCost)+ToppingCosts)
         public void CalculateCostTest()
+        { }
+
+        //--Interclass tests--
+
+        /*
+         Mandatory from Order: Can be fulfilled only if enough available
+         1) Deny topping from being added <in Pizza>
+        */
+
+        [Fact]//Pizza will not add topping if 
+        public void IngredientLimitTest()
         { }
     }
 }
