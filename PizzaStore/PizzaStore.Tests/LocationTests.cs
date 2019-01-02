@@ -42,11 +42,7 @@ namespace PizzaStore.Tests
         public void GetUsersTest()
         { }
 
-        [Fact]//Location can get a single user from the inventory
-        public void GetUserTest()
-        { }
-
-        [Fact]//Location can get full history of a user
+        [Fact]//Location can get full history of a single user
         public void GetUserHistoryTest()
         { }
 
@@ -56,9 +52,24 @@ namespace PizzaStore.Tests
 
         //----
         //Mandatory: Must manage its sales
-        //Sales part 1: 
+        [Fact]//Location can get orders
+        public void GetOrdersTest()
+        { }
 
-        //Sales part 2:
-        //Orders cannot be cancelled once it’s processed (Thus no deletion of orders)
+        [Fact]//Location can get an order
+        public void GetOrderTest()
+        { }
+
+        [Fact]//Location posts orders in history once orders are finalized
+        public void PostOrderTest()
+        { }
+
+        [Fact]//Location removes ingredients when order is processed
+        public void ProcessIngredientRemovalTest()
+        { }
+
+        [Fact]//Location Balance increases via order process
+        public void ProcessIncomingSaleTest()
+        { }
     }
 }

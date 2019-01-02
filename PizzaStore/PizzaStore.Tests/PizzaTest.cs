@@ -33,11 +33,15 @@ namespace PizzaStore.Tests
 
         /*
          Mandatory from Order: Can be fulfilled only if enough available
-         1) Deny topping from being added <in Pizza>
+         1) Deny topping or crust from being added <in Pizza>
         */
 
-        [Fact]//Pizza will not add topping if 
-        public void IngredientLimitTest()
+        [Fact]//Pizza will not instatiate if not enough dough
+        public void DoughInventoryTest()
+        { }
+        
+        [Fact]//Pizza will not add topping if location from order does not enough from supply of toppings
+        public void ToppingInventoryTest()
         { }
     }
 }
