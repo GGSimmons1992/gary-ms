@@ -15,27 +15,27 @@ namespace PizzaStore.Tests
         [Fact]//Can add valid toppings
         public void AddToppingTest()
         {
-            Toppings PreExpected = new Toppings<Topping>();
+            List<Topping> Expected = new List<Topping>();
             Topping Sauce = new Topping("TomatoSauce");
             Topping nonsense new Topping("nonsense");
-            Toppings Expected=PreExpected.Add(Sauce);
+            Expected.Add(Sauce);
 
             var sutStore = new Location();
             var sut = new Pizza(sutStore);
             sut.Toppings.AddTopping("TomatoSauce");
             sut.Toppings.AddTopping("nonsense");
-            Assert.True(sut.ToppingList == Expected);
+            Assert.True(sut.Toppings == Expected);
         }
 
         [Fact]//Can remove toppings
         public void RemoveToppingTest()
         {
-            Toppings PreExpected = new Toppings<Topping>();
+            List<Topping> Expected = new List<Topping>();
             Topping Sauce = new Topping("TomatoSauce");
             Topping Cheese = new Topping("Mozzarella");
             Topping P = new Topping("Pepperoni");
-            PreExpected.Add(Sauce);
-            Toppings Expected=PreExpected.Add(Cheese);
+            Expected.Add(Sauce);
+            Expected.Add(Cheese);
 
             var sutStore = new Location();
             var sut = new Pizza(sutStore);
@@ -44,7 +44,7 @@ namespace PizzaStore.Tests
             sut.Toppings.AddTopping("Pepperoni");
             sut.Toppings.RemoveTopping("Pepperoni");
 
-            Assert.True(sut.ToppingList == Expected);
+            Assert.True(sut.Toppings == Expected);
         }
 
         [Fact]//Pizza will prevent adding a new topping if 5 are already on it.
@@ -56,8 +56,8 @@ namespace PizzaStore.Tests
             Topping S = new Topping("Sausage");
             Topping B = new Topping("Bacon");
             Topping Anch = new Topping("Anchovies");
-            Toppings Expectation= new Toppings<Topping>(){Sauce,Cheese,P,S,B};
-            Toppings FalseExpectation = new Toppings<Topping>() { Sauce, Cheese, P, S, B, Anch};
+            List<Topping> Expectation= new List<Topping>(){Sauce,Cheese,P,S,B};
+            List<Topping> FalseExpectation = new List<Topping>() { Sauce, Cheese, P, S, B, Anch};
 
             var sutStore = new Location();
             var sut = new Pizza(sutStore);
@@ -118,12 +118,12 @@ namespace PizzaStore.Tests
         [Fact]//Pizza will not add topping if location from order does not enough from supply of toppings
         public void ToppingInventoryTest()
         {
-            Toppings PreExpected = new Toppings<Topping>();
+            List<Topping> Expected = new List<Topping>();
             Topping P1 = new Topping("Pepperoni");
             Topping P2 = new Topping("Pepperoni");
             Topping P3 = new Topping("Pepperoni");
-            PreExpected.Add(P1);
-            Toppings Expected = PreExpected.Add(P2);
+            Expected.Add(P1);
+            Expected.Add(P2);
 
             var sutStore = new Location();
             sutStore.Inventory.Item["Pepperoni"].Amount = 5.0;
