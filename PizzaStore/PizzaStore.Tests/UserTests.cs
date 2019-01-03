@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PizzaStore.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
@@ -8,9 +9,14 @@ namespace PizzaStore.Tests
     public class UserTests
     {
         //Mandatory: Must have an account before ordering
-        [Fact]//Username cannot be duplicated in all locations in the chain
+        [Fact]//Username cannot be duplicated in location
         public void CreateUserTest()
-        { }
+        {
+            Location a = new Location();
+            User b = new User("Joey");
+            b.CreateOrder(a);
+            Assert.True();
+        }
 
         //----
         //Mandatory: Must be able to see their order history

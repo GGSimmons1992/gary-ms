@@ -87,7 +87,7 @@ namespace PizzaStore.Tests
 
             var sutStore = new Location();
             var sut = new Pizza(sutStore);
-            Pizza sut1 = new Pizza(sutStore,12.00,"thin");
+            Pizza sut1 = new Pizza(sutStore,12,"thin");
             Pizza sut2 = new Pizza(sutStore);
             sut1.AddTopping("Pepperoni");
             sut1.AddTopping("Mozzarella");
