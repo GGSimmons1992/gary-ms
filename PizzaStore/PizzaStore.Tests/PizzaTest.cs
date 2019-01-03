@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PizzaStore.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
@@ -19,7 +20,8 @@ namespace PizzaStore.Tests
             Topping nonsense new Topping("nonsense");
             Toppings Expected=PreExpected.Add(Sauce);
 
-            var sut = new Pizza();
+            var sutStore = new Location();
+            var sut = new Pizza(sutStore);
             sut.Toppings.AddTopping("TomatoSauce");
             sut.Toppings.AddTopping("nonsense");
             Assert.True(sut.ToppingList == Expected);
@@ -35,7 +37,8 @@ namespace PizzaStore.Tests
             PreExpected.Add(Sauce);
             Toppings Expected=PreExpected.Add(Cheese);
 
-            var sut = new Pizza();
+            var sutStore = new Location();
+            var sut = new Pizza(sutStore);
             sut.Toppings.AddTopping("TomatoSauce");
             sut.Toppings.AddTopping("Mozzarella");
             sut.Toppings.AddTopping("Pepperoni");
@@ -56,7 +59,8 @@ namespace PizzaStore.Tests
             Toppings Expectation= new Toppings<Topping>(){Sauce,Cheese,P,S,B};
             Toppings FalseExpectation = new Toppings<Topping>() { Sauce, Cheese, P, S, B, Anch};
 
-            Pizza sut = new Pizza();
+            var sutStore = new Location();
+            var sut = new Pizza(sutStore);
             List<string> potentialToppings = new List<string>() {"TomatoSauce","Mozzarella","Pepperoni","Sausage","Bacon","Anchovies"};
             foreach (var top in potentialToppings)
             {
@@ -75,8 +79,23 @@ namespace PizzaStore.Tests
             double sizeCost =12.00;
             double crustMultiplierThin =1.25;
             double crustMultiplierDefault = 1.00;
+            double pepperoniCost = .25;
+            double cheeseCost = .25;
+            double pineappleCost = .75;
+            double expected1 = (sizeCost * crustMultiplierThin) + pepperoniCost + cheeseCost;
+            double expected2= (sizeCost * crustMultiplierDefault) + pineappleCost + cheeseCost;
 
+            var sutStore = new Location();
+            var sut = new Pizza(sutStore);
+            Pizza sut1 = new Pizza(sutStore,12.00,"thin");
+            Pizza sut2 = new Pizza(sutStore);
+            sut1.AddTopping("Pepperoni");
+            sut1.AddTopping("Mozzarella");
+            sut2.AddTopping("Pineapple");
+            sut2.AddTopping("Mozzarella");
 
+            Assert.True(expected1 == sut1.CalculateCost());
+            Assert.True(expected2 == sut2.CalculateCost());
         }
 
         //--Interclass tests--
@@ -88,10 +107,34 @@ namespace PizzaStore.Tests
 
         [Fact]//Pizza will not instatiate if not enough dough
         public void DoughInventoryTest()
-        { }
+        {
+            var sutStore = new Location();
+            sutStore.Inventory.Item["Dough"].Amount = 0.0;
+            var sut = new Pizza(sutStore);
+
+            Assert.False(sut.Validity);
+        }
         
         [Fact]//Pizza will not add topping if location from order does not enough from supply of toppings
         public void ToppingInventoryTest()
-        { }
+        {
+            Toppings PreExpected = new Toppings<Topping>();
+            Topping P1 = new Topping("Pepperoni");
+            Topping P2 = new Topping("Pepperoni");
+            Topping P3 = new Topping("Pepperoni");
+            PreExpected.Add(P1);
+            Toppings Expected = PreExpected.Add(P2);
+
+            var sutStore = new Location();
+            sutStore.Inventory.Item["Pepperoni"].Amount = 5.0;
+            sutStore.Inventory.Item["Pepperoni"].PerPizza = 2.5; 
+            var sut = new Pizza(sutStore);
+            sut.AddTopping("Pepperoni");
+            sut.AddTopping("Pepperoni");
+            sut.AddTopping("Pepperoni");
+
+            Assert.True(sut.ToppingList==Expected);
+
+        }
     }
 }
