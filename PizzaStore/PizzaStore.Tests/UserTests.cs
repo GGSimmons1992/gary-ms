@@ -12,10 +12,11 @@ namespace PizzaStore.Tests
         [Fact]//Username cannot be duplicated in location
         public void CreateUserTest()
         {
-            Location a = new Location();
-            User b = new User("Joey");
-            b.CreateOrder(a);
-            Assert.True();
+            var expected="Joey"
+            User sut = new User("Joey");
+
+            Assert.IsType<string>(sut.Name);
+            Assert.True(sut.Name=="Joey");
         }
 
         //----

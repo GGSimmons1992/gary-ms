@@ -31,7 +31,7 @@ namespace PizzaStore.Tests
             sut2.AddTopping("Pineapple");
             sut2.AddTopping("Mozzarella");
 
-            PreOrder trueSut = new PreOrder();
+            Order trueSut = new Order();
             trueSut.AddPizza(sut1);
             trueSut.AddPizza(sut2);
 
@@ -39,10 +39,10 @@ namespace PizzaStore.Tests
         }
 
         
-        [Fact]//"Finaling an order" creates an unchangable Order from a PreOrder
+        [Fact]//"Finaling an order" creates changes boolean of finalized from false to true.
         public void FinalizeTest()
         {
-            PreOrder a = new PreOrder();
+            Order a = new Order();
             Location d = new Location();
             Pizza c = new Pizza(d);
             c.AddTopping("Mozzarella");
