@@ -8,17 +8,19 @@ namespace PizzaStore.Domain.Models
     {
         public bool Voidable { get; set; }
         public List<Pizza> PizzaList { get; set; }
+        public DateTime TimeStamp { get; set; }
 
         public Order()
         {
             PizzaList = new List<Pizza>();
             Voidable = true;
+            TimeStamp = DateTime.Now;
         }
 
-        public void Finalize(bool pizzaTest,bool costTest, bool inventoryTest, bool UserTest)
+        public void Finalize(bool pizzaTest,bool costTest, bool inventoryTest)
         {
-            if (pizzaTest && costTest && inventoryTest && UserTest)
-            { Voidable = false; }
+            if (pizzaTest && costTest && inventoryTest)
+            { Voidable = false; TimeStamp = DateTime.Now; }
             else { Voidable = true; }
         }
 

@@ -7,15 +7,68 @@ namespace PizzaStore.Domain.Models
     public class User
     {
         public string name { get; set; }
+        private string password { get; set; }
+        public List<Order> History { get; set; }
+        public Location Store { get; set; }
 
-        public User()
+        public User(string uname, string pw)
         {
-            name = Guid.NewGuid().ToString();
+            name = uname;
+            password = pw;
+            History = new List<Order>();
+            Store = new Location();
         }
 
-        public User(string Suggested)
+        public bool AccountTest()
         {
-            name = Suggested;
+            return ((name !=null) && (password!=null));
+        }
+
+        public Order CreateOrder()
+        {
+            if (TimeTest())
+            {
+                var newOrder = new Order();
+                return newOrder;
+            }
+            else return null;
+        }
+
+        public void AddOrder(Order newOrder)
+        {
+            History.Add(newOrder);
+        }
+
+        public bool TimeTest()
+        {
+            if (History.Count != 0)
+            {
+                DateTime lastOrderTime = History[(History.Count - 1)].TimeStamp;
+                DateTime now = DateTime.Now;
+                TimeSpan span = now - lastOrderTime;
+                if (span.Hours < 1)
+                { return false; }
+                else
+                { return true; }
+            }
+            else return true;
+        }
+
+        public bool SpaceTest()
+        {
+            if (History.Count == 0)
+            { return true; }
+            else
+            {
+                DateTime lastOrderTime = History[(History.Count - 1)].TimeStamp;
+                DateTime now = DateTime.Now;
+                return lastOrderTime.Date == now.Date ? false : true;
+            }
+        }
+
+        public void SetStore(Location newLocation)
+        {
+            if (SpaceTest()) {Store=newLocation;}
         }
     }
 }

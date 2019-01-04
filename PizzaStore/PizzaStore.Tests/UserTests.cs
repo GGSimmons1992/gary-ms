@@ -19,12 +19,16 @@ namespace PizzaStore.Tests
         //----
         //Mandatory: Must be able to see their order history
         [Fact]//User can see their whole history
-        public void getFullOrderHistoryTest()
+        public void getHistoryTest()
         {
-            var sut = new User("Wheeler","Yami");
-            sut.AddOrder((new Order()).Finalize(true, true, true, true));
-            sut.AddOrder((new Order()).Finalize(true, true, true, true));
-            Assert.True(User.History.Count==2);
+            var store = new Location();
+            var sut = new User("Wheeler","Yam1");
+            Assert.NotNull(sut.History);
+
+            var newOrder = sut.CreateOrder();
+            newOrder.Finalize(true,true,true);
+            sut.AddOrder(newOrder);
+            Assert.NotEmpty(sut.History);
         }
 
         //----
@@ -38,17 +42,38 @@ namespace PizzaStore.Tests
         {
             var sut = new User("John","xj9");
             Assert.True(sut.TimeTest());
-            sut.AddOrder((new Order()).Finalize(true, true, true, true));
+            var newOrder = sut.CreateOrder();
+            newOrder.Finalize(true,true,true);
+            sut.AddOrder(newOrder);
             Assert.False(sut.TimeTest());
+
+            var newOrder2 = sut.CreateOrder();
+            Assert.Null(newOrder2);
+
         }
 
         //----
         //Mandatory: Limit to ordering from 1 location “24hrs(i.e.end of business day)”
         [Fact]//If user tries to change current location within 24 hours, deny change
-        public void DenyCreationSpaceTest()
+        public void DenyChangeSpaceTest()
         {
             var sut = new User("Dexter","AceSpades");
-            
+            var userStore = new Location();
+            var newStore = new Location();
+            sut.SetStore(userStore);
+            var a = sut.Store.ID;
+            var b = userStore.ID;
+            Assert.True(sut.SpaceTest());
+            Assert.True(a == b);
+
+            var newOrder=sut.CreateOrder();
+            newOrder.Finalize(true,true,true);
+            sut.AddOrder(newOrder);
+            sut.SetStore(newStore);
+            var c = sut.Store.ID;
+            var d = newStore.ID;
+            Assert.False(sut.SpaceTest());
+            Assert.False(c == d);
         }
     }
 }
