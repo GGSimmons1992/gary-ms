@@ -63,6 +63,5 @@ namespace PizzaStore.Tests
             sut2.Finalize(true, true, inventoryTest2);
             Assert.True(sut2.Voidable);
         }
-         
     }
 }

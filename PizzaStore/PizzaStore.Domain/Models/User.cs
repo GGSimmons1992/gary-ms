@@ -34,9 +34,20 @@ namespace PizzaStore.Domain.Models
             else return null;
         }
 
+        public Order CreateOrder(Location store)
+        {
+            if (TimeTest())
+            {
+                var newOrder = new Order(store);
+                return newOrder;
+            }
+            else return null;
+        }
+
         public void AddOrder(Order newOrder)
         {
-            History.Add(newOrder);
+            if (newOrder.Voidable == false)
+            { History.Add(newOrder); }
         }
 
         public bool TimeTest()

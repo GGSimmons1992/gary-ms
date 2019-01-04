@@ -31,8 +31,11 @@ namespace PizzaStore.Domain.Models
 
         public void AddToHistory(Order newOrder)
         {
-            History.Add(newOrder);
-            changeLedger(newOrder.Cost());
+            if (newOrder.Voidable == false)
+            {
+                History.Add(newOrder);
+                changeLedger(newOrder.Cost());
+            }
         }
 
         public void AddUser(User somebody)

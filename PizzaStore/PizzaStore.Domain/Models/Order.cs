@@ -9,12 +9,22 @@ namespace PizzaStore.Domain.Models
         public bool Voidable { get; set; }
         public List<Pizza> PizzaList { get; set; }
         public DateTime TimeStamp { get; set; }
+        public Location Store { get; set; }
 
         public Order()
         {
             PizzaList = new List<Pizza>();
             Voidable = true;
             TimeStamp = DateTime.Now;
+            Store = null;
+        }
+
+        public Order(Location store)
+        {
+            PizzaList = new List<Pizza>();
+            Voidable = true;
+            TimeStamp = DateTime.Now;
+            Store = store;
         }
 
         public void Finalize(bool pizzaTest, bool costTest, bool inventoryTest)
@@ -22,6 +32,21 @@ namespace PizzaStore.Domain.Models
             if (pizzaTest && costTest && inventoryTest)
             { Voidable = false; TimeStamp = DateTime.Now; }
             else { Voidable = true; }
+        }
+
+        public void TrulyFinalize()
+        {
+            var PT = PizzaTest();
+            var CT = costTest();
+            if (Store != null)
+            {
+                var IT = BalanceOrder(Store);
+                Finalize(PT, CT, IT);
+            }
+            else
+            {
+                Finalize(PT, CT, false);
+            }
         }
 
         public bool PizzaTest()

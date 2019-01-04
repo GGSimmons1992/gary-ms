@@ -75,5 +75,18 @@ namespace PizzaStore.Tests
             Assert.False(sut.SpaceTest());
             Assert.False(c == d);
         }
+
+        [Fact]//Combine all three finalization tests from OrderTests.cs (Testing in user to ensure, user can instantiate order)
+        public void TrulyFinalizeTest()
+        {
+            var sut = new User("Billy","B0b");
+            var store = new Location();
+            sut.Store = store;
+            var newOrder = sut.CreateOrder(sut.Store);
+            newOrder.AddPizza(new Pizza());
+            newOrder.TrulyFinalize();
+            Assert.False(newOrder.Voidable);
+
+        }
     }
 }
