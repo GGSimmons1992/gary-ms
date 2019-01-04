@@ -8,6 +8,11 @@ namespace PizzaStore.Domain.Models
     {
         public string name { get; set; }
 
+        public User()
+        {
+            name = Guid.NewGuid().ToString();
+        }
+
         public User(string Suggested)
         {
             name = Suggested;
