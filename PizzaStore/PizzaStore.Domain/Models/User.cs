@@ -6,5 +6,11 @@ namespace PizzaStore.Domain.Models
 {
     public class User
     {
+        public string name { get; set; }
+
+        public User(string Suggested)
+        {
+            name = Suggested;
+        }
     }
 }

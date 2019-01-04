@@ -12,129 +12,31 @@ namespace PizzaStore.Tests
 
         //----
         //Mandatory: Can contain no more than 5 toppings all categories included
-        [Fact]//Can add valid toppings
-        public void AddToppingTest()
+        [Fact]
+        public void PizzaToppingTest()
         {
-            List<Topping> Expected = new List<Topping>();
-            Topping Sauce = new Topping("TomatoSauce");
-            Topping nonsense new Topping("nonsense");
-            Expected.Add(Sauce);
-
-            var sutStore = new Location();
-            var sut = new Pizza(sutStore);
-            sut.Toppings.AddTopping("TomatoSauce");
-            sut.Toppings.AddTopping("nonsense");
-            Assert.True(sut.Toppings == Expected);
+            var sut = new Pizza();
+            var toppingList = new List<string>() { "pepperoni", "sausage" };
+            var sut1 = new Pizza(toppingList);
+            Assert.True(sut.Toppings.Count <= 5);
+            Assert.True(sut1.Toppings.Count <= 5);
+            sut1.AddTopping("anchovies");
+            Assert.True(sut1.Toppings.Count <= 5);
+            sut1.AddTopping("mushrooms");
+            Assert.True(sut1.Toppings.Count <= 5);
         }
 
-        [Fact]//Can remove toppings
-        public void RemoveToppingTest()
-        {
-            List<Topping> Expected = new List<Topping>();
-            Topping Sauce = new Topping("TomatoSauce");
-            Topping Cheese = new Topping("Mozzarella");
-            Topping P = new Topping("Pepperoni");
-            Expected.Add(Sauce);
-            Expected.Add(Cheese);
-
-            var sutStore = new Location();
-            var sut = new Pizza(sutStore);
-            sut.Toppings.AddTopping("TomatoSauce");
-            sut.Toppings.AddTopping("Mozzarella");
-            sut.Toppings.AddTopping("Pepperoni");
-            sut.Toppings.RemoveTopping("Pepperoni");
-
-            Assert.True(sut.Toppings == Expected);
-        }
-
-        [Fact]//Pizza will prevent adding a new topping if 5 are already on it.
-        public void StopAddingToppingTest()
-        {
-            Topping Sauce = new Topping("TomatoSauce");
-            Topping Cheese = new Topping("Mozzarella");
-            Topping P = new Topping("Pepperoni");
-            Topping S = new Topping("Sausage");
-            Topping B = new Topping("Bacon");
-            Topping Anch = new Topping("Anchovies");
-            List<Topping> Expectation= new List<Topping>(){Sauce,Cheese,P,S,B};
-            List<Topping> FalseExpectation = new List<Topping>() { Sauce, Cheese, P, S, B, Anch};
-
-            var sutStore = new Location();
-            var sut = new Pizza(sutStore);
-            List<string> potentialToppings = new List<string>() {"TomatoSauce","Mozzarella","Pepperoni","Sausage","Bacon","Anchovies"};
-            foreach (var top in potentialToppings)
-            {
-                sut.AddTopping(top);
-            }
-            Assert.False(sut.ToppingList==FalseExpectation);
-            Assert.True(sut.ToppingList==Expectation);
-
-        }
-        
         //----
         //Mandatory: Price is derived from toppings, size, and/or crust
-        [Fact]//Price=((CrustMuliplier*SizeCost)+ToppingCosts)
-        public void CalculateCostTest()
+        [Fact]
+        public void PriceCheck()
         {
-            double sizeCost =12.00;
-            double crustMultiplierThin =1.25;
-            double crustMultiplierDefault = 1.00;
-            double pepperoniCost = .25;
-            double cheeseCost = .25;
-            double pineappleCost = .75;
-            double expected1 = (sizeCost * crustMultiplierThin) + pepperoniCost + cheeseCost;
-            double expected2= (sizeCost * crustMultiplierDefault) + pineappleCost + cheeseCost;
+            var sut = new Pizza();
+            var defaultCost = sut.CalculateCost();
+            Assert.True(defaultCost > 0);
 
-            var sutStore = new Location();
-            var sut = new Pizza(sutStore);
-            Pizza sut1 = new Pizza(sutStore,12,"thin");
-            Pizza sut2 = new Pizza(sutStore);
-            sut1.AddTopping("Pepperoni");
-            sut1.AddTopping("Mozzarella");
-            sut2.AddTopping("Pineapple");
-            sut2.AddTopping("Mozzarella");
-
-            Assert.True(expected1 == sut1.CalculateCost());
-            Assert.True(expected2 == sut2.CalculateCost());
-        }
-
-        //--Interclass tests--
-
-        /*
-         Mandatory from Order: Can be fulfilled only if enough available
-         1) Deny topping or crust from being added <in Pizza>
-        */
-
-        [Fact]//Pizza will not instatiate if not enough dough
-        public void DoughInventoryTest()
-        {
-            var sutStore = new Location();
-            sutStore.Inventory.Item["Dough"].Amount = 0.0;
-            var sut = new Pizza(sutStore);
-
-            Assert.False(sut.Validity);
-        }
-        
-        [Fact]//Pizza will not add topping if location from order does not enough from supply of toppings
-        public void ToppingInventoryTest()
-        {
-            List<Topping> Expected = new List<Topping>();
-            Topping P1 = new Topping("Pepperoni");
-            Topping P2 = new Topping("Pepperoni");
-            Topping P3 = new Topping("Pepperoni");
-            Expected.Add(P1);
-            Expected.Add(P2);
-
-            var sutStore = new Location();
-            sutStore.Inventory.Item["Pepperoni"].Amount = 5.0;
-            sutStore.Inventory.Item["Pepperoni"].PerPizza = 2.5; 
-            var sut = new Pizza(sutStore);
-            sut.AddTopping("Pepperoni");
-            sut.AddTopping("Pepperoni");
-            sut.AddTopping("Pepperoni");
-
-            Assert.True(sut.ToppingList==Expected);
-
+            var sut2 = new Pizza("pepperoni");
+            Assert.True(sut2.CalculateCost() > defaultCost);
         }
     }
 }

@@ -9,23 +9,22 @@ namespace PizzaStore.Tests
     public class UserTests
     {
         //Mandatory: Must have an account before ordering
-        [Fact]//Username cannot be duplicated in location
+        //[Fact]//Username cannot be duplicated in location
         public void CreateUserTest()
         {
-            var expected="Joey"
             User sut = new User("Joey");
 
-            Assert.IsType<string>(sut.Name);
-            Assert.True(sut.Name=="Joey");
+            Assert.IsType<string>(sut.name);
+            Assert.True(sut.name=="Joey");
         }
 
         //----
         //Mandatory: Must be able to see their order history
-        [Fact]//User can see their whole history
+        //[Fact]//User can see their whole history
         public void getFullOrderHistoryTest()
         { }
 
-        [Fact]//User can see an order from their history
+        //[Fact]//User can see an order from their history
         public void getAnOrderHistoryTest()
         { }
 
@@ -35,13 +34,13 @@ namespace PizzaStore.Tests
         //----
         //Mandatory: Limit to 1 order per 1 hour
 
-        [Fact]//If user history has an order that happened less than an hour ago, deny creation of pre-order
+        //[Fact]//If user history has an order that happened less than an hour ago, deny creation of pre-order
         public void DenyCreationTimeTest()
         { }
 
         //----
         //Mandatory: Limit to ordering from 1 location “24hrs(i.e.end of business day)”
-        [Fact]//If user history has an order from location that has the same date stamp, deny creation of pre-order
+        //[Fact]//If user history has an order from location that has the same date stamp, deny creation of pre-order
         public void DenyCreationSpaceTest()
         { }
     }
