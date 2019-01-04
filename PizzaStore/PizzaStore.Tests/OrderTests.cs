@@ -40,6 +40,29 @@ namespace PizzaStore.Tests
 
         }
 
+        [Fact]
+        public void itemizedTest()
+        {
+            var sut1 = new Order();
+            var sut2 = new Order();
+            var store = new Location();
+
+            store.Inventory = new Dictionary<string, int>() { { "Crust", 3 }, { "Pepperoni", 1 }, { "Mozzarella", 20 }, { "TomatoSauce", 20 } };
+            for (var i = 0; i < 3; i += 1)
+            { sut1.AddPizza(new Pizza()); }
+            var inventoryTest=sut1.BalanceOrder(store);
+            sut1.Finalize(true,true,inventoryTest);
+            Assert.False(sut1.Voidable);
+
+            store.Inventory = new Dictionary<string, int>() { };
+            for (var i = 0; i < 5; i += 1)
+            { sut2.AddPizza(new Pizza()); }
+            Assert.True((sut2.orderInventory()).Count==3);
+            Assert.Empty(store.Inventory);
+            var inventoryTest2 = sut2.BalanceOrder(store);
+            sut2.Finalize(true, true, inventoryTest2);
+            Assert.True(sut2.Voidable);
+        }
          
     }
 }

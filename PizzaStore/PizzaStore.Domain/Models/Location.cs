@@ -14,7 +14,7 @@ namespace PizzaStore.Domain.Models
 
         public Location()
         {
-            Inventory = new Dictionary<string, int>() { { "crust", 20 }, {"mozzarella",20 },{"TomatoSauce",20} };
+            Inventory = new Dictionary<string, int>() { { "Crust", 20 }, {"Mozzarella",20 },{"TomatoSauce",20} };
             userlist = new List<User>();
             History = new List<Order>();
             Ledger = 100.0;
