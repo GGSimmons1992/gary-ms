@@ -9,59 +9,53 @@ namespace PizzaStore.Tests
     public class OrderTests
     {
         //Mandatory: Cannot be cancelled once it’s processed
-        //[Fact]//When processed, it needs to give total pizza cost
-        public void TotalCostTest()
+
+        [Fact]//Orders instantiate as voidable=true. When finalized, voidable=false
+        public void VoidOrderTest()
         {
-            double sizeCost = 12.00;
-            double crustMultiplierThin = 1.25;
-            double crustMultiplierDefault = 1.00;
-            double pepperoniCost = .25;
-            double cheeseCost = .25;
-            double pineappleCost = .75;
-            double expected1 = (sizeCost * crustMultiplierThin) + pepperoniCost + cheeseCost;
-            double expected2 = (sizeCost * crustMultiplierDefault) + pineappleCost + cheeseCost;
-            double salesTax = 0.75;
+            var sut = new Order();
+            Assert.True(sut.Voidable);
+            var InventoryCheck = true;
+            var CostCheck = true;
+            var UserCheck = true;
+            sut.Finalize(sut.PizzaTest(), CostCheck, InventoryCheck, UserCheck);//
+            Assert.True(sut.Voidable);
 
-            //var sutStore = new Location();
-            //sutStore.tax = salesTax;
-            //Pizza sut1 = new Pizza(sutStore, 12, "thin");
-            //Pizza sut2 = new Pizza(sutStore);
-            //sut1.AddTopping("Pepperoni");
-            //sut1.AddTopping("Mozzarella");
-            //sut2.AddTopping("Pineapple");
-            //sut2.AddTopping("Mozzarella");
-
-            //Order trueSut = new Order();
-            //trueSut.AddPizza(sut1);
-            //trueSut.AddPizza(sut2);
-
-            //Assert.True(trueSut.TotalCost()==((1.0+salesTax)*(expected1+expected2)));
+            sut.AddPizza(new Pizza());
+            sut.Finalize(sut.PizzaTest(), CostCheck, InventoryCheck, UserCheck);//
+            Assert.False(sut.Voidable);
         }
-
-        
-        //[Fact]//"Finaling an order" creates changes boolean of finalized from false to true.
-        //public void FinalizeTest()
-        //{
-        //    Order a = new Order();
-        //    Location d = new Location();
-        //    Pizza c = new Pizza(d);
-        //    c.AddTopping("Mozzarella");
-        //    a.AddPizza(c);
-
-        //    Order b = a.Finalize();
-        //    Assert.IsType<Order>(b);
-        //    Assert.True(a.TotalCost == b.TotalCost);
-        //}
 
         //----
-        //Mandatory: Can be fulfilled only if enough available <Test in Pizza>
+        //Mandatory: Can be fulfilled only if enough available (Need location.Inventory)
 
-        //--Interclass tests
-        //Mandatory from User: Can order up to $5000 worth per order 
-        //[Fact]//PreOrder cannot become an Order if worth is above $5000 after taxes.
-        public void MetalDetectorTest()
+        //[Fact]//If inventory of location cannot fullfil order, then do not finalize order
+        //public void InventoryTest()
+        //{
+        //    var sutStore = new Location();
+        //    sutStore.AddToInventory("dough",3);
+        //    sutStore.AddToInventory("TomatoSauce", 5);
+        //    sutStore.AddToInventory("Mozzarella", 5);
+        //    var sut = new Order();
+        //    Assert.False(sut.InventoryTest(sutStore));
+        //    sut.Finalize();
+
+        //}
+
+        [Fact]//If worth of order is greater than $5000 cap, do not finaliz order
+        public void CostTest()
         {
+            var sut = new Order();
+            for (var i = 0; i < 3; i += 1)
+            {
+                sut.AddPizza(new Pizza());
+            }
+            Assert.True(sut.costTest());
+            sut.Finalize(true,sut.costTest(),true,true);
+            Assert.False(sut.Voidable);
 
         }
+
+         
     }
 }
