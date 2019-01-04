@@ -88,5 +88,35 @@ namespace PizzaStore.Tests
             Assert.False(newOrder.Voidable);
 
         }
+
+        [Fact]
+        public void SubmitTest()
+        {
+            var sut = new User("Billy", "B0b");
+            var store = new Location();
+            sut.Store = store;
+            var newOrder = sut.CreateOrder(sut.Store);
+            newOrder.AddPizza(new Pizza());
+            newOrder.TrulyFinalize();
+            sut.Submit(newOrder);
+            Assert.True(sut.History.Count == 1);
+            Assert.True(store.History.Count == 1);
+            Assert.True(store.Ledger == (100.0 + newOrder.Cost()));
+            Assert.True(store.userlist.Count == 1);
+            Assert.True(store.userlist[((store.userlist.Count) - 1)] ==sut);
+
+            var failSut = new User("sad","Panda!");
+            var badOrder = failSut.CreateOrder(store);
+            badOrder.TrulyFinalize();
+            Assert.True(badOrder.Voidable);
+            failSut.Submit(badOrder);
+            Assert.False(failSut.History.Count == 1);
+            Assert.True(store.History.Count == 1);
+            Assert.True(store.Ledger == (100.0 + newOrder.Cost()));
+            Assert.True(store.userlist.Count == 1);
+            Assert.False(store.userlist[((store.userlist.Count) - 1)] == failSut);
+
+
+        }
     }
 }

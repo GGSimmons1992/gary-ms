@@ -81,5 +81,17 @@ namespace PizzaStore.Domain.Models
         {
             if (SpaceTest()) {Store=newLocation;}
         }
+
+        public void Submit(Order newOrder)
+        {
+
+            AddOrder(newOrder);
+            Store.AddToHistory(newOrder);
+
+            if (false == newOrder.Voidable)
+            {
+                Store.AddUser(this);
+            }
+        }
     }
 }

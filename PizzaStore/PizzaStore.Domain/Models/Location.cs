@@ -47,5 +47,10 @@ namespace PizzaStore.Domain.Models
         {
             Ledger += orderCost;
         }
+
+        public void removeItems(string top, int amount)
+        {
+            Inventory[top] = Inventory[top] - amount;
+        }
     }
 }

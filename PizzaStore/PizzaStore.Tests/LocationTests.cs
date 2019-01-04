@@ -18,6 +18,15 @@ namespace PizzaStore.Tests
             Assert.True(newStore.Inventory.Count==4);
         }
 
+        [Fact]
+        public void RemoveItems()
+        {
+            var newStore = new Location();
+
+            newStore.removeItems("Mozzarella", 5);
+            Assert.True(20 > newStore.Inventory["Mozzarella"]);
+        }
+
         //----
         //Mandatory: Must manage its users
         [Fact]//Location can access its users
