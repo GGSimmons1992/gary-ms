@@ -22,7 +22,6 @@ namespace PizzaStore.Tests
         public void RemoveItems()
         {
             var newStore = new Location();
-
             newStore.removeItems("Mozzarella", 5);
             Assert.True(20 > newStore.Inventory["Mozzarella"]);
         }

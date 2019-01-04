@@ -10,6 +10,7 @@ namespace PizzaStore.Domain.Models
         private string password { get; set; }
         public List<Order> History { get; set; }
         public Location Store { get; set; }
+        public int Id { get; set; }
 
         public User(string uname, string pw)
         {

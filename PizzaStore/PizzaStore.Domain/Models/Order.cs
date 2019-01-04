@@ -10,6 +10,7 @@ namespace PizzaStore.Domain.Models
         public List<Pizza> PizzaList { get; set; }
         public DateTime TimeStamp { get; set; }
         public Location Store { get; set; }
+        public int Id { get; set; }
 
         public Order()
         {

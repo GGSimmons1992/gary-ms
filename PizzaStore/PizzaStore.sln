@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaStore.Domain", "PizzaStore.Domain\PizzaStore.Domain.csproj", "{840CC768-777A-48BC-B2B2-442B4E2C91CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaStore.Domain", "PizzaStore.Domain\PizzaStore.Domain.csproj", "{840CC768-777A-48BC-B2B2-442B4E2C91CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaStore.Tests", "PizzaStore.Tests\PizzaStore.Tests.csproj", "{373BFC43-6AFC-45E6-82A9-C37F7F3BBAB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaStore.Tests", "PizzaStore.Tests\PizzaStore.Tests.csproj", "{373BFC43-6AFC-45E6-82A9-C37F7F3BBAB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaStore.Data", "PizzaStore.Data\PizzaStore.Data.csproj", "{DF430020-7E7B-46A5-9A9A-8868588B84D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaStore.EFMigration", "PizzaStore.EFMigration\PizzaStore.EFMigration.csproj", "{BE5D9447-2E43-4144-BD58-C8C9029163FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{373BFC43-6AFC-45E6-82A9-C37F7F3BBAB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{373BFC43-6AFC-45E6-82A9-C37F7F3BBAB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{373BFC43-6AFC-45E6-82A9-C37F7F3BBAB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF430020-7E7B-46A5-9A9A-8868588B84D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF430020-7E7B-46A5-9A9A-8868588B84D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF430020-7E7B-46A5-9A9A-8868588B84D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF430020-7E7B-46A5-9A9A-8868588B84D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE5D9447-2E43-4144-BD58-C8C9029163FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5D9447-2E43-4144-BD58-C8C9029163FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5D9447-2E43-4144-BD58-C8C9029163FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5D9447-2E43-4144-BD58-C8C9029163FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

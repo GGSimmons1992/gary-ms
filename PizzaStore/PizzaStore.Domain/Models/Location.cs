@@ -10,7 +10,7 @@ namespace PizzaStore.Domain.Models
         public List<User> userlist { get; set; }
         public Double Ledger { get; set; }
         public List<Order> History {get;set;}
-        public Guid ID { get; set; }
+        public int Id { get; set; }
 
         public Location()
         {
@@ -18,7 +18,6 @@ namespace PizzaStore.Domain.Models
             userlist = new List<User>();
             History = new List<Order>();
             Ledger = 100.0;
-            ID = Guid.NewGuid();
         }
 
         public void AddInventory(string item, int amount)
