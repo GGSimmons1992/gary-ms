@@ -61,8 +61,8 @@ namespace PizzaStore.Tests
             var userStore = new Location();
             var newStore = new Location();
             sut.SetStore(userStore);
-            var a = sut.Store.ID;
-            var b = userStore.ID;
+            var a = sut.Store.id;
+            var b = userStore.id;
             Assert.True(sut.SpaceTest());
             Assert.True(a == b);
 
@@ -70,8 +70,8 @@ namespace PizzaStore.Tests
             newOrder.Finalize(true,true,true);
             sut.AddOrder(newOrder);
             sut.SetStore(newStore);
-            var c = sut.Store.ID;
-            var d = newStore.ID;
+            var c = sut.Store.id;
+            var d = newStore.id;
             Assert.False(sut.SpaceTest());
             Assert.False(c == d);
         }
