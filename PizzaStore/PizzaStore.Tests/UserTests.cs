@@ -81,7 +81,7 @@ namespace PizzaStore.Tests
         {
             var sut = new User("Billy","B0b");
             var store = new Location();
-            sut.Store = store;
+            sut.SetStore(store);
             var newOrder = sut.CreateOrder(sut.Store);
             newOrder.AddPizza(new Pizza());
             newOrder.TrulyFinalize();
@@ -94,7 +94,7 @@ namespace PizzaStore.Tests
         {
             var sut = new User("Billy", "B0b");
             var store = new Location();
-            sut.Store = store;
+            sut.SetStore(store);
             var newOrder = sut.CreateOrder(sut.Store);
             newOrder.AddPizza(new Pizza());
             newOrder.TrulyFinalize();
