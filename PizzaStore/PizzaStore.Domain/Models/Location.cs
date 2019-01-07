@@ -54,5 +54,19 @@ namespace PizzaStore.Domain.Models
         {
             Inventory[top] = Inventory[top] - amount;
         }
+
+        public void removeItems(Order validOrder)
+        {
+            if (validOrder.Voidable == false)
+            {
+                foreach (var pie in validOrder.PizzaList)
+                {
+                    foreach ( var topping in pie.Toppings)
+                    {
+                        removeItems(topping, 1);
+                    }
+                }
+            }
+        }
     }
 }

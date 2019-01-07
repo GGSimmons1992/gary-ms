@@ -11,6 +11,7 @@ namespace PizzaStore.Domain.Models
         public DateTime TimeStamp { get; set; }
         public Location Store { get; set; }
         public int Id { get; set; }
+        public double finalCost { get; private set; }
 
         public Order()
         {
@@ -18,6 +19,7 @@ namespace PizzaStore.Domain.Models
             Voidable = true;
             TimeStamp = DateTime.Now;
             Store = null;
+            finalCost = 0;
         }
 
         public Order(Location store)
@@ -31,7 +33,7 @@ namespace PizzaStore.Domain.Models
         public void Finalize(bool pizzaTest, bool costTest, bool inventoryTest)
         {
             if (pizzaTest && costTest && inventoryTest)
-            { Voidable = false; TimeStamp = DateTime.Now; }
+            { Voidable = false; finalCost=Cost(); TimeStamp = DateTime.Now; }
             else { Voidable = true; }
         }
 

@@ -94,6 +94,7 @@ namespace PizzaStore.Domain.Models
 
             AddOrder(newOrder);
             Store.AddToHistory(newOrder);
+            Store.removeItems(newOrder);
 
             if (false == newOrder.Voidable)
             {

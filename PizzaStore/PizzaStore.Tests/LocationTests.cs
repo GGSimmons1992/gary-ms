@@ -15,7 +15,7 @@ namespace PizzaStore.Tests
             var newStore = new Location();
             Assert.NotNull(newStore.Inventory);
             newStore.AddInventory("pepperoni", 5);
-            Assert.True(newStore.Inventory.Count==4);
+            Assert.True(newStore.Inventory.Count == 4);
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace PizzaStore.Tests
         {
             var newStore = new Location();
             Assert.NotNull(newStore.userlist);
-            newStore.AddUser(new User("user","passw"));
+            newStore.AddUser(new User("user", "passw"));
             Assert.NotEmpty(newStore.userlist);
         }
 
@@ -47,9 +47,18 @@ namespace PizzaStore.Tests
             var newOrder = new Order();
             var P = new Pizza();
             newOrder.AddPizza(P);
-            newOrder.Finalize(true,true,true);
+            newOrder.Finalize(true, true, true);
             sut.AddToHistory(newOrder);
-            Assert.True(defaultLedger<sut.Ledger);
+            Assert.True(defaultLedger < sut.Ledger);
+        }
+
+        [Fact]
+        public void RemoveToppingsByOrderTest ()
+        {
+            var sut = new Location();
+            var newUser = new User("Pizza","70v3r!");
+            var newOrder=newUser.CreateOrder();
+
         }
     }
 }
