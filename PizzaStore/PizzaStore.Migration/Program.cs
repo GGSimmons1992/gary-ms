@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace PizzaStore.EFMigration
+namespace PizzaStore.Migration
 {
-    public class Program
+    class Program
     {
         static void Main(string[] args)
         {
