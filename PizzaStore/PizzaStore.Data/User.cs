@@ -7,17 +7,17 @@ namespace PizzaStore.Data
     {
         public User()
         {
-            LocationUser = new HashSet<LocationUser>();
-            UserOrder = new HashSet<UserOrder>();
+            LocationUser = new HashSet<LocationUser>();//Connects to Location.UserList and Store
+            UserOrder = new HashSet<UserOrder>();//connects to History
         }
 
-        public short UserId { get; set; }
-        public string Name { get; set; }
-        public string Password { get; set; }
+        public short UserId { get; set; }//Connects to Id
+        public string Name { get; set; }//connects to name
+        public string Password { get; set; }//connects to password
         public DateTime ModifiedDate { get; set; }
         public bool? Active { get; set; }
 
-        public virtual ICollection<LocationUser> LocationUser { get; set; }
-        public virtual ICollection<UserOrder> UserOrder { get; set; }
+        public virtual ICollection<LocationUser> LocationUser { get; set; }//connects to Location.UserList & Store
+        public virtual ICollection<UserOrder> UserOrder { get; set; }//Connects to History
     }
 }
