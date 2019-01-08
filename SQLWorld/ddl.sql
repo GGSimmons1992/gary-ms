@@ -14,7 +14,6 @@ go
 create table PizzaStore.Location
 (
 	LocationID tinyint not null primary key identity(1,1)
-	,InventoryID tinyint foreign key references PizzaStore.[Inventory](InventoryID)
 	,Sales numeric(9,2) default(0) --Ledger
 	--,GuidId (not needed)
 	,ModifiedDate datetime2(0) not null
@@ -48,14 +47,7 @@ create table PizzaStore.[User]
 	,name varchar(32)
     ,password varchar(32)
 	--History transient via UserOrder
-    ,LastVist tinyint foreign key references PizzaStore.Location(LocationID)
-	,ModifiedDate datetime2(0) not null
-	,Active bit not null default(1)
-);
-
-create table PizzaStore.[Inventory]
-(
-	InventoryID tinyint not null primary key identity(1,1)
+    ,LastStoreID tinyint foreign key references PizzaStore.Location(LocationID)
 	,ModifiedDate datetime2(0) not null
 	,Active bit not null default(1)
 );
@@ -63,8 +55,7 @@ create table PizzaStore.[Inventory]
 create table PizzaStore.Ingredient
 (
 	IngredientID smallint not null primary key identity(1,1)
-	,Name nvarchar(50) not null --n=unicode
-	,InventoryAmount int 
+	,Name nvarchar(50) not null --n=unicode 
 	,ModifiedDate datetime2(0) not null
 	,Active bit not null default(1)
 );
@@ -72,35 +63,36 @@ create table PizzaStore.Ingredient
 --
 --
 --Transient tables
-create table PizzaStore.LocationUser
+create table PizzaStore.LocationUser--For Location.UserList and User.Store
 (
 	LocationUserID int primary key identity(1,1)
 	,LocationID tinyint foreign key references PizzaStore.Location(LocationID)
 	,UserID smallint foreign key references PizzaStore.[User](UserID)
 );
 
-create table PizzaStore.InventoryIngredient
+create table PizzaStore.LocationIngredient --For Location.Inventory
 (
-	InventoryIngredient int primary key identity(1,1)
-	,InventoryID tinyint foreign key references PizzaStore.[Inventory](InventoryID)
+	LocationIngredient int primary key identity(1,1)
+	,LocationID tinyint foreign key references PizzaStore.[Location](LocationID)
 	,IngredientID smallint foreign key references PizzaStore.[Ingredient](IngredientID)
+	,InventoryAmount int
 );
 
-create table PizzaStore.OrderPizza
+create table PizzaStore.OrderPizza --For Order.PizzaList
 (
 	OrderPizzaID bigint primary key identity(1,1)
 	,PizzaID bigint foreign key references PizzaStore.Pizza(PizzaID)
 	,OrderID int foreign key references PizzaStore.[Order](OrderID)
 );
 
-create table PizzaStore.PizzaIngredient
+create table PizzaStore.PizzaIngredient --For Pizza.Toppings
 (
 	PizzaIngredientID bigint primary key identity(1,1)
 	,PizzaID bigint foreign key references PizzaStore.Pizza(PizzaID)
 	,IngredientID smallint foreign key references PizzaStore.[Ingredient](IngredientID)
 );
 
-create table PizzaStore.UserOrder
+create table PizzaStore.UserOrder--For User.History
 (
 	UserOrder int primary key identity(1,1)
 	,UserID smallint foreign key references PizzaStore.[User](UserID)

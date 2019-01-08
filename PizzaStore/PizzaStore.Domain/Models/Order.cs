@@ -69,6 +69,7 @@ namespace PizzaStore.Domain.Models
             {
                 cost += p.CalculateCost();
             }
+            finalCost = cost;
             return cost;
         }
 

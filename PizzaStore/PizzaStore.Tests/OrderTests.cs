@@ -47,6 +47,11 @@ namespace PizzaStore.Tests
             sut.Finalize(true,sut.costTest(),true);
             Assert.False(sut.Voidable);
 
+            var failSut = new Order();
+            sut.AddPizza(new Pizza(10000));//Since Pizza cost is based on size, a very large pizza is expensive
+            Assert.False(sut.costTest());
+            sut.Finalize(true, sut.costTest(), true);
+            Assert.True(sut.Voidable);
         }
 
         [Fact]
