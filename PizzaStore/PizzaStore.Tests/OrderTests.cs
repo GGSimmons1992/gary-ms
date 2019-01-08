@@ -1,4 +1,5 @@
-﻿using PizzaStore.Domain.Models;
+﻿using PizzaStore.Data;
+using PizzaStore.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,14 @@ namespace PizzaStore.Tests
 {
     public class OrderTests
     {
+
+        public EntityHelper eh { get; set; }
+
+        public OrderTests()
+        {
+            eh = new EntityHelper();
+        }
+
         //Mandatory: Cannot be cancelled once it’s processed
 
         [Fact]//Orders instantiate as voidable=true. When finalized, voidable=false
@@ -62,6 +71,13 @@ namespace PizzaStore.Tests
             var inventoryTest2 = sut2.BalanceOrder(store);
             sut2.Finalize(true, true, inventoryTest2);
             Assert.True(sut2.Voidable);
+        }
+
+        [Fact]
+        public void Test_OrderData()
+        {
+            Assert.NotNull(eh.GetOrders());
+            Assert.True(eh.GetOrders().Count >= 0);
         }
     }
 }

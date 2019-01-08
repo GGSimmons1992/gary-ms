@@ -1,4 +1,5 @@
-﻿using PizzaStore.Domain.Models;
+﻿using PizzaStore.Data;
+using PizzaStore.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,14 @@ namespace PizzaStore.Tests
 
         //----
         //Mandatory: Can contain no more than 5 toppings all categories included
+
+        public EntityHelper eh { get; set; }
+
+        public PizzaTest()
+        {
+            eh = new EntityHelper();
+        }
+
         [Fact]
         public void PizzaToppingTest()
         {
@@ -37,6 +46,13 @@ namespace PizzaStore.Tests
 
             var sut2 = new Pizza("pepperoni");
             Assert.True(sut2.CalculateCost() > defaultCost);
+        }
+
+        [Fact]
+        public void Test_PizzaData()
+        {
+            Assert.NotNull(eh.GetPizzas());
+            Assert.True(eh.GetPizzas().Count >= 0);
         }
     }
 }

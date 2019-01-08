@@ -106,7 +106,6 @@ create table PizzaStore.UserOrder
 	,UserID smallint foreign key references PizzaStore.[User](UserID)
 	,OrderID int foreign key references PizzaStore.[Order](OrderID)
 )
-
 --
 --
 --alterations

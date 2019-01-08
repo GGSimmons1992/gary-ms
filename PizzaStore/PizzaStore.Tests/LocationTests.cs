@@ -86,6 +86,7 @@ namespace PizzaStore.Tests
         [Fact]
         public void Test_LocationData()
         {
+
             Assert.NotNull(eh.GetLocations());
             Assert.True(eh.GetLocations().Count>=0);
         }
