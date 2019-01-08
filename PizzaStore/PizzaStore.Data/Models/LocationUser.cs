@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PizzaStore.Data
+namespace PizzaStore.Data.Models
 {
     public partial class LocationUser
     {

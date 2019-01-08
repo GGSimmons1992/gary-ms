@@ -1,4 +1,5 @@
-﻿using PizzaStore.Domain.Models;
+﻿using PizzaStore.Data;
+using PizzaStore.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,13 @@ namespace PizzaStore.Tests
 {
     public class LocationTests
     {
+        public EntityHelper eh { get; set; }
+
+        public LocationTests()
+        {
+            eh = new EntityHelper();
+        }
+        
         //Mandatory: Must manage its inventory
         [Fact]//Location can access its inventory
         public void InventoryTest()
@@ -73,8 +81,13 @@ namespace PizzaStore.Tests
             Assert.True(oldMozzCount != sut.Inventory["Mozzarella"]);
             Assert.True(oldSauceCount > sut.Inventory["TomatoSauce"]);
             Assert.True(oldCrustCount > sut.Inventory["Crust"]);
+        }
 
-
+        [Fact]
+        public void Test_LocationData()
+        {
+            Assert.NotNull(eh.GetLocations());
+            Assert.True(eh.GetLocations().Count>=0);
         }
     }
 }
