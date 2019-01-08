@@ -24,5 +24,51 @@ namespace PizzaStore.Data
 
             return ls;
         }
+
+        public List<d.User> GetUsers()
+        {
+            var ls = new List<d.User>();
+
+            foreach (var l in _db.User.ToList())
+            {
+                ls.Add(new d.User()
+                {
+                    Id = l.UserId
+                });
+            }
+
+            return ls;
+        }
+
+        public List<d.Order> GetOrders()
+        {
+            var ls = new List<d.Order>();
+
+            foreach (var l in _db.Order.ToList())
+            {
+                ls.Add(new d.Order()
+                {
+                    Id = l.OrderId
+                });
+            }
+
+            return ls;
+        }
+
+        public List<d.Pizza> GetPizzas()
+        {
+            var ls = new List<d.Pizza>();
+
+            foreach (var l in _db.Pizza.ToList())
+            {
+                ls.Add(new d.Pizza()
+                {
+                    Id = (int) l.PizzaId
+                });
+            }
+
+            return ls;
+        }
+
     }
 }

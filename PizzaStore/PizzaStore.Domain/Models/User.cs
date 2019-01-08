@@ -12,6 +12,11 @@ namespace PizzaStore.Domain.Models
         public Location Store { get; private set; }
         public int Id { get; set; }
 
+        public User()
+        {
+            History = new List<Order>();
+        }
+
         public User(string uname, string pw)
         {
             name = uname;
