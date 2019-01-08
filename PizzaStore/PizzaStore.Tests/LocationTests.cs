@@ -23,7 +23,7 @@ namespace PizzaStore.Tests
         {
             var newStore = new Location();
             newStore.removeItems("Mozzarella", 5);
-            Assert.True(20 > newStore.Inventory["Mozzarella"]);
+            Assert.True(15 == newStore.Inventory["Mozzarella"]);
         }
 
         //----
@@ -56,8 +56,24 @@ namespace PizzaStore.Tests
         public void RemoveToppingsByOrderTest ()
         {
             var sut = new Location();
+            var oldMozzCount = sut.Inventory["Mozzarella"];
+            var oldCrustCount = sut.Inventory["Crust"];
+            var oldSauceCount = sut.Inventory["TomatoSauce"];
             var newUser = new User("Pizza","70v3r!");
+            newUser.SetStore(sut);
             var newOrder=newUser.CreateOrder();
+            var newPizza = new Pizza();
+            Assert.Contains("Mozzarella", newPizza.Toppings);
+            newOrder.AddPizza(newPizza);
+            newOrder.TrulyFinalize();
+            Assert.False(newOrder.Voidable);
+            newUser.Submit(newOrder);
+
+            Assert.True(oldMozzCount == 20);//because default
+            Assert.True(oldMozzCount != sut.Inventory["Mozzarella"]);
+            Assert.True(oldSauceCount > sut.Inventory["TomatoSauce"]);
+            Assert.True(oldCrustCount > sut.Inventory["Crust"]);
+
 
         }
     }

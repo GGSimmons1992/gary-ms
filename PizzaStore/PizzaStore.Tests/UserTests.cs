@@ -24,8 +24,7 @@ namespace PizzaStore.Tests
             var store = new Location();
             var sut = new User("Wheeler","Yam1");
             Assert.NotNull(sut.History);
-
-            var newOrder = sut.CreateOrder();
+            var newOrder = sut.CreateOrder(store);
             newOrder.Finalize(true,true,true);
             sut.AddOrder(newOrder);
             Assert.NotEmpty(sut.History);
@@ -42,7 +41,7 @@ namespace PizzaStore.Tests
         {
             var sut = new User("John","xj9");
             Assert.True(sut.TimeTest());
-            var newOrder = sut.CreateOrder();
+            var newOrder = sut.CreateOrder(new Location());
             newOrder.Finalize(true,true,true);
             sut.AddOrder(newOrder);
             Assert.False(sut.TimeTest());
@@ -101,7 +100,7 @@ namespace PizzaStore.Tests
             sut.Submit(newOrder);
             Assert.True(sut.History.Count == 1);
             Assert.True(store.History.Count == 1);
-            Assert.True(store.Ledger == (100.0 + newOrder.Cost()));
+            Assert.True(store.Ledger == (newOrder.Cost()));
             Assert.True(store.userlist.Count == 1);
             Assert.True(store.userlist[((store.userlist.Count) - 1)] ==sut);
 
@@ -112,11 +111,21 @@ namespace PizzaStore.Tests
             failSut.Submit(badOrder);
             Assert.False(failSut.History.Count == 1);
             Assert.True(store.History.Count == 1);
-            Assert.True(store.Ledger == (100.0 + newOrder.Cost()));
+            Assert.True(store.Ledger == (newOrder.Cost()));
             Assert.True(store.userlist.Count == 1);
             Assert.False(store.userlist[((store.userlist.Count) - 1)] == failSut);
 
 
         }
+
+        [Fact]
+        public void storeDependancyTest()
+        {
+            var sut = new User("John","D03!");
+            Assert.Null(sut.Store);
+            var sutOrder = sut.CreateOrder();
+            Assert.Null(sutOrder);
+        }
+
     }
 }

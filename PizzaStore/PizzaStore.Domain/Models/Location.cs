@@ -18,7 +18,7 @@ namespace PizzaStore.Domain.Models
             Inventory = new Dictionary<string, int>() { { "Crust", 20 }, {"Mozzarella",20 },{"TomatoSauce",20} };
             userlist = new List<User>();
             History = new List<Order>();
-            Ledger = 100.0;
+            Ledger = 0.0;//Because we have no sales in the beginning
             GuidId = Guid.NewGuid();
 
         }
@@ -66,6 +66,7 @@ namespace PizzaStore.Domain.Models
                         removeItems(topping, 1);
                     }
                 }
+                Inventory["Crust"] = Inventory["Crust"] - validOrder.PizzaList.Count;
             }
         }
     }

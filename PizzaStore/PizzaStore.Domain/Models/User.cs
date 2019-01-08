@@ -17,7 +17,6 @@ namespace PizzaStore.Domain.Models
             name = uname;
             password = pw;
             History = new List<Order>();
-            Store = new Location();
         }
 
         public bool AccountTest()
@@ -27,7 +26,7 @@ namespace PizzaStore.Domain.Models
 
         public Order CreateOrder()
         {
-            if (TimeTest())
+            if (TimeTest() && Store!=null)
             {
                 var newOrder = new Order(Store);
                 return newOrder;
