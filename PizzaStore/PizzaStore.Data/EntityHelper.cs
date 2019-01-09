@@ -18,7 +18,7 @@ namespace PizzaStore.Data
             {
                 ls.Add(new d.Location()
                 {
-                    Id=l.LocationId
+                    Id = l.LocationId
                 });
             }
 

@@ -9,9 +9,10 @@ namespace PizzaStore.Domain.Models
         public Dictionary<string, int> Inventory { get; set; }
         public List<User> userlist { get; set; }
         public Double Ledger { get; set; }
-        public List<Order> History {get;set;}
+        public List<Order> History { get; set; }
         public Guid GuidId { get; set; }
         public int Id { get; set; }
+        public DateTime ModifiedDate {get;set;}
 
         public Location()
         {
@@ -20,7 +21,7 @@ namespace PizzaStore.Domain.Models
             History = new List<Order>();
             Ledger = 0.0;//Because we have no sales in the beginning
             GuidId = Guid.NewGuid();
-
+            ModifiedDate = DateTime.Now;
         }
 
         public void AddInventory(string item, int amount)

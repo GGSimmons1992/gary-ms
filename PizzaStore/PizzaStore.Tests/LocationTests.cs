@@ -88,7 +88,9 @@ namespace PizzaStore.Tests
         {
 
             Assert.NotNull(eh.GetLocations());
-            Assert.True(eh.GetLocations().Count>=0);
+            var LocationList = eh.GetLocations();
+            Assert.True(LocationList[0].Id == 1);
+            Assert.True(LocationList[1].Id==2);
         }
     }
 }
