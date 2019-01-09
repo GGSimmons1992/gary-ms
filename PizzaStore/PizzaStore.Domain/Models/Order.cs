@@ -11,7 +11,10 @@ namespace PizzaStore.Domain.Models
         public DateTime TimeStamp { get; set; }
         public Location Store { get; set; }
         public int Id { get; set; }
-        public double finalCost { get; private set; }
+        public double finalCost { get;set; }
+        public byte StoreID { get; set; }
+        public short UserID { get; set; }
+
 
         public Order()
         {

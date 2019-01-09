@@ -140,7 +140,9 @@ namespace PizzaStore.Tests
         public void Test_UserData()
         {
             Assert.NotNull(eh.GetUsers());
-            Assert.True(eh.GetUsers().Count >= 0);
+            var userlist = eh.GetUsers();
+            Assert.True(userlist[1].name=="Lover");
+            Assert.True(userlist[0].password =="D03!");
         }
     }
 }

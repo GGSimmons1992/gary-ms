@@ -19,6 +19,7 @@ namespace PizzaStore.Data
                 ls.Add(new d.Location()
                 {
                     Id = l.LocationId
+                    , ModifiedDate = l.ModifiedDate
                 });
             }
 
@@ -31,9 +32,10 @@ namespace PizzaStore.Data
 
             foreach (var l in _db.User.ToList())
             {
-                ls.Add(new d.User()
+                ls.Add(new d.User(l.Name,l.Password)
                 {
                     Id = l.UserId
+                    ,ModifiedDate=l.ModifiedDate
                 });
             }
 
@@ -49,7 +51,12 @@ namespace PizzaStore.Data
                 ls.Add(new d.Order()
                 {
                     Id = l.OrderId
-                });
+                    ,StoreID=(byte) l.StoreId
+                    ,UserID=(short) l.UserId
+                    ,Voidable=(bool)l.Voidable
+                    ,finalCost = (double) l.Cost
+                    ,TimeStamp= l.TimeStamp
+            });
             }
 
             return ls;
@@ -64,11 +71,55 @@ namespace PizzaStore.Data
                 ls.Add(new d.Pizza()
                 {
                     Id = (int) l.PizzaId
+                    ,OrderId=(int) l.OrderId
+                    ,ModifiedDate=l.ModifiedDate
+                    ,crustSize=(int) l.Size
                 });
             }
 
             return ls;
         }
 
+        public bool setUser(d.User u)
+        {
+            var du = new User();
+            du.ModifiedDate = DateTime.Now;
+            du.Name = u.name;
+            du.Password = u.password;
+
+            _db.User.Add(du);
+            return _db.SaveChanges() == 1;
+        }
+
+        public bool setLocation(d.Location l)
+        {
+            var dl = new Location();
+            dl.ModifiedDate = DateTime.Now;
+
+            _db.Location.Add(dl);
+            return _db.SaveChanges() == 1;
+        }
+
+        public bool setOrder(d.Order r)
+        {
+            var dr = new Order();
+            dr.StoreId =(byte) r.Store.Id;
+            dr.UserId = r.UserID;
+            dr.TimeStamp = DateTime.Now;
+
+            _db.Order.Add(dr);
+            return _db.SaveChanges() == 1;
+        }
+
+        public bool setPizza(d.Pizza p)
+        {
+            var dp = new Pizza();
+            dp.ModifiedDate = DateTime.Now;
+            dp.OrderId = p.OrderId;
+            dp.Size = (byte) p.crustSize;
+
+            _db.Pizza.Add(dp);
+            return _db.SaveChanges() == 1;
+        }
     }
 }

@@ -82,7 +82,8 @@ namespace PizzaStore.Tests
         public void Test_OrderData()
         {
             Assert.NotNull(eh.GetOrders());
-            Assert.True(eh.GetOrders().Count >= 0);
+            var OrderList = eh.GetOrders();
+            Assert.True(OrderList[1].finalCost==36.00);
         }
     }
 }

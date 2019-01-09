@@ -52,7 +52,9 @@ namespace PizzaStore.Tests
         public void Test_PizzaData()
         {
             Assert.NotNull(eh.GetPizzas());
-            Assert.True(eh.GetPizzas().Count >= 0);
+            var PizzaList=eh.GetPizzas();
+            Assert.True(PizzaList[0].OrderId==1);
+            Assert.True(PizzaList[1].crustSize==12);
         }
     }
 }
