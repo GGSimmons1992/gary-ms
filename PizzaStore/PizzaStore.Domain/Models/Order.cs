@@ -73,7 +73,7 @@ namespace PizzaStore.Domain.Models
                 cost += p.CalculateCost();
             }
             finalCost = cost;
-            if (cost == null) { cost = 0; }
+            
             return cost;
         }
 

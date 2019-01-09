@@ -26,7 +26,7 @@ create table PizzaStore.[Order]
 	--,PizzaList transient via OrderPizza
     ,StoreID tinyint foreign key references PizzaStore.[Location](LocationID)
 	,UserID smallint foreign key references PizzaStore.[User](UserID)
-	,Cost decimal(4,2)
+	,Cost decimal(4,2) default(0.00)
     ,TimeStamp datetime2(0) not null
 	,Active bit not null default(1)
 );
@@ -35,9 +35,10 @@ create table PizzaStore.Pizza
 (
 	PizzaID bigint not null primary key identity(1,1)
 	--,toppings transient via PizzaIngredient
-	,size tinyint
+	,size tinyint default(10)
 	,OrderId int foreign key references PizzaStore.[Order](OrderID)
 	,ModifiedDate datetime2(0) not null
+	,price decimal(4,2) default(0.00)
 	,Active bit not null default(1)
 );
 
@@ -74,7 +75,7 @@ create table PizzaStore.LocationIngredient --For Location.Inventory
 	LocationIngredient int primary key identity(1,1)
 	,LocationID tinyint foreign key references PizzaStore.[Location](LocationID)
 	,IngredientID smallint foreign key references PizzaStore.[Ingredient](IngredientID)
-	,InventoryAmount int
+	,InventoryAmount int default(20)
 );
 
 create table PizzaStore.PizzaIngredient --For Pizza.Toppings
@@ -90,6 +91,15 @@ create table PizzaStore.PizzaIngredient --For Pizza.Toppings
 alter table PizzaStore.[Order]
 add constraint CK_Order_Modified check(ModifiedDate=getdate())
 go
+
+alter table PizzaStore.[Pizza]
+add price decimal(4,2);
+
+alter table PizzaStore.[Order]
+alter column Cost decimal(4,2) not null;
+
+alter table PizzaStore.[User]
+alter column 
 
 drop database PizzaStoreDB
 

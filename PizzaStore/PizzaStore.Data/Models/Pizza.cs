@@ -14,6 +14,7 @@ namespace PizzaStore.Data.Models
         public byte? Size { get; set; }
         public int? OrderId { get; set; }
         public DateTime ModifiedDate { get; set; }
+        public decimal? Price { get; set; }
         public bool? Active { get; set; }
 
         public virtual Order Order { get; set; }
