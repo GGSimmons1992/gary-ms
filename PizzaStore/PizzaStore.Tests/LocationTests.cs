@@ -92,5 +92,12 @@ namespace PizzaStore.Tests
             Assert.True(LocationList[0].Id == 1);
             Assert.True(LocationList[1].Id==2);
         }
+
+        [Fact]
+        public void LocationDataAdditionTest()
+        {
+            var sut = new Location();
+            Assert.True(eh.setLocation(sut));
+        }
     }
 }

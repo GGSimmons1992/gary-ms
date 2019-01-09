@@ -103,7 +103,7 @@ namespace PizzaStore.Data
         public bool setOrder(d.Order r)
         {
             var dr = new Order();
-            dr.StoreId =(byte) r.Store.Id;
+            dr.StoreId =(byte) r.StoreID;
             dr.UserId = r.UserID;
             dr.TimeStamp = DateTime.Now;
 

@@ -144,5 +144,12 @@ namespace PizzaStore.Tests
             Assert.True(userlist[1].name=="Lover");
             Assert.True(userlist[0].password =="D03!");
         }
+
+        [Fact]
+        public void UserDataAdditionTest()
+        {
+            var sut = new User("Hi","Mark");
+            Assert.True(eh.setUser(sut));
+        }
     }
 }

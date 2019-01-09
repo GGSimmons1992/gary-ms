@@ -56,5 +56,12 @@ namespace PizzaStore.Tests
             Assert.True(PizzaList[0].OrderId==1);
             Assert.True(PizzaList[1].crustSize==12);
         }
+
+        [Fact]
+        public void PizzaDataAdditionTest()
+        {
+            var sut = new Pizza() { OrderId=1};
+            Assert.True(eh.setPizza(sut));
+        }
     }
 }

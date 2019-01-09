@@ -85,5 +85,12 @@ namespace PizzaStore.Tests
             var OrderList = eh.GetOrders();
             Assert.True(OrderList[1].finalCost==36.00);
         }
+
+        [Fact]
+        public void OrderDataAdditionTest()
+        {
+            var sut = new Order() { UserID=2,StoreID=1};
+            Assert.True(eh.setOrder(sut));
+        }
     }
 }
