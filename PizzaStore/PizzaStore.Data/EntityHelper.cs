@@ -106,6 +106,7 @@ namespace PizzaStore.Data
             dr.StoreId =(byte) r.StoreID;
             dr.UserId = r.UserID;
             dr.TimeStamp = DateTime.Now;
+            dr.Cost = (decimal) r.Cost();
 
             _db.Order.Add(dr);
             return _db.SaveChanges() == 1;

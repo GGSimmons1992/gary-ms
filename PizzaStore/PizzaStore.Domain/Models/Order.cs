@@ -22,7 +22,7 @@ namespace PizzaStore.Domain.Models
             Voidable = true;
             TimeStamp = DateTime.Now;
             Store = null;
-            finalCost = 0;
+            finalCost = Cost();
         }
 
         public Order(Location store)
@@ -73,6 +73,7 @@ namespace PizzaStore.Domain.Models
                 cost += p.CalculateCost();
             }
             finalCost = cost;
+            if (cost == null) { cost = 0; }
             return cost;
         }
 
