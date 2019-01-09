@@ -1,35 +1,34 @@
 use PizzaStoreDB;
 go;
 
-SET IDENTITY_INSERT PizzaStore.[User] ON;  
-GO 
 
-SET IDENTITY_INSERT PizzaStore.[Order] OFF;  
-GO 
-
-insert into PizzaStore.[Inventory](ModifiedDate)
-values
-(getDate())
-,(getDate())
-
-insert into PizzaStore.[Location](InventoryID,ModifiedDate)
+insert into PizzaStore.[Location](ModifiedDate)
 values 
-(1,getDate())
-,(2,getDate());
+(getDate())
+,(getDate());
+;select * from PizzaStore.[Location];
 
-insert into PizzaStore.[User](name,password,LastVist,ModifiedDate)
+insert into PizzaStore.[User](name,password,ModifiedDate)
 values
-('High','D03!',6,getDate())
-,('Lover','W@7k1n6',7,getDate());
+('High','D03!',getDate())
+,('Lover','W@7k1n6',getDate());
+;select * from PizzaStore.[User];
 
-insert into PizzaStore.[Order](TimeStamp,ModifiedDate)
+insert into PizzaStore.[Order](StoreId,UserId,Cost,TimeStamp)
 values
-(getDate(),getDate())
-,(getDate(),getDate());
+(1,2,24.50,getDate())
+,(2,1,36.00,getDate())
+;select * from PizzaStore.[Order];
 
-insert into PizzaStore.[Pizza](size,ModifiedDate)
+insert into PizzaStore.[Pizza](size,OrderId,ModifiedDate)
 values
-(14,getDate())
-,(12,getDate());
+(14,1,getDate())
+,(12,2,getDate())
+;select * from PizzaStore.[Pizza];
 
-select * from PizzaStore.[Order];
+insert into PizzaStore.[Ingredient](name,ModifiedDate)
+values
+('Crust',getDate())
+,('TomatoSauce',getDate())
+,('Mozzarella',getDate())
+;select * from PizzaStore.[Ingredient];

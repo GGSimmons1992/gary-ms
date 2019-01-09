@@ -10,6 +10,7 @@ namespace PizzaStore.Domain.Models
         public int OrderId { get; set; }
         public DateTime ModifiedDate { get; set; }
         public List<string> Toppings { get; set; }
+        public double price {get;set;}
 
         public int crustSize { get; set; }
 
@@ -17,12 +18,14 @@ namespace PizzaStore.Domain.Models
         {
             Toppings = new List<string>() {"TomatoSauce","Mozzarella"};
             crustSize = newSize;
+            price = CalculateCost();
         }
 
         public Pizza(string newTopping ,int newSize = 10)
         {
             Toppings = new List<string>() { "TomatoSauce", "Mozzarella", newTopping };
             crustSize = newSize;
+            price = CalculateCost();
         }
 
         public Pizza(List<string> NewToppingList, int newSize = 10)
@@ -49,7 +52,8 @@ namespace PizzaStore.Domain.Models
 
         public double CalculateCost()
         {
-            return ((0.75*crustSize) + (Toppings.Count * 0.50));
+            price = ((0.75 * crustSize) + (Toppings.Count * 0.50));
+            return price;
         }
     }
 }
