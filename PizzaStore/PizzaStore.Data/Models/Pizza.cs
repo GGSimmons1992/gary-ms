@@ -7,16 +7,16 @@ namespace PizzaStore.Data.Models
     {
         public Pizza()
         {
-            OrderPizza = new HashSet<OrderPizza>();
             PizzaIngredient = new HashSet<PizzaIngredient>();
         }
 
         public long PizzaId { get; set; }
         public byte? Size { get; set; }
+        public int? OrderId { get; set; }
         public DateTime ModifiedDate { get; set; }
         public bool? Active { get; set; }
 
-        public virtual ICollection<OrderPizza> OrderPizza { get; set; }
+        public virtual Order Order { get; set; }
         public virtual ICollection<PizzaIngredient> PizzaIngredient { get; set; }
     }
 }

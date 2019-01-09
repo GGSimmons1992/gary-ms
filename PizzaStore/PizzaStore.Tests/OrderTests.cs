@@ -9,14 +9,14 @@ namespace PizzaStore.Tests
 {
     public class OrderTests
     {
-
+        
         public EntityHelper eh { get; set; }
 
         public OrderTests()
         {
             eh = new EntityHelper();
         }
-
+        
         //Mandatory: Cannot be cancelled once it’s processed
 
         [Fact]//Orders instantiate as voidable=true. When finalized, voidable=false
