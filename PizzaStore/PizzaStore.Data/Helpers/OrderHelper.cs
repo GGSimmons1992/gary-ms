@@ -17,7 +17,7 @@ namespace PizzaStore.Data.Helpers
             return new dom.Order()
             {
                 Id = dataOrder.OrderId
-                ,finalCost = (double)dataOrder.Cost
+                ,finalCost = GetCostByOrder(dataOrder)
                 ,StoreID = (byte)dataOrder.StoreId
                 ,Store= LocationHelper.GetLocationByOrder(dataOrder)
                 ,TimeStamp = dataOrder.TimeStamp
@@ -62,6 +62,28 @@ namespace PizzaStore.Data.Helpers
             }
 
             return null;
+        }
+
+        public static List<dom.Pizza> GetPizzasByOrder(Order dr)
+        {
+            var pizzalist = new List<dom.Pizza>();
+            var dataPizzas = _db.Pizza.Where(p => p.OrderId == dr.OrderId).ToList();
+            foreach (var item in dataPizzas)
+            {
+                pizzalist.Add(PizzaHelper.DOMPizza(item));
+            }
+            return pizzalist;
+        }
+
+        public static double GetCostByOrder(Order dr)
+        {
+            var pizzalist=GetPizzasByOrder(dr);
+            double cost = 0;
+            foreach (var item in pizzalist)
+            {
+                cost +=item.price;
+            }
+            return cost;
         }
 
     }
