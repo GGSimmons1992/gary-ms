@@ -26,6 +26,18 @@ namespace PizzaStore.Data.Helpers
             };
         }
 
+        public static List<dom.Order> GetOrders()
+        {
+            var ls = new List<dom.Order>();
+
+            foreach (var l in _db.Order.ToList())
+            {
+                ls.Add(DOMOrder(l));
+            }
+
+            return ls;
+        }
+
         public static List<dom.Order> GetOrderByUser(User user)
         {
 

@@ -32,3 +32,6 @@ values
 ,('TomatoSauce',getDate())
 ,('Mozzarella',getDate())
 ;select * from PizzaStore.[Ingredient];
+
+
+select getdate()

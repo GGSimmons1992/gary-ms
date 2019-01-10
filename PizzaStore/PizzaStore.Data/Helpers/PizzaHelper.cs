@@ -24,6 +24,18 @@ namespace PizzaStore.Data.Helpers
             };
         }
 
+        public static List<dom.Pizza> GetPizzas()
+        {
+            var ls = new List<dom.Pizza>();
+
+            foreach (var l in _db.Pizza.ToList())
+            {
+                ls.Add(DOMPizza(l));
+            }
+
+            return ls;
+        }
+
         public static List<string> GetIngredientsByPizza(Pizza dp)
         {
             var toppings = new List<string>();

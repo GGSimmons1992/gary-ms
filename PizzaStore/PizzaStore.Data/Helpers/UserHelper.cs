@@ -28,6 +28,18 @@ namespace PizzaStore.Data.Helpers
 
         }
 
+        public static List<dom.User> GetUsers()
+        {
+            var ls = new List<dom.User>();
+
+            foreach (var l in _db.User.ToList())
+            {
+                ls.Add(DOMUser(l));
+            }
+
+            return ls;
+        }
+
         public static List<dom.Order> GetOrdersByUser(User du)
         {
             var orderlist = new List<dom.Order>();

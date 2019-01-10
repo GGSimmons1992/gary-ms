@@ -24,6 +24,18 @@ namespace PizzaStore.Data.Helpers
             };
         }
 
+        public static List<dom.Location> GetLocations()
+        {
+            var ls = new List<dom.Location>();
+
+            foreach (var l in _db.Location.ToList())
+            {
+                ls.Add(DOMLocation(l));
+            }
+
+            return ls;
+        }
+
         public static dom.Location GetLocationByOrder(Order dr)
         {
 
