@@ -42,10 +42,15 @@ namespace PizzaStore.Data.Helpers
 
             var piPairs = _db.PizzaIngredient.Where(pi => pi.PizzaId == dp.PizzaId).ToList();
 
-            foreach (var item in piPairs)
+            if (piPairs != null)
             {
-                toppings.Add(item.Ingredient.Name);
+                foreach (var item in piPairs)
+                {
+                    var myingredient = _db.Ingredient.Where(i => i.IngredientId == item.IngredientId).FirstOrDefault();
+                    { toppings.Add(myingredient.Name); }
+                }
             }
+                
             return toppings;
         }
 
@@ -54,6 +59,7 @@ namespace PizzaStore.Data.Helpers
             var toppings=GetIngredientsByPizza(dp);
             return (double)((0.75*dp.Size) + (0.50*toppings.Count));
         }
+
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PizzaStore.Data;
+using PizzaStore.Data.Helpers;
 using PizzaStore.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,6 @@ namespace PizzaStore.Tests
 {
     public class UserTests
     {
-
-        public EntityHelper eh { get; set; }
-
-        public UserTests()
-        {
-            eh = new EntityHelper();
-        }
 
         //Mandatory: Must have an account before ordering
         [Fact]
@@ -137,19 +131,11 @@ namespace PizzaStore.Tests
         }
 
         [Fact]
-        public void Test_UserData()
+        public void SetUserTest()
         {
-            Assert.NotNull(eh.GetUsers());
-            var userlist = eh.GetUsers();
-            Assert.True(userlist[1].name=="Lover");
-            Assert.True(userlist[0].password =="D03!");
-        }
+            var sut = new User("Andrew","T1tan$");
+            Assert.True(1 == UserHelper.SetUser(sut));
 
-        [Fact]
-        public void UserDataAdditionTest()
-        {
-            var sut = new User("Hi","Mark");
-            Assert.True(eh.setUser(sut));
         }
     }
 }

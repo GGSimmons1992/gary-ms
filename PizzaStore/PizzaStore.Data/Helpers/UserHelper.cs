@@ -73,5 +73,19 @@ namespace PizzaStore.Data.Helpers
             else return null;
 
         }
+
+        public static int SetUser(dom.User u)
+        {
+            var datauser = new User() {
+                ModifiedDate=DateTime.Now
+                ,Name=u.name
+                ,Password=u.password
+            };
+
+            _db.User.Add(datauser);
+            return _db.SaveChanges();
+
+        }
+
     }
 }

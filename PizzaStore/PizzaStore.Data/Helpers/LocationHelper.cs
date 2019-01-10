@@ -13,7 +13,7 @@ namespace PizzaStore.Data.Helpers
 
         public static dom.Location DOMLocation(Location dataLocation)
         {
-            return new dom.Location()
+            dom.Location  store= new dom.Location()
             {
                 Id=dataLocation.LocationId
                 ,ModifiedDate=dataLocation.ModifiedDate
@@ -22,6 +22,8 @@ namespace PizzaStore.Data.Helpers
                 ,History=GetOrdersByLocation(dataLocation)
                 ,Ledger=GetSalesByLocation(dataLocation)
             };
+
+            return store;
         }
 
         public static List<dom.Location> GetLocations()
@@ -39,9 +41,9 @@ namespace PizzaStore.Data.Helpers
         public static dom.Location GetLocationByOrder(Order dr)
         {
 
-            var dataOrder = _db.Order.Where(o => o.OrderId == dr.OrderId).FirstOrDefault();
+            var dataStore = _db.Location.Where(l => l.LocationId == dr.StoreId).FirstOrDefault();
 
-            var domStore = DOMLocation(dataOrder.Store);
+            var domStore = DOMLocation(dataStore);
 
 
             return domStore;
@@ -55,7 +57,8 @@ namespace PizzaStore.Data.Helpers
 
             foreach (var item in DesiredLIPairs)
             {
-                inventory.Add(item.Ingredient.Name, (int)item.InventoryAmount);
+                var myingredient = _db.Ingredient.Where(i => i.IngredientId == item.IngredientId).FirstOrDefault();
+                inventory.Add(myingredient.Name, (int)item.InventoryAmount);
             }
 
             return inventory;
@@ -69,7 +72,8 @@ namespace PizzaStore.Data.Helpers
 
             foreach (var item in DesiredLUPairs)
             {
-                userlist.Add(UserHelper.DOMUser(item.User));
+                var myuser = _db.User.Where(u => u.UserId == item.UserId).FirstOrDefault();
+                userlist.Add(UserHelper.DOMUser(myuser));
             }
 
             return userlist;
@@ -99,6 +103,28 @@ namespace PizzaStore.Data.Helpers
                 sales += item.Cost();
             }
             return sales;
+        }
+
+        public static int SetLocation(dom.Location domloc)
+        {
+            var dataloc = new Location() {
+                ModifiedDate=DateTime.Now
+            };
+
+            _db.Location.Add(dataloc);
+            return _db.SaveChanges();
+        }
+
+        public static int SetIngredient(string newIngredient)
+        {
+            var dataIngredient = new Ingredient()
+            {
+                Name=newIngredient,
+                ModifiedDate=DateTime.Now
+            };
+            
+            _db.Ingredient.Add(dataIngredient);
+            return _db.SaveChanges();
         }
 
     }

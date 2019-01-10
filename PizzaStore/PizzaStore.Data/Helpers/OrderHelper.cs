@@ -98,5 +98,31 @@ namespace PizzaStore.Data.Helpers
             return cost;
         }
 
+        public static int SetOrder(dom.Order r)
+        {
+            var loc = _db.Location.Where(l => l.LocationId == r.StoreID).FirstOrDefault();
+            var myuser = _db.User.Where(u => u.UserId == r.UserID).FirstOrDefault();
+
+            if (loc == null || myuser == null)
+            {
+                return 0;
+            }
+            else
+            {
+                var dataorder = new Order()
+                {
+                    Cost=(decimal) r.Cost()
+                    ,StoreId=r.StoreID
+                    ,Voidable=r.Voidable
+                    ,TimeStamp=DateTime.Now
+                    ,UserId=r.UserID
+                };
+
+                _db.Order.Add(dataorder);
+                return _db.SaveChanges();
+            }
+
+        }
+
     }
 }

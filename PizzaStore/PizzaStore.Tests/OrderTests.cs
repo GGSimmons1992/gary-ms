@@ -1,4 +1,5 @@
 ﻿using PizzaStore.Data;
+using PizzaStore.Data.Helpers;
 using PizzaStore.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,6 @@ namespace PizzaStore.Tests
     public class OrderTests
     {
         
-        public EntityHelper eh { get; set; }
-
-        public OrderTests()
-        {
-            eh = new EntityHelper();
-        }
         
         //Mandatory: Cannot be cancelled once it’s processed
 
@@ -79,18 +74,16 @@ namespace PizzaStore.Tests
         }
 
         [Fact]
-        public void Test_OrderData()
+        public void SetOrderTest()
         {
-            Assert.NotNull(eh.GetOrders());
-            var OrderList = eh.GetOrders();
-            Assert.True(OrderList[1].finalCost==36.00);
+            var sut = new Order();
+            Assert.True(0 == OrderHelper.SetOrder(sut));
+
+            sut.UserID = 2;
+            sut.StoreID = 1;
+
+            Assert.True(1 == OrderHelper.SetOrder(sut));
         }
 
-        [Fact]
-        public void OrderDataAdditionTest()
-        {
-            var sut = new Order() { UserID=2,StoreID=1};
-            Assert.True(eh.setOrder(sut));
-        }
     }
 }
