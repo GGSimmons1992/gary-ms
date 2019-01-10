@@ -12,6 +12,18 @@ namespace PizzaStore.Data.Helpers
 
         private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
 
+        public static dom.Order DOMOrder(Order dataOrder)
+        {
+            return new dom.Order()
+            {
+                Id = dataOrder.OrderId
+                ,finalCost = (double)dataOrder.Cost
+                ,StoreID = (byte)dataOrder.StoreId
+                ,TimeStamp = DateTime.Now
+                ,UserID = (short)dataOrder.UserId
+            };
+        }
+
         public static List<dom.Order> GetOrderByUser(User user)
         {
 
@@ -23,17 +35,7 @@ namespace PizzaStore.Data.Helpers
 
                 foreach (var item in dataUser.Order.ToList())
                 {
-                    orders.Add(new dom.Order()
-                    {
-                        Id = item.OrderId
-                        ,
-                        finalCost = (double)item.Cost
-                        ,
-                        StoreID = (byte)item.StoreId
-                        ,
-                        TimeStamp = DateTime.Now
-                        ,UserID = (short)item.UserId
-                    });
+                    orders.Add(DOMOrder(item));
                 }
                 return orders;
             }
@@ -52,17 +54,7 @@ namespace PizzaStore.Data.Helpers
 
                 foreach (var item in dataLocation.Order.ToList())
                 {
-                    orders.Add(new dom.Order()
-                    {
-                        Id = item.OrderId
-                        ,
-                        finalCost = (double)item.Cost
-                        ,
-                        StoreID = (byte)item.StoreId
-                        ,
-                        TimeStamp = DateTime.Now
-                        , UserID = (short) item.UserId
-                    });
+                    orders.Add(DOMOrder(item));
                 }
                 return orders;
             }

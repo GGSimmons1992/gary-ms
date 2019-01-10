@@ -11,6 +11,13 @@ namespace PizzaStore.Data.Helpers
     {
         private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
 
-        
+        public static dom.User DOMUser(User dataUser)
+        {
+            return new dom.User()
+            {
+
+            };
+        }
+
     }
 }

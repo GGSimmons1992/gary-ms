@@ -6,17 +6,16 @@ using System.Text;
 
 namespace PizzaStore.Data.Helpers
 {
-    public static class PizzaHelper
+    public static class LocationHelper
     {
         private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
 
-        public static dom.Pizza DOMPizza(Pizza dataPizza)
+        public static dom.Location DOMLocation(Location dataLocation)
         {
-            return new dom.Pizza()
+            return new dom.Location()
             {
-                
+
             };
         }
-
     }
 }
