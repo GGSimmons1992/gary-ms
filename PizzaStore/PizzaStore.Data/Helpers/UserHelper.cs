@@ -11,30 +11,24 @@ namespace PizzaStore.Data.Helpers
     {
         private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
 
-        public static dom.User DOMUser(User dataUser)
-        {
-            var domU=new dom.User()
-            {
-                name=dataUser.Name
-                ,password=dataUser.Password
-                ,Id=dataUser.UserId
-                ,ModifiedDate=dataUser.ModifiedDate
-                ,History=GetOrdersByUser(dataUser)
-            };
-
-            domU.SetStore(GetLocationByUsersLastOrder(dataUser));
-
-            return domU;
-
-        }
-
         public static List<dom.User> GetUsers()
         {
             var ls = new List<dom.User>();
 
             foreach (var l in _db.User.ToList())
             {
-                ls.Add(DOMUser(l));
+                var domU = new dom.User()
+                {
+                name = l.Name
+                ,password = l.Password
+                ,Id = l.UserId
+                ,ModifiedDate = l.ModifiedDate
+                ,History = GetOrdersByUser(l)
+                };
+
+                domU.SetStore(GetLocationByUsersLastOrder(l));
+
+                ls.Add(domU);
             }
 
             return ls;

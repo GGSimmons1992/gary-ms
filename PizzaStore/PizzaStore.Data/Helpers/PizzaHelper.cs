@@ -13,15 +13,10 @@ namespace PizzaStore.Data.Helpers
 
         public static dom.Pizza DOMPizza(Pizza dataPizza)
         {
-            return new dom.Pizza()
-            {
-                Id = (int)dataPizza.PizzaId
-                , OrderId = (int)dataPizza.OrderId
-                , ModifiedDate = dataPizza.ModifiedDate
-                , crustSize = (int)dataPizza.Size
-                , Toppings = GetIngredientsByPizza(dataPizza)//No Crusts!!!! Toppings Only!!!
-                , price = GetPriceByPizza(dataPizza)
-            };
+            Console.WriteLine($"Making DomPizza {dataPizza.PizzaId}");
+            
+
+            return newPizza
         }
 
         public static List<dom.Pizza> GetPizzas()
@@ -30,7 +25,16 @@ namespace PizzaStore.Data.Helpers
 
             foreach (var l in _db.Pizza.ToList())
             {
-                ls.Add(DOMPizza(l));
+                var newPizza = new dom.Pizza()
+                {
+                    Id = (int)l.PizzaId
+                    , OrderId = (int)l.OrderId
+                    , ModifiedDate = l.ModifiedDate
+                    , crustSize = (int) l.Size
+                    , Toppings = GetIngredientsByPizza(l)//No Crusts!!!! Toppings Only!!!
+                    , price = GetPriceByPizza(l)
+                };
+                ls.Add(newPizza);
             }
 
             return ls;

@@ -12,19 +12,7 @@ namespace PizzaStore.Data.Helpers
 
         private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
 
-        public static dom.Order DOMOrder(Order dataOrder)
-        {
-            return new dom.Order()
-            {
-                Id = dataOrder.OrderId
-                ,finalCost = GetCostByOrder(dataOrder)
-                ,StoreID = (byte)dataOrder.StoreId
-                ,Store= LocationHelper.GetLocationByOrder(dataOrder)
-                ,TimeStamp = dataOrder.TimeStamp
-                ,UserID = (short)dataOrder.UserId
-                ,Voidable=(bool) dataOrder.Voidable
-            };
-        }
+        
 
         public static List<dom.Order> GetOrders()
         {
@@ -32,7 +20,23 @@ namespace PizzaStore.Data.Helpers
 
             foreach (var l in _db.Order.ToList())
             {
-                ls.Add(DOMOrder(l));
+                var newOrder = new dom.Order()
+                {
+                    Id = l.OrderId
+                ,
+                    finalCost = GetCostByOrder(l)
+                ,
+                    StoreID = (byte) l.StoreId
+                ,
+                    Store = LocationHelper.GetLocationByOrder(l)
+                ,
+                    TimeStamp = l.TimeStamp
+                ,
+                    UserID = (short) l.UserId
+                ,
+                    Voidable = (bool) l.Voidable
+                };
+                ls.Add(newOrder);
             }
 
             return ls;

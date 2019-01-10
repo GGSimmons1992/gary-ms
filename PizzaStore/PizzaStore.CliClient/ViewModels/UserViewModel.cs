@@ -11,6 +11,7 @@ namespace PizzaStore.CliClient.ViewModels
     {
         public List<dom.User> GetUsers()
         {
+            Console.WriteLine("Start ViewModels");
             return UserHelper.GetUsers();
         }
 

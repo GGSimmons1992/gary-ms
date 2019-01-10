@@ -11,28 +11,27 @@ namespace PizzaStore.Data.Helpers
     {
         private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
 
-        public static dom.Location DOMLocation(Location dataLocation)
-        {
-            dom.Location  store= new dom.Location()
-            {
-                Id=dataLocation.LocationId
-                ,ModifiedDate=dataLocation.ModifiedDate
-                ,Inventory=GetInventoryByLocation(dataLocation)
-                ,userlist=GetUsersByLocation(dataLocation)
-                ,History=GetOrdersByLocation(dataLocation)
-                ,Ledger=GetSalesByLocation(dataLocation)
-            };
-
-            return store;
-        }
-
         public static List<dom.Location> GetLocations()
         {
             var ls = new List<dom.Location>();
 
             foreach (var l in _db.Location.ToList())
             {
-                ls.Add(DOMLocation(l));
+                dom.Location store = new dom.Location()
+                {
+                    Id = l.LocationId
+                ,
+                    ModifiedDate = l.ModifiedDate
+                ,
+                    Inventory = GetInventoryByLocation(l)
+                ,
+                    userlist = GetUsersByLocation(l)
+                ,
+                    History = GetOrdersByLocation(l)
+                ,
+                    Ledger = GetSalesByLocation(l)
+                };
+                ls.Add(store);
             }
 
             return ls;
