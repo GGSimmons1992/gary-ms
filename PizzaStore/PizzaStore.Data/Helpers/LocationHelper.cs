@@ -42,10 +42,23 @@ namespace PizzaStore.Data.Helpers
 
             var dataStore = _db.Location.Where(l => l.LocationId == dr.StoreId).FirstOrDefault();
 
-            var domStore = DOMLocation(dataStore);
+            dom.Location domstore = new dom.Location()
+            {
+                Id = dataStore.LocationId
+                ,
+                ModifiedDate = dataStore.ModifiedDate
+                ,
+                Inventory = GetInventoryByLocation(dataStore)
+                ,
+                userlist = GetUsersByLocation(dataStore)
+                ,
+                History = GetOrdersByLocation(dataStore)
+                ,
+                Ledger = GetSalesByLocation(dataStore)
+            };
 
 
-            return domStore;
+            return domstore;
         }
 
         public static Dictionary<string, int> GetInventoryByLocation(Location dl)
@@ -72,7 +85,15 @@ namespace PizzaStore.Data.Helpers
             foreach (var item in DesiredLUPairs)
             {
                 var myuser = _db.User.Where(u => u.UserId == item.UserId).FirstOrDefault();
-                userlist.Add(UserHelper.DOMUser(myuser));
+                var domuser = new dom.User()
+                {
+                    Id = myuser.UserId,
+                    name = myuser.Name,
+                    password = myuser.Password,
+                    ModifiedDate = myuser.ModifiedDate,
+                    History = OrderHelper.GetOrderByUser(myuser)
+                };
+                userlist.Add(domuser);
             }
 
             return userlist;
@@ -86,7 +107,17 @@ namespace PizzaStore.Data.Helpers
 
             foreach (var item in desiredOrders)
             {
-                orders.Add(OrderHelper.DOMOrder(item));
+                var newOrder = new dom.Order()
+                {
+                    Id = item.OrderId,
+                    finalCost = OrderHelper.GetCostByOrder(item),
+                    StoreID = (byte)item.StoreId,
+                    Store = LocationHelper.GetLocationByOrder(item),
+                    TimeStamp = item.TimeStamp,
+                    UserID = (short)item.UserId,
+                    Voidable = (bool) item.Voidable
+                };
+                orders.Add(newOrder);
             }
 
             return orders;

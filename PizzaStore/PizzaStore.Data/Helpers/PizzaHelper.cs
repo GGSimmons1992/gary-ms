@@ -11,14 +11,6 @@ namespace PizzaStore.Data.Helpers
     {
         private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
 
-        public static dom.Pizza DOMPizza(Pizza dataPizza)
-        {
-            Console.WriteLine($"Making DomPizza {dataPizza.PizzaId}");
-            
-
-            return newPizza
-        }
-
         public static List<dom.Pizza> GetPizzas()
         {
             var ls = new List<dom.Pizza>();

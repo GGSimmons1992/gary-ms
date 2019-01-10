@@ -19,13 +19,12 @@ namespace PizzaStore.Data.Helpers
             {
                 var domU = new dom.User()
                 {
-                name = l.Name
-                ,password = l.Password
-                ,Id = l.UserId
-                ,ModifiedDate = l.ModifiedDate
-                ,History = GetOrdersByUser(l)
+                name = l.Name,
+                password = l.Password,
+                Id = l.UserId,
+                ModifiedDate = l.ModifiedDate,
+                History = GetOrdersByUser(l),
                 };
-
                 domU.SetStore(GetLocationByUsersLastOrder(l));
 
                 ls.Add(domU);
@@ -42,7 +41,18 @@ namespace PizzaStore.Data.Helpers
 
             foreach (var item in dataOrders)
             {
-                orderlist.Add(OrderHelper.DOMOrder(item));
+                var domOrder = new dom.Order()
+                {
+                    Id=item.OrderId,
+                    StoreID=(byte) item.StoreId,
+                    TimeStamp=item.TimeStamp,
+                    Voidable=(bool) item.Voidable,
+                    UserID=(short) item.UserId,
+                    PizzaList=OrderHelper.GetPizzasByOrder(item),
+                    finalCost=OrderHelper.GetCostByOrder(item),
+                    Store=LocationHelper.GetLocationByOrder(item)
+                };
+                orderlist.Add(domOrder);
             }
 
             return orderlist;

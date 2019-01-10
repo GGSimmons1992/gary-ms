@@ -22,19 +22,14 @@ namespace PizzaStore.Data.Helpers
             {
                 var newOrder = new dom.Order()
                 {
-                    Id = l.OrderId
-                ,
-                    finalCost = GetCostByOrder(l)
-                ,
-                    StoreID = (byte) l.StoreId
-                ,
-                    Store = LocationHelper.GetLocationByOrder(l)
-                ,
-                    TimeStamp = l.TimeStamp
-                ,
-                    UserID = (short) l.UserId
-                ,
-                    Voidable = (bool) l.Voidable
+                Id = l.OrderId
+                ,StoreID = (byte) l.StoreId
+                ,TimeStamp = l.TimeStamp
+                ,UserID = (short) l.UserId
+                ,Voidable = (bool) l.Voidable
+                ,finalCost = GetCostByOrder(l)
+                ,Store = LocationHelper.GetLocationByOrder(l)
+                ,PizzaList=GetPizzasByOrder(l)
                 };
                 ls.Add(newOrder);
             }
@@ -53,7 +48,19 @@ namespace PizzaStore.Data.Helpers
 
                 foreach (var item in dataUser.Order.ToList())
                 {
-                    orders.Add(DOMOrder(item));
+                    var domOrder = new dom.Order()
+                    {
+                        Id = item.OrderId,
+                        TimeStamp = item.TimeStamp,
+                        Voidable = (bool) item.Voidable,
+                        UserID = (short)item.UserId,
+                        StoreID = (byte)item.StoreId,
+                        PizzaList = GetPizzasByOrder(item),
+                        finalCost = GetCostByOrder(item),
+                        Store=LocationHelper.GetLocationByOrder(item)
+                    };
+
+                    orders.Add(domOrder);
                 }
                 return orders;
             }
@@ -63,21 +70,29 @@ namespace PizzaStore.Data.Helpers
 
         public static List<dom.Order> GetOrderByLocation(Location Loc)
         {
+            var dataorders = _db.Order.Where(o => o.StoreId == Loc.LocationId).ToList();
 
-            var dataLocation = _db.Location.Where(l => l.LocationId == Loc.LocationId).FirstOrDefault();
+            var orderlist = new List<dom.Order>();
 
-            if (dataLocation != null)
+            foreach (var item in dataorders)
             {
-                var orders = new List<dom.Order>();
-
-                foreach (var item in dataLocation.Order.ToList())
+                var domorder = new dom.Order()
                 {
-                    orders.Add(DOMOrder(item));
-                }
-                return orders;
+                    Id=item.OrderId,
+                    TimeStamp=item.TimeStamp,
+                    StoreID=(byte)item.StoreId,
+                    Voidable=(bool) item.Voidable,
+                    UserID=(short) item.UserId,
+                    Store=LocationHelper.GetLocationByOrder(item),
+                    PizzaList=GetPizzasByOrder(item),
+                    finalCost=GetCostByOrder(item)
+                };
+                orderlist.Add(domorder);
+                
             }
 
-            return null;
+            return orderlist;
+            
         }
 
         public static List<dom.Pizza> GetPizzasByOrder(Order dr)
@@ -86,7 +101,17 @@ namespace PizzaStore.Data.Helpers
             var dataPizzas = _db.Pizza.Where(p => p.OrderId == dr.OrderId).ToList();
             foreach (var item in dataPizzas)
             {
-                pizzalist.Add(PizzaHelper.DOMPizza(item));
+                var dompizza = new dom.Pizza()
+                {
+                    Id=(int)item.PizzaId,
+                    crustSize=(int) item.Size,
+                    ModifiedDate=item.ModifiedDate,
+                    OrderId=(int)item.OrderId,
+                    Toppings=PizzaHelper.GetIngredientsByPizza(item),
+                    price=PizzaHelper.GetPriceByPizza(item)
+                };
+
+                pizzalist.Add(dompizza);
             }
             return pizzalist;
         }
