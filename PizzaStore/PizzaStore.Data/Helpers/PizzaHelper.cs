@@ -14,7 +14,10 @@ namespace PizzaStore.Data.Helpers
         {
             return new dom.Pizza()
             {
-                
+                Id = (int) dataPizza.PizzaId
+                ,OrderId= (int) dataPizza.OrderId
+                ,ModifiedDate=dataPizza.ModifiedDate
+                ,crustSize=(int) dataPizza.Size
             };
         }
 

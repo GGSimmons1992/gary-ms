@@ -19,8 +19,10 @@ namespace PizzaStore.Data.Helpers
                 Id = dataOrder.OrderId
                 ,finalCost = (double)dataOrder.Cost
                 ,StoreID = (byte)dataOrder.StoreId
-                ,TimeStamp = DateTime.Now
+                ,Store= LocationHelper.GetLocationByOrder(dataOrder)
+                ,TimeStamp = dataOrder.TimeStamp
                 ,UserID = (short)dataOrder.UserId
+                ,Voidable=(bool) dataOrder.Voidable
             };
         }
 

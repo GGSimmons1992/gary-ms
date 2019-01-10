@@ -15,7 +15,10 @@ namespace PizzaStore.Data.Helpers
         {
             return new dom.User()
             {
-
+                name=dataUser.Name
+                ,password=dataUser.Password
+                ,Id=dataUser.UserId
+                ,ModifiedDate=dataUser.ModifiedDate
             };
         }
 
