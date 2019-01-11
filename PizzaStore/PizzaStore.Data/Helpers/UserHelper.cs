@@ -19,13 +19,12 @@ namespace PizzaStore.Data.Helpers
             {
                 var domU = new dom.User()
                 {
-                name = l.Name,
-                password = l.Password,
-                Id = l.UserId,
-                ModifiedDate = l.ModifiedDate,
-                History = GetOrdersByUser(l),
+                    name = l.Name,
+                    password = l.Password,
+                    Id = l.UserId,
+                    ModifiedDate = l.ModifiedDate
                 };
-                domU.SetStore(GetLocationByUsersLastOrder(l));
+             
 
                 ls.Add(domU);
             }

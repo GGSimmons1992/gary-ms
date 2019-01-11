@@ -27,9 +27,6 @@ namespace PizzaStore.Data.Helpers
                 ,TimeStamp = l.TimeStamp
                 ,UserID = (short) l.UserId
                 ,Voidable = (bool) l.Voidable
-                ,finalCost = GetCostByOrder(l)
-                ,Store = LocationHelper.GetLocationByOrder(l)
-                ,PizzaList=GetPizzasByOrder(l)
                 };
                 ls.Add(newOrder);
             }
@@ -54,10 +51,7 @@ namespace PizzaStore.Data.Helpers
                         TimeStamp = item.TimeStamp,
                         Voidable = (bool) item.Voidable,
                         UserID = (short)item.UserId,
-                        StoreID = (byte)item.StoreId,
-                        PizzaList = GetPizzasByOrder(item),
-                        finalCost = GetCostByOrder(item),
-                        Store=LocationHelper.GetLocationByOrder(item)
+                        StoreID = (byte)item.StoreId
                     };
 
                     orders.Add(domOrder);

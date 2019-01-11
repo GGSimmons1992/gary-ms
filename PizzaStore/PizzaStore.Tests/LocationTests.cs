@@ -1,16 +1,19 @@
 ﻿using PizzaStore.Data;
 using PizzaStore.Data.Helpers;
 using PizzaStore.Domain.Models;
+using pdm=PizzaStore.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using System.Linq;
 
 namespace PizzaStore.Tests
 {
     public class LocationTests
     {
-        
+        private static pdm.PizzaStoreDbContext _db = new pdm.PizzaStoreDbContext();
+
         //Mandatory: Must manage its inventory
         [Fact]//Location can access its inventory
         public void InventoryTest()
@@ -78,6 +81,41 @@ namespace PizzaStore.Tests
             Assert.True(oldCrustCount > sut.Inventory["Crust"]);
         }
 
+        //---Getters
+
+        [Fact]
+        public void GetLocationsTest()
+        {
+            var sutlist =LocationHelper.GetLocations();
+            Assert.NotNull(sutlist);
+            Assert.True(sutlist[2].Id==4);
+        }
+
+        [Fact]
+        void GetLocationByOrderTest()
+        {
+            var sutorder = _db.Order.Where(o => o.OrderId == 3).FirstOrDefault();
+            var sutLocation = LocationHelper.GetLocationByOrder(sutorder);
+            Assert.True(sutLocation.Id == 2);
+        }
+
+        [Fact]
+        void GetInventoryByLocationTest()
+        {
+            var sut = _db.Location.Where(l => l.LocationId == 2).FirstOrDefault();
+            var inventory = LocationHelper.GetInventoryByLocation(sut);
+            Assert.True(inventory["Crust"] == 9);
+        }
+
+        [Fact]
+        public void GetUsersByLocationTest()
+        {
+            var sut = _db.Location.Where(l => l.LocationId == 2).FirstOrDefault();
+            var userlist = LocationHelper.GetUsersByLocation(sut);
+            Assert.True(userlist[0].Id == 1);
+        }
+
+        //---Setters
         [Fact]
         public void SetLocationTest()
         {

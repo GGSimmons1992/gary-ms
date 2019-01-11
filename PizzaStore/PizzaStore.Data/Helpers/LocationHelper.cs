@@ -19,17 +19,8 @@ namespace PizzaStore.Data.Helpers
             {
                 dom.Location store = new dom.Location()
                 {
-                    Id = l.LocationId
-                ,
+                    Id = l.LocationId,
                     ModifiedDate = l.ModifiedDate
-                ,
-                    Inventory = GetInventoryByLocation(l)
-                ,
-                    userlist = GetUsersByLocation(l)
-                ,
-                    History = GetOrdersByLocation(l)
-                ,
-                    Ledger = GetSalesByLocation(l)
                 };
                 ls.Add(store);
             }
@@ -47,14 +38,7 @@ namespace PizzaStore.Data.Helpers
                 Id = dataStore.LocationId
                 ,
                 ModifiedDate = dataStore.ModifiedDate
-                ,
-                Inventory = GetInventoryByLocation(dataStore)
-                ,
-                userlist = GetUsersByLocation(dataStore)
-                ,
-                History = GetOrdersByLocation(dataStore)
-                ,
-                Ledger = GetSalesByLocation(dataStore)
+                
             };
 
 
@@ -90,8 +74,7 @@ namespace PizzaStore.Data.Helpers
                     Id = myuser.UserId,
                     name = myuser.Name,
                     password = myuser.Password,
-                    ModifiedDate = myuser.ModifiedDate,
-                    History = OrderHelper.GetOrderByUser(myuser)
+                    ModifiedDate = myuser.ModifiedDate
                 };
                 userlist.Add(domuser);
             }
@@ -110,9 +93,7 @@ namespace PizzaStore.Data.Helpers
                 var newOrder = new dom.Order()
                 {
                     Id = item.OrderId,
-                    finalCost = OrderHelper.GetCostByOrder(item),
                     StoreID = (byte)item.StoreId,
-                    Store = LocationHelper.GetLocationByOrder(item),
                     TimeStamp = item.TimeStamp,
                     UserID = (short)item.UserId,
                     Voidable = (bool) item.Voidable

@@ -23,8 +23,6 @@ namespace PizzaStore.Data.Helpers
                     , OrderId = (int)l.OrderId
                     , ModifiedDate = l.ModifiedDate
                     , crustSize = (int) l.Size
-                    , Toppings = GetIngredientsByPizza(l)//No Crusts!!!! Toppings Only!!!
-                    , price = GetPriceByPizza(l)
                 };
                 ls.Add(newPizza);
             }

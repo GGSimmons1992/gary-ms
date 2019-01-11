@@ -48,3 +48,41 @@ go
 
 select * from fn_CountCrusts(2);
 go
+
+--stored procedures (lazy proc, smug procedure)
+create procedure pr_SetUser(@name nvarchar(50),@street nvarchar(50),@city nvarchar(50),@addressId int output)
+as
+begin
+   declare @addressId int;
+
+   select @addressId=AddressId from 
+   PizzaStore.[Address]
+   where Street=@street,City=@city
+
+   begin transaction
+	   if (@addressId>0)
+	   begin
+		insert into PizzaStore.[User](Name,AddressId)
+		values
+		(@name,@addressId)
+	   end
+	   else
+	   begin
+		insert into PizzaStore.[Address]([City],[Street])
+		output @addressId=inserted(AddressId)
+		values (@city,@street)
+
+		insert into PizzaStore.[User]([Name],[AddressId])
+		values (@name,@addressId)
+
+	   end
+	  commit transaction
+	end
+
+end;
+go
+
+--How to use it (lazy exec, smug execute)
+declare @id int;
+execute pr_SetUser 'fred','fowler','tampa bay', @id output;
+
