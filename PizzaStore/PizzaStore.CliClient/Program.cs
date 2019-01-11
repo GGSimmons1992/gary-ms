@@ -7,13 +7,12 @@ namespace PizzaStore.CliClient
     {
         static void Main(string[] args)
         {
-            DisplayUsers();
+            UserViewModel.UserWelcome();
         }
 
         static void DisplayUsers()
         {
-            var userview = new UserViewModel();
-            foreach (var item in userview.GetUsers())
+            foreach (var item in UserViewModel.GetUsers())
             {
                 Console.WriteLine(item.name);
             }
