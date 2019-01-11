@@ -19,11 +19,35 @@ namespace PizzaStore.CliClient.ViewModels
             return UserHelper.GetUsers();
         }
 
+        public static void TopMenu()
+        {
+            Console.WriteLine("Welcome to PizzaOrderingSystem v1: User-side");
+            Console.WriteLine("1: Log in");
+            Console.WriteLine("2: Sign up");
+            Console.WriteLine("3: Close Program");
+            var s = Console.ReadLine();
+            switch (s)
+            {
+                case "1":
+                    UserWelcome();
+                    break;
+                case "2":
+                    RegisterUser();
+                    break;
+                case "3":
+                    Console.WriteLine("Farewell!");
+                    break;
+                default:
+                    Console.WriteLine("invalid choice");
+                    TopMenu();
+                    break;
+            }
+        }
 
         public static void UserWelcome()
         {
             var userlist = GetUsers();
-            Console.WriteLine("Hi user, please type your username");
+            Console.WriteLine("Welcome valued customer, please type your username");
             var enteredname = Console.ReadLine();
             var selectedUser = userlist.FirstOrDefault(u => u.name == enteredname);
             if (selectedUser == null)
@@ -246,8 +270,8 @@ namespace PizzaStore.CliClient.ViewModels
         {
             var target = o.PizzaList[selectedPizza - 1];
             DisplayPizza(target);
-            
-            var IngredientObjects =_db.Ingredient.ToList();
+
+            var IngredientObjects = _db.Ingredient.ToList();
             var Ingredients = new List<String>();
             foreach (var ingred in IngredientObjects)
             {
@@ -260,12 +284,12 @@ namespace PizzaStore.CliClient.ViewModels
                 Console.WriteLine("Topping limit reached.");
                 Console.WriteLine("1: Change size");
                 Console.WriteLine("2: Return to OrderMenu");
-                var s=Console.ReadLine();
+                var s = Console.ReadLine();
                 switch (s)
                 {
                     case "1":
                         Console.WriteLine("Insert new size (inches)");
-                        var newS=Console.ReadLine();
+                        var newS = Console.ReadLine();
                         int selection;
                         if (false == Int32.TryParse(newS, out selection))
                         {
@@ -291,8 +315,8 @@ namespace PizzaStore.CliClient.ViewModels
                     Console.WriteLine($"{i}: Add {Ingredients[i]}");
                 }
                 Console.WriteLine($"{Ingredients.Count}: Change Pizza Size");
-                Console.WriteLine($"{Ingredients.Count+1}: Return to OrderMenu");
-                var stringSelection=Console.ReadLine();
+                Console.WriteLine($"{Ingredients.Count + 1}: Return to OrderMenu");
+                var stringSelection = Console.ReadLine();
                 int selection;
                 if (false == Int32.TryParse(stringSelection, out selection))
                 {
@@ -315,7 +339,7 @@ namespace PizzaStore.CliClient.ViewModels
                         {
                             Console.WriteLine("Invalid choice");
                         }
-                        else { target.crustSize = sel;target.price = target.CalculateCost(); }
+                        else { target.crustSize = sel; target.price = target.CalculateCost(); }
                         PizzaEdit(o, selectedPizza);
                     }
                     else if (selection == (Ingredients.Count + 1))
@@ -324,7 +348,7 @@ namespace PizzaStore.CliClient.ViewModels
                     }
                     else { target.Toppings.Add(Ingredients[selection]); PizzaEdit(o, selectedPizza); }
                 }
-            }            
+            }
         }
 
         public static void SubmitOrder(dom.Order o)
@@ -344,6 +368,45 @@ namespace PizzaStore.CliClient.ViewModels
 
             var userlist = GetUsers();
             UserMenu(userlist.FirstOrDefault(u => u.Id == o.UserID));
+
+        }
+
+        public static void RegisterUser()
+        {
+            Console.WriteLine("Please type in a username");
+            var s = Console.ReadLine();
+            var potentialcopy=_db.User.Where(u => (u.Name).ToLower() == s.ToLower()).FirstOrDefault();
+
+            if (potentialcopy != null)
+            {
+                Console.WriteLine("User exists. Redirecting to top menu");
+                TopMenu();
+            }
+            else
+            {
+                Console.WriteLine("Type in a password");
+                var p1 = Console.ReadLine();
+                Console.WriteLine("Re-type in password");
+                var p2 = Console.ReadLine();
+                if (p1 == p2)
+                {
+                    if (1 == UserHelper.SetUser(new dom.User(s, p1)))
+                    {
+                        Console.WriteLine("Registration succesful");
+                        TopMenu();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Registration failed");
+                        TopMenu();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Registration failed");
+                    TopMenu();
+                }
+            }
 
         }
 

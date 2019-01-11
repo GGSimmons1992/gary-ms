@@ -37,14 +37,14 @@ values
 
 insert into PizzaStore.[User](name,password,ModifiedDate)
 values
-('High','D03!',dbo.ESTNow())
-,('Lover','W@7k1n6',dbo.ESTNow());
+('Hugo','D03!',dbo.ESTNow())
+,('Liv','W@7k1n6',dbo.ESTNow());
 ;select * from PizzaStore.[User];
 
 insert into PizzaStore.[Order](StoreId,UserId,Cost,TimeStamp)
 values
-(1,2,((0.75*14)*(0.50*2)),getDate())
-,(2,1,((0.75*12)*(0.50*3)),getDate())
+(7,7,((0.75*14)*(0.50*2)),dbo.ESTNow())
+,(8,6,((0.75*12)*(0.50*3)),dbo.ESTNow())
 ;select * from PizzaStore.[Order];
 
 update p
@@ -53,42 +53,50 @@ from PizzaStore.[Order] as p;
 
 insert into PizzaStore.[Pizza](size,OrderId,ModifiedDate)
 values
-(14,2,dbo.ESTNow())
-,(12,3,dbo.ESTNow())
+(14,8,dbo.ESTNow())
+,(12,9,dbo.ESTNow())
 ;select * from PizzaStore.[Pizza];
+
+update u
+set name='Hugo'
+from PizzaStore.[User] as u
+where name='High';
 
 insert into PizzaStore.[LocationUser](LocationID,UserID)
 values
-(1,2)
-,(2,1)
+(7,7)
+,(8,6)
 ;select * from PizzaStore.[LocationUser]
 
 insert into PizzaStore.[LocationIngredient](LocationID,IngredientID,InventoryAmount)
 values
-(1,1,40)
-,(1,2,65)
-,(1,3,7)
-,(1,4,9)
-,(2,1,9)
-,(2,2,13)
-,(2,3,88)
-,(2,4,16);
+(7,11,40)
+,(7,12,65)
+,(7,13,7)
+,(7,14,9)
+,(8,11,9)
+,(8,12,13)
+,(8,13,88)
+,(8,14,16);
 
 ;select * from PizzaStore.[LocationIngredient]
 
 insert into PizzaStore.[PizzaIngredient](PizzaID,IngredientID)
 values
-(1,2)
-,(1,3)
-,(2,2)
-,(2,3)
-,(2,4)
+(4,12)
+,(4,13)
+,(5,12)
+,(5,13)
+,(5,14)
 ;select * from PizzaStore.[PizzaIngredient]
 
 --Select all
 
+--Mistakes were made
  delete from PizzaStore.[Location] where locationID=3;
+ delete from PizzaStore.[Order] where OrderID=4;
 
+--Select everything
 select * from PizzaStore.[Ingredient];
 select * from PizzaStore.[User];
 select * from PizzaStore.[Location];
@@ -97,6 +105,19 @@ select * from PizzaStore.[Pizza];
 select * from PizzaStore.[LocationUser];
 select * from PizzaStore.[LocationIngredient];
 select * from PizzaStore.[PizzaIngredient];
+
+delete from PizzaStore.[Ingredient];
+delete from PizzaStore.[User];
+delete from PizzaStore.[Location];
+delete from PizzaStore.[Order];
+delete from PizzaStore.[Pizza];
+delete from PizzaStore.[LocationUser];
+delete from PizzaStore.[LocationIngredient];
+delete from PizzaStore.[PizzaIngredient];
+
+insert into PizzaStore.[User](name,password,ModifiedDate)
+values
+('Guinea','P!6',dbo.ESTNow())
 
 --Trial stuff
 select sysdatetime() as regular,[dbo].fn_EST(GetDate()) as offset,[dbo].ESTNow() as test;

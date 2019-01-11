@@ -7,7 +7,7 @@ namespace PizzaStore.CliClient
     {
         static void Main(string[] args)
         {
-            UserViewModel.UserWelcome();
+            UserViewModel.TopMenu();
         }
 
         static void DisplayUsers()
