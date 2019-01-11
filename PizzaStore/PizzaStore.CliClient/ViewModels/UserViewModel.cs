@@ -5,11 +5,15 @@ using System.Collections.Generic;
 using System.Text;
 using PizzaStore.Data.Helpers;
 using System.Linq;
+using PizzaStore.Data.Models;
 
 namespace PizzaStore.CliClient.ViewModels
 {
     public static class UserViewModel
     {
+
+        private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
+
         public static List<dom.User> GetUsers()
         {
             return UserHelper.GetUsers();
@@ -58,7 +62,7 @@ namespace PizzaStore.CliClient.ViewModels
                         Console.WriteLine("Developer please create create order");
                         break;
                     case 2:
-                        Console.WriteLine("Developer please create getOrders");
+                        GetOrders(thisUser);
                         break;
                     case 3:
                         Console.WriteLine("Farewell!");
@@ -70,6 +74,40 @@ namespace PizzaStore.CliClient.ViewModels
                 }
             }
 
+        }
+
+        public static void GetOrders(dom.User thisuser)
+        {
+            var datauser = _db.User.Where(u => u.UserId == thisuser.Id).FirstOrDefault();
+            var orderlist=UserHelper.GetOrdersByUser(datauser);
+
+            foreach(var o in orderlist)
+            {
+                DisplayOrderList(orderlist);
+            }
+            Console.WriteLine("\n Press enter to move forward");
+            var holder = Console.ReadLine();
+            UserMenu(thisuser);
+        }
+
+        public static void DisplayOrderList(List<dom.Order> olist)
+        {
+            foreach (var o in olist)
+            {
+                Console.WriteLine("---------");
+                Console.WriteLine($"Order #{o.Id}; Store #{o.StoreID}; Total=${o.Cost()}");
+                foreach (var p in o.PizzaList)
+                {
+                    Console.WriteLine($"Pizza#{p.Id}  Size={p.crustSize}");
+                    Console.Write("Toppings:");
+                    foreach (var ingred in p.Toppings)
+                    {
+                        Console.Write($"{ingred} ");
+                    }
+                    Console.Write($"; ${p.price}\n");
+                }
+            }
+            
         }
 
     }
