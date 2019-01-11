@@ -1,4 +1,5 @@
 ﻿using PizzaStore.Data;
+using PizzaStore.Data.Helpers;
 using PizzaStore.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -58,10 +59,15 @@ namespace PizzaStore.Tests
         }
 
         [Fact]
-        public void PizzaDataAdditionTest()
+        public void SetPizzaTest()
         {
-            var sut = new Pizza() { OrderId=1};
-            Assert.True(eh.setPizza(sut));
+            var sut = new Pizza();
+            sut.OrderId = 100;
+            Assert.True(0 == PizzaHelper.PizzaSetter(sut));
+
+            sut.OrderId = 3;
+
+            Assert.True(1 == PizzaHelper.PizzaSetter(sut));
         }
     }
 }

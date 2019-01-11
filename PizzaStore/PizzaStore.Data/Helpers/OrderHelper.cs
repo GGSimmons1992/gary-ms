@@ -141,6 +141,13 @@ namespace PizzaStore.Data.Helpers
                     ,UserId=r.UserID
                 };
 
+                var locuserpair = new LocationUser()
+                {
+                    LocationId=loc.LocationId,
+                    UserId=myuser.UserId
+                };
+
+                _db.LocationUser.Add(locuserpair);
                 _db.Order.Add(dataorder);
                 return _db.SaveChanges();
             }

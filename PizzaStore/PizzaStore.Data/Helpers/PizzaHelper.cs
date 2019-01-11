@@ -54,6 +54,49 @@ namespace PizzaStore.Data.Helpers
             return (double)((0.75*dp.Size) + (0.50*toppings.Count));
         }
 
+        public static int PizzaSetter(dom.Pizza p)
+        {
+            var myOrder = _db.Order.Where(o => o.OrderId == p.OrderId).FirstOrDefault();
 
+            if (myOrder == null)
+            {
+                return 0;
+            }
+            else
+            {
+                var dataPizza = new Pizza()
+                {
+                    OrderId = p.OrderId,
+                    ModifiedDate = DateTime.Now,
+                    Price = (decimal) p.CalculateCost(),
+                    Size=(byte)p.crustSize
+                };
+
+                _db.Pizza.Add(dataPizza);
+
+                var pizzaAdditions = _db.SaveChanges();
+
+                var fullPizzaList = GetPizzas();
+                var lastPizza = fullPizzaList[fullPizzaList.Count - 1];
+                var lastPizzaID = lastPizza.Id;
+                SetPizzaIngredientByIds(p,lastPizzaID);
+
+                return pizzaAdditions;
+            }
+        }
+
+        public static void SetPizzaIngredientByIds(dom.Pizza p,int lastID)
+        {
+            foreach (var top in p.Toppings)
+            {
+                var topping = _db.Ingredient.Where(i => (i.Name).ToLower() == top.ToLower()).FirstOrDefault();
+                if (topping != null)
+                {
+                    var pipair = new PizzaIngredient() { PizzaId = lastID, IngredientId = topping.IngredientId };
+                    _db.PizzaIngredient.Add(pipair);
+                    _db.SaveChanges();
+                }
+            }
+        }
     }
 }

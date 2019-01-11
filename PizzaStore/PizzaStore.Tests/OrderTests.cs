@@ -79,10 +79,10 @@ namespace PizzaStore.Tests
             var sut = new Order();
             Assert.True(0 == OrderHelper.SetOrder(sut));
 
-            sut.UserID = 2;
-            sut.StoreID = 1;
+            sut.UserID = 3;
+            sut.StoreID = 2;
 
-            Assert.True(1 == OrderHelper.SetOrder(sut));
+            Assert.True(2 == OrderHelper.SetOrder(sut));
         }
 
     }
