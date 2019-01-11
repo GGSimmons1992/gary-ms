@@ -29,7 +29,7 @@ namespace PizzaStore.CliClient.ViewModels
                 Console.WriteLine($"Hi {selectedUser.name}, please type your password");
                 var enteredpw = Console.ReadLine();
                 if (enteredpw == selectedUser.password)
-                { UserMenu(selectedUser); }
+                { Console.WriteLine("Login successful") ;UserMenu(selectedUser); }
                 else
                 { Console.WriteLine("Invalid password, please try again"); UserWelcome(); }
             }
@@ -38,7 +38,38 @@ namespace PizzaStore.CliClient.ViewModels
 
         public static void UserMenu(dom.User thisUser)
         {
-            Console.WriteLine("Developer, you're clear to start writing UserMenu");
+            Console.WriteLine("Please pick an option");
+            Console.WriteLine("1: Create Order");
+            Console.WriteLine("2: Read History");
+            Console.WriteLine("3: Exit");
+
+            var selection= Console.ReadLine();
+            int intSelection;
+            if (Int32.TryParse(selection, out intSelection)==false)
+            {
+                Console.WriteLine("Invalid option, please try again");
+                UserMenu(thisUser);
+            }
+            else
+            {
+                switch (intSelection)
+                {
+                    case 1:
+                        Console.WriteLine("Developer please create create order");
+                        break;
+                    case 2:
+                        Console.WriteLine("Developer please create getOrders");
+                        break;
+                    case 3:
+                        Console.WriteLine("Farewell!");
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option, please try again");
+                        UserMenu(thisUser);
+                        break;
+                }
+            }
+
         }
 
     }
