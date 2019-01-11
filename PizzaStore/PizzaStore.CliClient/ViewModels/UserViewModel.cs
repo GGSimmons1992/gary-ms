@@ -51,7 +51,7 @@ namespace PizzaStore.CliClient.ViewModels
             var enteredname = Console.ReadLine();
             var selectedUser = userlist.FirstOrDefault(u => u.name == enteredname);
             if (selectedUser == null)
-            { Console.WriteLine("Invalid username, please try again"); UserWelcome(); }
+            { Console.WriteLine("Invalid username, please try again"); TopMenu(); }
             else
             {
                 Console.WriteLine($"Hi {selectedUser.name}, please type your password");
@@ -59,7 +59,7 @@ namespace PizzaStore.CliClient.ViewModels
                 if (enteredpw == selectedUser.password)
                 { Console.WriteLine("Login successful"); UserMenu(selectedUser); }
                 else
-                { Console.WriteLine("Invalid password, please try again"); UserWelcome(); }
+                { Console.WriteLine("Invalid password, please try again"); TopMenu(); }
             }
 
         }
