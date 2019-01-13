@@ -3,18 +3,19 @@ using System.Collections.Generic;
 
 namespace PizzaStore.Data.Models
 {
-    public partial class Ingredient
+    public partial class Crust
     {
-        public Ingredient()
+        public Crust()
         {
-            PizzaIngredient = new HashSet<PizzaIngredient>();
+            Pizza = new HashSet<Pizza>();
         }
 
-        public short IngredientId { get; set; }
+        public byte CrustId { get; set; }
         public string Name { get; set; }
+        public decimal CrustFactor { get; set; }
         public DateTime ModifiedDate { get; set; }
         public bool? Active { get; set; }
 
-        public virtual ICollection<PizzaIngredient> PizzaIngredient { get; set; }
+        public virtual ICollection<Pizza> Pizza { get; set; }
     }
 }

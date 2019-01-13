@@ -99,13 +99,7 @@ namespace PizzaStore.Tests
             Assert.True(sutLocation.Id == 2);
         }
 
-        [Fact]
-        void GetInventoryByLocationTest()
-        {
-            var sut = _db.Location.Where(l => l.LocationId == 2).FirstOrDefault();
-            var inventory = LocationHelper.GetInventoryByLocation(sut);
-            Assert.True(inventory["Crust"] == 9);
-        }
+        //Inventory methods have been scrapped
 
         [Fact]
         public void GetUsersByLocationTest()

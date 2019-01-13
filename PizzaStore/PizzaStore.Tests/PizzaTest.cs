@@ -15,13 +15,7 @@ namespace PizzaStore.Tests
         //----
         //Mandatory: Can contain no more than 5 toppings all categories included
 
-        public EntityHelper eh { get; set; }
-
-        public PizzaTest()
-        {
-            eh = new EntityHelper();
-        }
-
+        
         [Fact]
         public void PizzaToppingTest()
         {
@@ -49,14 +43,6 @@ namespace PizzaStore.Tests
             Assert.True(sut2.CalculateCost() > defaultCost);
         }
 
-        [Fact]
-        public void Test_PizzaData()
-        {
-            Assert.NotNull(eh.GetPizzas());
-            var PizzaList=eh.GetPizzas();
-            Assert.True(PizzaList[0].OrderId==1);
-            Assert.True(PizzaList[1].crustSize==12);
-        }
 
         [Fact]
         public void SetPizzaTest()
