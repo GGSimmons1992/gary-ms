@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaStore.Migration", "Piz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaStore.Data", "PizzaStore.Data\PizzaStore.Data.csproj", "{DF81C08A-749F-4FB2-B661-5E07B5726645}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaStore.CliClient", "PizzaStore.CliClient\PizzaStore.CliClient.csproj", "{CC29A9DF-598C-4826-9C06-E93E1871E360}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaStore.CliClient", "PizzaStore.CliClient\PizzaStore.CliClient.csproj", "{CC29A9DF-598C-4826-9C06-E93E1871E360}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaStore.ASP", "PizzaStore.ASP\PizzaStore.ASP.csproj", "{A8411D72-EBE0-46FC-9DF4-17B22665B90E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{CC29A9DF-598C-4826-9C06-E93E1871E360}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC29A9DF-598C-4826-9C06-E93E1871E360}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC29A9DF-598C-4826-9C06-E93E1871E360}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8411D72-EBE0-46FC-9DF4-17B22665B90E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8411D72-EBE0-46FC-9DF4-17B22665B90E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8411D72-EBE0-46FC-9DF4-17B22665B90E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8411D72-EBE0-46FC-9DF4-17B22665B90E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

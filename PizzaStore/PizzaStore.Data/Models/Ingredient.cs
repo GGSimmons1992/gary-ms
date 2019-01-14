@@ -7,7 +7,6 @@ namespace PizzaStore.Data.Models
     {
         public Ingredient()
         {
-            LocationIngredient = new HashSet<LocationIngredient>();
             PizzaIngredient = new HashSet<PizzaIngredient>();
         }
 
@@ -16,7 +15,6 @@ namespace PizzaStore.Data.Models
         public DateTime ModifiedDate { get; set; }
         public bool? Active { get; set; }
 
-        public virtual ICollection<LocationIngredient> LocationIngredient { get; set; }
         public virtual ICollection<PizzaIngredient> PizzaIngredient { get; set; }
     }
 }

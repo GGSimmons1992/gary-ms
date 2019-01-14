@@ -45,20 +45,7 @@ namespace PizzaStore.Data.Helpers
             return domstore;
         }
 
-        public static Dictionary<string, int> GetInventoryByLocation(Location dl)
-        {
-            var inventory = new Dictionary<string, int>();
-            
-            var DesiredLIPairs = _db.LocationIngredient.Where(li => li.LocationId == dl.LocationId).ToList();
-
-            foreach (var item in DesiredLIPairs)
-            {
-                var myingredient = _db.Ingredient.Where(i => i.IngredientId == item.IngredientId).FirstOrDefault();
-                inventory.Add(myingredient.Name, (int)item.InventoryAmount);
-            }
-
-            return inventory;
-        }
+        //Inventory checking has been scrapped
 
         public static List<dom.User> GetUsersByLocation(Location dl)
         {

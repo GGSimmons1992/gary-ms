@@ -51,7 +51,7 @@ namespace PizzaStore.CliClient.ViewModels
             var enteredname = Console.ReadLine();
             var selectedUser = userlist.FirstOrDefault(u => u.name == enteredname);
             if (selectedUser == null)
-            { Console.WriteLine("Invalid username, please try again"); UserWelcome(); }
+            { Console.WriteLine("Invalid username, please try again"); TopMenu(); }
             else
             {
                 Console.WriteLine($"Hi {selectedUser.name}, please type your password");
@@ -59,7 +59,7 @@ namespace PizzaStore.CliClient.ViewModels
                 if (enteredpw == selectedUser.password)
                 { Console.WriteLine("Login successful"); UserMenu(selectedUser); }
                 else
-                { Console.WriteLine("Invalid password, please try again"); UserWelcome(); }
+                { Console.WriteLine("Invalid password, please try again"); TopMenu(); }
             }
 
         }
@@ -90,6 +90,7 @@ namespace PizzaStore.CliClient.ViewModels
                         break;
                     case 3:
                         Console.WriteLine("Farewell!");
+                        TopMenu();
                         break;
                     default:
                         Console.WriteLine("Invalid option, please try again");
@@ -119,7 +120,8 @@ namespace PizzaStore.CliClient.ViewModels
                 Console.WriteLine($"Order #{o.Id}; DateTime={o.TimeStamp} ;Store #{o.StoreID}; Total=${o.Cost()}");
                 foreach (var p in o.PizzaList)
                 {
-                    Console.WriteLine($"Pizza#{p.Id}  Size={p.crustSize}");
+                    var crustname = PizzaHelper.GetCrustNameByPizza(p);
+                    Console.WriteLine($"Pizza#{p.Id}  Size={p.crustSize}in {crustname} crust");
                     Console.Write("Toppings:");
                     foreach (var ingred in p.Toppings)
                     {

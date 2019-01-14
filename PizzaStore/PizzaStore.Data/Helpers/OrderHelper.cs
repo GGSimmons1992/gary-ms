@@ -97,12 +97,14 @@ namespace PizzaStore.Data.Helpers
             {
                 var dompizza = new dom.Pizza()
                 {
-                    Id=(int)item.PizzaId,
-                    crustSize=(int) item.Size,
-                    ModifiedDate=item.ModifiedDate,
-                    OrderId=(int)item.OrderId,
-                    Toppings=PizzaHelper.GetIngredientsByPizza(item),
-                    price=PizzaHelper.GetPriceByPizza(item)
+                    Id = (int)item.PizzaId,
+                    crustSize = (int)item.Size,
+                    ModifiedDate = item.ModifiedDate,
+                    OrderId = (int)item.OrderId,
+                    Toppings = PizzaHelper.GetIngredientsByPizza(item),
+                    price = PizzaHelper.GetPriceByPizza(item),
+                    CrustId = (byte) item.CrustId,
+                    CrustFactor = (double) item.Crust.CrustFactor
                 };
 
                 pizzalist.Add(dompizza);

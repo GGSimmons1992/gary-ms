@@ -10,12 +10,5 @@ namespace PizzaStore.CliClient
             UserViewModel.TopMenu();
         }
 
-        static void DisplayUsers()
-        {
-            foreach (var item in UserViewModel.GetUsers())
-            {
-                Console.WriteLine(item.name);
-            }
-        }
     }
 }
