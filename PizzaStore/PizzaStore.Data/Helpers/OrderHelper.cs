@@ -95,6 +95,12 @@ namespace PizzaStore.Data.Helpers
             var dataPizzas = _db.Pizza.Where(p => p.OrderId == dr.OrderId).ToList();
             foreach (var item in dataPizzas)
             {
+                var crust = _db.Crust.Where(c => c.CrustId == item.CrustId).FirstOrDefault();
+                if (crust == null)
+                {
+                    crust = _db.Crust.Where(c => c.Name == "Regular").FirstOrDefault();
+                }
+
                 var dompizza = new dom.Pizza()
                 {
                     Id = (int)item.PizzaId,
@@ -103,8 +109,8 @@ namespace PizzaStore.Data.Helpers
                     OrderId = (int)item.OrderId,
                     Toppings = PizzaHelper.GetIngredientsByPizza(item),
                     price = PizzaHelper.GetPriceByPizza(item),
-                    CrustId = (byte) item.CrustId,
-                    CrustFactor = (double) item.Crust.CrustFactor
+                    CrustId = (byte)item.CrustId,
+                    CrustFactor = (double)crust.CrustFactor
                 };
 
                 pizzalist.Add(dompizza);

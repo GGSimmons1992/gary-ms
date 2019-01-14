@@ -52,13 +52,38 @@ namespace PizzaStore.Data.Helpers
         public static double GetPriceByPizza(Pizza dp)
         {
             var toppings=GetIngredientsByPizza(dp);
-            var factor =(double) dp.Crust.CrustFactor;
+            var factor =(double) GetFactorByCrustID(dp.CrustId);
             return (double)((factor*dp.Size) + (0.50*toppings.Count));
+        }
+
+        public static double GetFactorByCrustID(short? crustid)
+        {
+            var crust = _db.Crust.Where(c=>c.CrustId == crustid).FirstOrDefault();
+            if (crust == null)
+            {
+                crust= _db.Crust.Where(c => c.Name== "Regular").FirstOrDefault();
+            }
+
+            return (double) crust.CrustFactor;
         }
 
         public static string GetCrustNameByPizza(Pizza dp)
         {
             var crust = _db.Crust.Where(c => c.CrustId == dp.CrustId).FirstOrDefault();
+            return crust.Name;
+        }
+
+        public static string GetCrustNameByPizza(dom.Pizza p)
+        {
+            var crust = _db.Crust.Where(c => c.CrustId == p.CrustId).FirstOrDefault();
+
+            if (crust != null)
+            {
+                var defaultCrust= _db.Crust.Where(c => c.Name == "Regular").FirstOrDefault();
+                p.CrustId =defaultCrust.CrustId;
+                p.CrustFactor= (double) defaultCrust.CrustFactor;
+            }
+
             return crust.Name;
         }
 
