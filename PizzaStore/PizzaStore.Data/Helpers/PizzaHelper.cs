@@ -17,13 +17,22 @@ namespace PizzaStore.Data.Helpers
 
             foreach (var l in _db.Pizza.ToList())
             {
+                var crust = _db.Crust.Where(c => c.CrustId == l.CrustId).FirstOrDefault();
+
+                if (crust == null)
+                {
+                    crust = _db.Crust.Where(c => c.Name == "Regular").FirstOrDefault();
+                    l.CrustId = crust.CrustId;
+                }
+
                 var newPizza = new dom.Pizza()
                 {
                     Id = (int)l.PizzaId
                     , OrderId = (int)l.OrderId
                     , ModifiedDate = l.ModifiedDate
-                    , crustSize = (int) l.Size
-                    ,CrustFactor=(double) l.Crust.CrustFactor
+                    , crustSize = (int)l.Size
+                    , CrustFactor = (double) crust.CrustId
+                    , CrustId =(byte) l.CrustId
                 };
                 ls.Add(newPizza);
             }
@@ -77,11 +86,11 @@ namespace PizzaStore.Data.Helpers
         {
             var crust = _db.Crust.Where(c => c.CrustId == p.CrustId).FirstOrDefault();
 
-            if (crust != null)
+            if (crust == null)
             {
-                var defaultCrust= _db.Crust.Where(c => c.Name == "Regular").FirstOrDefault();
-                p.CrustId =defaultCrust.CrustId;
-                p.CrustFactor= (double) defaultCrust.CrustFactor;
+                crust= _db.Crust.Where(c => c.Name == "Regular").FirstOrDefault();
+                p.CrustId =crust.CrustId;
+                p.CrustFactor= (double) crust.CrustFactor;
             }
 
             return crust.Name;

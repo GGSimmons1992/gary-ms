@@ -136,7 +136,9 @@ namespace PizzaStore.CliClient.ViewModels
         public static void DisplayPizza(dom.Pizza p)
         {
             Console.WriteLine("\n\n\n\n\n");
-            Console.WriteLine($"Pizza#{p.Id}  Size={p.crustSize}");
+
+            var crustname = PizzaHelper.GetCrustNameByPizza(p);
+            Console.WriteLine($"Pizza#{p.Id}  Size={p.crustSize}in {crustname} crust");
             Console.Write("Toppings:");
             foreach (var ingred in p.Toppings)
             {
@@ -151,7 +153,8 @@ namespace PizzaStore.CliClient.ViewModels
             Console.WriteLine($"Order #{o.Id}; DateTime={o.TimeStamp} ;Store #{o.StoreID}; Total=${o.Cost()}");
             foreach (var p in o.PizzaList)
             {
-                Console.WriteLine($"Pizza#{p.Id}  Size={p.crustSize}");
+                var crustname = PizzaHelper.GetCrustNameByPizza(p);
+                Console.WriteLine($"Pizza#{p.Id}  Size={p.crustSize}in {crustname} crust");
                 Console.Write("Toppings:");
                 foreach (var ingred in p.Toppings)
                 {
@@ -285,7 +288,8 @@ namespace PizzaStore.CliClient.ViewModels
             {
                 Console.WriteLine("Topping limit reached.");
                 Console.WriteLine("1: Change size");
-                Console.WriteLine("2: Return to OrderMenu");
+                Console.WriteLine("2: Change crust type");
+                Console.WriteLine("3: Return to OrderMenu");
                 var s = Console.ReadLine();
                 switch (s)
                 {
@@ -301,6 +305,9 @@ namespace PizzaStore.CliClient.ViewModels
                         PizzaEdit(o, selectedPizza);
                         break;
                     case "2":
+                        CrustMenu(o, selectedPizza);
+                        break;
+                    case "3":
                         OrderMenu(o);
                         break;
                     default:
@@ -312,12 +319,13 @@ namespace PizzaStore.CliClient.ViewModels
             }
             else
             {
-                for (var i = 1; i < Ingredients.Count; i++)//First entry is crust. Let's  skip that.
+                for (var i = 1; i < Ingredients.Count; i++)//First entry is crust. Let's skip that for now.
                 {
                     Console.WriteLine($"{i}: Add {Ingredients[i]}");
                 }
                 Console.WriteLine($"{Ingredients.Count}: Change Pizza Size");
-                Console.WriteLine($"{Ingredients.Count + 1}: Return to OrderMenu");
+                Console.WriteLine($"{Ingredients.Count+1}: Change Crust Type");
+                Console.WriteLine($"{Ingredients.Count + 2}: Return to OrderMenu");
                 var stringSelection = Console.ReadLine();
                 int selection;
                 if (false == Int32.TryParse(stringSelection, out selection))
@@ -327,7 +335,7 @@ namespace PizzaStore.CliClient.ViewModels
                 }
                 else
                 {
-                    if ((selection <= 0) || (selection > (Ingredients.Count + 1)))
+                    if ((selection <= 0) || (selection > (Ingredients.Count + 2)))
                     {
                         Console.WriteLine("Invalid choice");
                         PizzaEdit(o, selectedPizza);
@@ -346,11 +354,52 @@ namespace PizzaStore.CliClient.ViewModels
                     }
                     else if (selection == (Ingredients.Count + 1))
                     {
+                        CrustMenu(o, selectedPizza);
+                    }
+                    else if (selection == (Ingredients.Count + 2))
+                    {
                         OrderMenu(o);
                     }
                     else { target.Toppings.Add(Ingredients[selection]); PizzaEdit(o, selectedPizza); }
                 }
             }
+        }
+
+        public static void CrustMenu(dom.Order o, int selectedPizza)
+        {
+            var target = o.PizzaList[selectedPizza - 1];
+            var crustlist = _db.Crust.ToList();
+            Console.WriteLine("Select Crust Type");
+            var i = 1;
+            foreach (var item in crustlist)
+            {
+                Console.WriteLine($"{i}: {item.Name}");
+                i++;
+            }
+            var selection=Console.ReadLine();
+            int trueSelect;
+
+            if (false == Int32.TryParse(selection, out trueSelect))
+            {
+                Console.WriteLine("Incorrect Selection");
+                CrustMenu(o, selectedPizza);
+            }
+            else
+            {
+                if (trueSelect > 0 && trueSelect <= crustlist.Count())
+                {
+                    target.CrustId = crustlist[trueSelect - 1].CrustId;
+                    target.CrustFactor= (double) crustlist[trueSelect - 1].CrustFactor;
+                    target.price = target.CalculateCost();
+                    PizzaEdit(o, selectedPizza);
+                }
+                else
+                {
+                    Console.WriteLine("Incorrect Selection");
+                    CrustMenu(o, selectedPizza);
+                }
+            }
+
         }
 
         public static void SubmitOrder(dom.Order o)

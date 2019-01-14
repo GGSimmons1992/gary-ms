@@ -99,6 +99,7 @@ namespace PizzaStore.Data.Helpers
                 if (crust == null)
                 {
                     crust = _db.Crust.Where(c => c.Name == "Regular").FirstOrDefault();
+                    item.CrustId = crust.CrustId;
                 }
 
                 var dompizza = new dom.Pizza()
