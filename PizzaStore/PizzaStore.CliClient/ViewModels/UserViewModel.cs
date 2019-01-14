@@ -90,6 +90,7 @@ namespace PizzaStore.CliClient.ViewModels
                         break;
                     case 3:
                         Console.WriteLine("Farewell!");
+                        TopMenu();
                         break;
                     default:
                         Console.WriteLine("Invalid option, please try again");
@@ -119,7 +120,8 @@ namespace PizzaStore.CliClient.ViewModels
                 Console.WriteLine($"Order #{o.Id}; DateTime={o.TimeStamp} ;Store #{o.StoreID}; Total=${o.Cost()}");
                 foreach (var p in o.PizzaList)
                 {
-                    Console.WriteLine($"Pizza#{p.Id}  Size={p.crustSize}");
+                    var crustname = PizzaHelper.GetCrustNameByPizza(p);
+                    Console.WriteLine($"Pizza#{p.Id}  Size={p.crustSize}in {crustname} crust");
                     Console.Write("Toppings:");
                     foreach (var ingred in p.Toppings)
                     {

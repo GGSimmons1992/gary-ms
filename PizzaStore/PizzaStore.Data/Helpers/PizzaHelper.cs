@@ -23,6 +23,7 @@ namespace PizzaStore.Data.Helpers
                     , OrderId = (int)l.OrderId
                     , ModifiedDate = l.ModifiedDate
                     , crustSize = (int) l.Size
+                    ,CrustFactor=(double) l.Crust.CrustFactor
                 };
                 ls.Add(newPizza);
             }
@@ -51,12 +52,27 @@ namespace PizzaStore.Data.Helpers
         public static double GetPriceByPizza(Pizza dp)
         {
             var toppings=GetIngredientsByPizza(dp);
-            return (double)((0.75*dp.Size) + (0.50*toppings.Count));
+            var factor =(double) dp.Crust.CrustFactor;
+            return (double)((factor*dp.Size) + (0.50*toppings.Count));
+        }
+
+        public static string GetCrustNameByPizza(Pizza dp)
+        {
+            var crust = _db.Crust.Where(c => c.CrustId == dp.CrustId).FirstOrDefault();
+            return crust.Name;
         }
 
         public static int PizzaSetter(dom.Pizza p)
         {
             var myOrder = _db.Order.Where(o => o.OrderId == p.OrderId).FirstOrDefault();
+            var myCrust = _db.Crust.Where(c => c.CrustId == p.CrustId).FirstOrDefault();
+
+            if (myCrust == null)
+            {
+                var DefaultCrust= _db.Crust.Where(c => c.Name == "Regular").FirstOrDefault();
+                p.CrustId = DefaultCrust.CrustId;
+                p.CrustFactor = (double) DefaultCrust.CrustFactor;
+            }
 
             if (myOrder == null)
             {
@@ -69,7 +85,8 @@ namespace PizzaStore.Data.Helpers
                     OrderId = p.OrderId,
                     ModifiedDate = DateTime.Now,
                     Price = (decimal) p.CalculateCost(),
-                    Size=(byte)p.crustSize
+                    Size=(byte)p.crustSize,
+                    CrustId=(byte) p.CrustId,
                 };
 
                 _db.Pizza.Add(dataPizza);
