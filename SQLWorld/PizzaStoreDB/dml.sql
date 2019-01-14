@@ -1,5 +1,5 @@
 use PizzaStoreDB;
-go;
+go
 
 drop function fn_ToEasternTime;
 go
@@ -26,8 +26,18 @@ values
 ('Crust',dbo.ESTNow())
 ,('TomatoSauce',dbo.ESTNow())
 ,('Mozzarella',dbo.ESTNow())
-,('Pepperoni',dbo.ESTNow());
-;select * from PizzaStore.[Ingredient]
+,('Pepperoni',dbo.ESTNow())
+,('Mushrooms',dbo.ESTNow())
+,('Anchovies',dbo.EstNow());
+;select * from PizzaStore.[Ingredient];
+
+insert into PizzaStore.[Crust](Name,CrustFactor,ModifiedDate)
+values
+('Regular',1.00,dbo.ESTNow())
+,('Stuffed',1.50,dbo.ESTNow())
+,('Thin',1.25,dbo.ESTNow())
+,('Deep Dish',1.75,dbo.ESTNow());
+
 
 insert into PizzaStore.[Location](ModifiedDate)
 values 
@@ -41,78 +51,27 @@ values
 ,('Liv','W@7k1n6',dbo.ESTNow());
 ;select * from PizzaStore.[User];
 
-insert into PizzaStore.[Order](StoreId,UserId,Cost,TimeStamp)
-values
-(7,7,((0.75*14)*(0.50*2)),dbo.ESTNow())
-,(8,6,((0.75*12)*(0.50*3)),dbo.ESTNow())
-;select * from PizzaStore.[Order];
 
-update p
-set TimeStamp=dbo.ESTNow()
-from PizzaStore.[Order] as p;
-
-insert into PizzaStore.[Pizza](size,OrderId,ModifiedDate)
-values
-(14,8,dbo.ESTNow())
-,(12,9,dbo.ESTNow())
-;select * from PizzaStore.[Pizza];
-
-update u
-set name='Hugo'
-from PizzaStore.[User] as u
-where name='High';
-
-insert into PizzaStore.[LocationUser](LocationID,UserID)
-values
-(7,7)
-,(8,6)
-;select * from PizzaStore.[LocationUser]
-
-insert into PizzaStore.[LocationIngredient](LocationID,IngredientID,InventoryAmount)
-values
-(7,11,40)
-,(7,12,65)
-,(7,13,7)
-,(7,14,9)
-,(8,11,9)
-,(8,12,13)
-,(8,13,88)
-,(8,14,16);
-
-;select * from PizzaStore.[LocationIngredient]
-
-insert into PizzaStore.[PizzaIngredient](PizzaID,IngredientID)
-values
-(4,12)
-,(4,13)
-,(5,12)
-,(5,13)
-,(5,14)
-;select * from PizzaStore.[PizzaIngredient]
-
---Select all
-
---Mistakes were made
- delete from PizzaStore.[Location] where locationID=3;
- delete from PizzaStore.[Order] where OrderID=4;
+--CliClient will insert our transient and dependancy data for now. 
 
 --Select everything
+select * from PizzaStore.Crust;
 select * from PizzaStore.[Ingredient];
 select * from PizzaStore.[User];
 select * from PizzaStore.[Location];
 select * from PizzaStore.[Order];
 select * from PizzaStore.[Pizza];
 select * from PizzaStore.[LocationUser];
-select * from PizzaStore.[LocationIngredient];
 select * from PizzaStore.[PizzaIngredient];
 
+--delete everyting
+delete from PizzaStore.[Crust];
 delete from PizzaStore.[Ingredient];
 delete from PizzaStore.[User];
 delete from PizzaStore.[Location];
 delete from PizzaStore.[Order];
 delete from PizzaStore.[Pizza];
 delete from PizzaStore.[LocationUser];
-delete from PizzaStore.[LocationIngredient];
 delete from PizzaStore.[PizzaIngredient];
 
 insert into PizzaStore.[User](name,password,ModifiedDate)
