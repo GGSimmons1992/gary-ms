@@ -1,0 +1,26 @@
+﻿@model MVCWorld.Client.Models.Invitation
+
+<h1>Party Invitation</h1>
+<h2>@DateTime.UtcNow</h2>
+<p>@Model.Name</p>
+<p>@Model.Message</p>
+
+
+@using (Html.BeginForm("post", "invite"))
+{
+    @Html.LabelFor(m => m.Menu, "Gluten-Free")
+    @Html.RadioButtonFor(m => m.Menu, "yes")
+    @Html.ValidationMessageFor(m => m.Menu)
+
+    @Html.LabelFor(m => m.Guests)
+    @Html.TextBoxFor(m => m.Guests)
+    @Html.ValidationMessageFor(m => m.Guests)
+
+    @Html.LabelFor(m => m.RSVP)
+    @Html.CheckBoxFor(m => m.RSVP)
+    @Html.ValidationMessageFor(m => m.RSVP)
+
+    <button type="submit">Submit</button>
+}
+
+
