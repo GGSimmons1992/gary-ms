@@ -1,0 +1,16 @@
+﻿@model PizzaStore.MVCClient.Model;
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+@using (Html.BeginForm("Register", "Home"))
+{
+    @Html.TextBoxFor(m => m.Username)
+    @Html.TextBoxFor(m => m.Password)
+    @Html.TextBoxFor(m => m.Secondary)
+
+    <button type="submit">Submit</button>
+}
+
+<h2>SignUp</h2>
+

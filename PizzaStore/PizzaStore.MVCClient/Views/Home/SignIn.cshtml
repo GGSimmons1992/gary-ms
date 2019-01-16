@@ -1,0 +1,15 @@
+﻿@model  PizzaStore.Domain.Model;
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+@using (Html.BeginForm("Login", "Home"))
+{
+    @Html.TextBoxFor(m => m.Username)
+    @Html.TextBoxFor(m => m.Password)
+
+    <button type="submit">Submit</button>
+}
+
+<h2>SignIn</h2>
+

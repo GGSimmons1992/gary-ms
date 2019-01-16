@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PizzaStore.MVCClient</title>
+    <title>@ViewData["Title"] - PizzaStore</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,28 +26,37 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">PizzaStore.MVCClient</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">PizzaStore</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @if (ViewBag.ValidUsername != null)
+                    {
+                        <li>Welocme @ViewBag.ValidUsername</li>
+                        <li>Sign out</li>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="SignIn">Sign in</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="SignUp">Sign up</a></li>
+                    }
                 </ul>
             </div>
         </div>
     </nav>
 
-    <partial name="_CookieConsentPartial" />
-
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2019 - PizzaStore.MVCClient</p>
+            <p>
+            &copy; 2019 - Gary Garth Simmons under <a href="https://github.com/1811-nov12-net/gary-ms/blob/master/LICENSE">MIT License</a> 
+            </p>
         </footer>
     </div>
 
+    @*Scripts and rendering! Please do not remove anyting below this line!*@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

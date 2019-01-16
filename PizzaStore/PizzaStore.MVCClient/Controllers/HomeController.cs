@@ -34,6 +34,16 @@ namespace PizzaStore.MVCClient.Controllers
             return View();
         }
 
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
