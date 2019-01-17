@@ -7,27 +7,27 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PizzaStore.MVCClient.Controllers
 {
-    public class AdminController : Controller
+    public class OrderController : Controller
     {
-        // GET: Admin
+        // GET: Order
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Admin/Details/5
+        // GET: Order/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Admin/Create
+        // GET: Order/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Create
+        // POST: Order/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -44,13 +44,13 @@ namespace PizzaStore.MVCClient.Controllers
             }
         }
 
-        // GET: Admin/Edit/5
+        // GET: Order/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Admin/Edit/5
+        // POST: Order/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -67,13 +67,13 @@ namespace PizzaStore.MVCClient.Controllers
             }
         }
 
-        // GET: Admin/Delete/5
+        // GET: Order/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Admin/Delete/5
+        // POST: Order/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

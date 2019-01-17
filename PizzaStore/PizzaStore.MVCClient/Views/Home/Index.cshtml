@@ -2,13 +2,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-@if (ViewBag.ValidUsername != null)
-{
-    <li>Welocme @ViewBag.ValidUsername</li>
-    <li>Sign out</li>
-}
-else
-{
-    <li><a asp-area="" asp-controller="Home" asp-action="SignIn">Sign in</a></li>
-    <li><a asp-area="" asp-controller="Home" asp-action="SignUp">Sign up</a></li>
-}
+<div class="text-center">
+    <h1 class="display-4">Welcome to PizzaStore</h1>
+</div>
