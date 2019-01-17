@@ -24,6 +24,7 @@ namespace MVCWorld.Client.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Post(Invitation invite)
         {
             if (ModelState.IsValid)//Checks for validity of values, not type.

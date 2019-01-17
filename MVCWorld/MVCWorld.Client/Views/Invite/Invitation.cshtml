@@ -5,10 +5,15 @@
 <p>@Model.Name</p>
 <p>@Model.Message</p>
 
-
 @using (Html.BeginForm("post", "invite"))
 {
-    @Html.LabelFor(m => m.Menu, "Gluten-Free")
+    @Html.AntiForgeryToken()
+
+    @Html.LabelFor(m => m.Name)
+    @Html.TextBoxFor(m => m.Name)
+    @Html.ValidationMessageFor(m => m.Name)
+
+    @Html.LabelFor(m => m.Menu, "Gluten-Free", new { @class = "pretty" })
     @Html.RadioButtonFor(m => m.Menu, "yes")
     @Html.ValidationMessageFor(m => m.Menu)
 
@@ -23,11 +28,25 @@
     <button type="submit">Submit</button>
 }
 
-@section  Scripts
-{
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+<h1>Party Invitation</h1>
+<h2>@DateTime.UtcNow</h2>
+<p>@Model.Name</p>
+<p>@Model.Message</p>
+
+<form asp-controller="invite" method="post">
+    <label asp-for="Menu" class="pretty">Gluten-Free</label>
+    <input type="radio" asp-for="Menu" value="yes">
+    <span asp-validation-for="Menu"></span>
+
+    <button type="submit">Submit</button>
+</form>
+
+
+@section Scripts
+    {
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
 }
 
 
