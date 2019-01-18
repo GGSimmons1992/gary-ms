@@ -50,7 +50,7 @@ namespace PizzaStore.Data.Models
                     .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.CrustFactor)
-                    .HasColumnType("decimal(2, 2)")
+                    .HasColumnType("decimal(4, 2)")
                     .HasDefaultValueSql("((1.00))");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime2(0)");
@@ -98,19 +98,25 @@ namespace PizzaStore.Data.Models
 
                 entity.Property(e => e.LocationUserId).HasColumnName("LocationUserID");
 
+                entity.Property(e => e.Active)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.LocationId).HasColumnName("LocationID");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime2(0)");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.HasOne(d => d.Location)
                     .WithMany(p => p.LocationUser)
                     .HasForeignKey(d => d.LocationId)
-                    .HasConstraintName("FK__LocationU__Locat__693CA210");
+                    .HasConstraintName("FK__LocationU__Locat__656C112C");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.LocationUser)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__LocationU__UserI__6A30C649");
+                    .HasConstraintName("FK__LocationU__UserI__66603565");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -138,12 +144,12 @@ namespace PizzaStore.Data.Models
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__Order__StoreID__571DF1D5");
+                    .HasConstraintName("FK__Order__StoreID__59063A47");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Order__UserID__5812160E");
+                    .HasConstraintName("FK__Order__UserID__59FA5E80");
             });
 
             modelBuilder.Entity<Pizza>(entity =>
@@ -170,12 +176,12 @@ namespace PizzaStore.Data.Models
                 entity.HasOne(d => d.Crust)
                     .WithMany(p => p.Pizza)
                     .HasForeignKey(d => d.CrustId)
-                    .HasConstraintName("FK__Pizza__CrustId__6477ECF3");
+                    .HasConstraintName("FK__Pizza__CrustId__60A75C0F");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.Pizza)
                     .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK__Pizza__OrderId__6383C8BA");
+                    .HasConstraintName("FK__Pizza__OrderId__5FB337D6");
             });
 
             modelBuilder.Entity<PizzaIngredient>(entity =>
@@ -184,19 +190,25 @@ namespace PizzaStore.Data.Models
 
                 entity.Property(e => e.PizzaIngredientId).HasColumnName("PizzaIngredientID");
 
+                entity.Property(e => e.Active)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.IngredientId).HasColumnName("IngredientID");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime2(0)");
 
                 entity.Property(e => e.PizzaId).HasColumnName("PizzaID");
 
                 entity.HasOne(d => d.Ingredient)
                     .WithMany(p => p.PizzaIngredient)
                     .HasForeignKey(d => d.IngredientId)
-                    .HasConstraintName("FK__PizzaIngr__Ingre__6E01572D");
+                    .HasConstraintName("FK__PizzaIngr__Ingre__6B24EA82");
 
                 entity.HasOne(d => d.Pizza)
                     .WithMany(p => p.PizzaIngredient)
                     .HasForeignKey(d => d.PizzaId)
-                    .HasConstraintName("FK__PizzaIngr__Pizza__6D0D32F4");
+                    .HasConstraintName("FK__PizzaIngr__Pizza__6A30C649");
             });
 
             modelBuilder.Entity<User>(entity =>

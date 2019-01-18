@@ -8,6 +8,8 @@ namespace PizzaStore.Data.Models
         public long PizzaIngredientId { get; set; }
         public long? PizzaId { get; set; }
         public short? IngredientId { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public bool? Active { get; set; }
 
         public virtual Ingredient Ingredient { get; set; }
         public virtual Pizza Pizza { get; set; }

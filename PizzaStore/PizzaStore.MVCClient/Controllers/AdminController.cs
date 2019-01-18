@@ -10,7 +10,7 @@ namespace PizzaStore.MVCClient.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
-        public ActionResult Index()
+        public ActionResult AdminMenu()
         {
             return View();
         }
@@ -36,7 +36,7 @@ namespace PizzaStore.MVCClient.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AdminMenu));
             }
             catch
             {
@@ -59,7 +59,7 @@ namespace PizzaStore.MVCClient.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AdminMenu));
             }
             catch
             {
@@ -82,7 +82,7 @@ namespace PizzaStore.MVCClient.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AdminMenu));
             }
             catch
             {

@@ -4,17 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PizzaStore.MVCClient.Models;
 
 namespace PizzaStore.MVCClient.Controllers
 {
     public class CustomerController : Controller
     {
+
         // GET: Customer
-        public ActionResult Index()
+        public ActionResult CustomerMenu()
         {
             return View();
         }
 
+        public ActionResult ViewHistory()
+        {
+            return View("ViewOrders");
+        }
         // GET: Customer/Details/5
         public ActionResult Details(int id)
         {
@@ -36,7 +42,7 @@ namespace PizzaStore.MVCClient.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(CustomerMenu));
             }
             catch
             {
@@ -59,7 +65,7 @@ namespace PizzaStore.MVCClient.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(CustomerMenu));
             }
             catch
             {
@@ -82,7 +88,7 @@ namespace PizzaStore.MVCClient.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(CustomerMenu));
             }
             catch
             {

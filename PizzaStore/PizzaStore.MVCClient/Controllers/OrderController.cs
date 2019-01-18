@@ -10,7 +10,12 @@ namespace PizzaStore.MVCClient.Controllers
     public class OrderController : Controller
     {
         // GET: Order
-        public ActionResult Index()
+        public ActionResult OrderMenu()
+        {
+            return View();
+        }
+
+        public ActionResult UserLocationMenu()
         {
             return View();
         }
@@ -36,7 +41,7 @@ namespace PizzaStore.MVCClient.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(OrderMenu));
             }
             catch
             {
@@ -59,7 +64,7 @@ namespace PizzaStore.MVCClient.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(OrderMenu));
             }
             catch
             {
@@ -82,7 +87,7 @@ namespace PizzaStore.MVCClient.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(OrderMenu));
             }
             catch
             {

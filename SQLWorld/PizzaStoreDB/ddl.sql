@@ -82,6 +82,8 @@ create table PizzaStore.LocationUser--For Location.UserList and User.Store
 	LocationUserID int primary key identity(1,1)
 	,LocationID tinyint foreign key references PizzaStore.Location(LocationID)
 	,UserID smallint foreign key references PizzaStore.[User](UserID)
+	,ModifiedDate datetime2(0) not null
+	,Active bit not null default(1)
 );
 
 create table PizzaStore.PizzaIngredient --For Pizza.Toppings
@@ -89,6 +91,8 @@ create table PizzaStore.PizzaIngredient --For Pizza.Toppings
 	PizzaIngredientID bigint primary key identity(1,1)
 	,PizzaID bigint foreign key references PizzaStore.Pizza(PizzaID)
 	,IngredientID smallint foreign key references PizzaStore.[Ingredient](IngredientID)
+	,ModifiedDate datetime2(0) not null
+	,Active bit not null default(1)
 );
 
 --Inventory of ingredients have been scrapped in this itteration.
@@ -96,6 +100,15 @@ create table PizzaStore.PizzaIngredient --For Pizza.Toppings
 --
 --
 --alterations
+
+alter table PizzaStore.LocationUser
+add column ModifiedDate datetime2(0) not null
+
+	
+
+
+
+
 alter table PizzaStore.[Order]
 add constraint CK_Order_Modified check(ModifiedDate=getdate())
 go
