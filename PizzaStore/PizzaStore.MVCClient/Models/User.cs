@@ -14,6 +14,17 @@ namespace PizzaStore.MVCClient.Models
         [Required]
         public new string name { get; set; }
 
+        public User()
+        {
+        }
+
+        public User(dom.User domuser)
+        {
+            Id = Id;
+            name = name;
+
+        }
+
         public List<Order> GetOrders()
         {
             var datUser = new dat.User() { UserId = (short)Id };
@@ -26,6 +37,13 @@ namespace PizzaStore.MVCClient.Models
             }
 
             return MVCOrderList;
+        }
+
+        public User GetUserByName(string enteredName)
+        {
+            var domUser = UserHelper.GetUserByName(enteredName);
+            var mvcuser = new User(domUser);
+            return mvcuser;
         }
 
     }

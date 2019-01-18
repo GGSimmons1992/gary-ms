@@ -6,15 +6,27 @@ using dom = PizzaStore.Domain.Models;
 
 namespace PizzaStore.MVCClient.Models
 {
-    public class Order: dom.Order
+    public class Order
     {
+        public int Id { get; set; }
+        public byte StoreId { get; set; }
+        public short UserID { get; set; }
+        public double finalCost { get; set; }
+        public List<Pizza> PizzaList { get; set; }
+
+
         public Order(dom.Order domOrder)
         {
             Id = domOrder.Id;
-            StoreID =domOrder.StoreID;
+            StoreId =domOrder.StoreID;
             UserID = domOrder.UserID;
             finalCost = domOrder.finalCost;
-            PizzaList = domOrder.PizzaList;
+
+            foreach (var item in domOrder.PizzaList)
+            {
+                var mvcpizza = new Pizza(item);
+                PizzaList.Add(mvcpizza);
+            }
         }
     }
 }

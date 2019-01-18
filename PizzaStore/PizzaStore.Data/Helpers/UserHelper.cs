@@ -32,6 +32,13 @@ namespace PizzaStore.Data.Helpers
             return ls;
         }
 
+        public static dom.User GetUserByName(string enteredName)
+        {
+            var userlist = GetUsers();
+            var selectedUser=userlist.FirstOrDefault(u => u.name== enteredName);
+            return selectedUser;
+        }
+
         public static List<dom.Order> GetOrdersByUser(User du)
         {
             var orderlist = new List<dom.Order>();
