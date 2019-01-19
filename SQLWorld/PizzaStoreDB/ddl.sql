@@ -15,7 +15,7 @@ create table PizzaStore.Crust
 (
 CrustID tinyint not null primary key identity(1,1)
 ,Name nvarchar(50) not null
-,CrustFactor decimal(2,2) not null default (01.00)
+,CrustFactor decimal(4,2) not null default (01.00)
 ,ModifiedDate datetime2(0) not null
 ,Active bit not null default(1)
 );

@@ -23,8 +23,7 @@ go
 
 insert into PizzaStore.[Ingredient](Name,ModifiedDate)
 values
-('Crust',dbo.ESTNow())
-,('TomatoSauce',dbo.ESTNow())
+('TomatoSauce',dbo.ESTNow())
 ,('Mozzarella',dbo.ESTNow())
 ,('Pepperoni',dbo.ESTNow())
 ,('Mushrooms',dbo.ESTNow())
@@ -37,18 +36,24 @@ values
 ,('Stuffed',1.50,dbo.ESTNow())
 ,('Thin',1.25,dbo.ESTNow())
 ,('Deep Dish',1.75,dbo.ESTNow());
-
+select * from PizzaStore.[Crust];
 
 insert into PizzaStore.[Location](ModifiedDate)
 values 
 (dbo.ESTNow())
+,(dbo.ESTNow())
+,(dbo.ESTNow())
+,(dbo.ESTNow())
 ,(dbo.ESTNow());
 ;select * from PizzaStore.[Location];
 
 insert into PizzaStore.[User](name,password,ModifiedDate)
 values
 ('Hugo','D03!',dbo.ESTNow())
-,('Liv','W@7k1n6',dbo.ESTNow());
+,('Liv','W@7k1n6',dbo.ESTNow())
+,('Angel','Pr@y3r',dbo.ESTNow())
+,('Phoenix','D0wn!',dbo.ESTNow())
+,('Admin','Pizza',dbo.ESTNow());
 ;select * from PizzaStore.[User];
 
 

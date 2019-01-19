@@ -14,6 +14,9 @@ namespace PizzaStore.MVCClient.Models
         public double finalCost { get; set; }
         public List<Pizza> PizzaList { get; set; }
 
+        public Order()
+        {
+        }
 
         public Order(dom.Order domOrder)
         {
@@ -28,5 +31,6 @@ namespace PizzaStore.MVCClient.Models
                 PizzaList.Add(mvcpizza);
             }
         }
+
     }
 }

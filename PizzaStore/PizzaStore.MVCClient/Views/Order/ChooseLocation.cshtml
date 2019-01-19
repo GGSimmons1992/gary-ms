@@ -1,0 +1,28 @@
+﻿@model PizzaStore.MVCClient.Models.LocationUser
+
+@{
+    ViewData["Title"] = "Choose Location";
+}
+
+<h1>ChooseLocation</h1>
+
+@using (Html.BeginForm("ValidatePair", "Order"))
+{
+    @Html.LabelFor(m=>m.Name,"Insert Username")
+    <br>
+    @Html.TextBoxFor(m=>m.Name);
+    <br>
+    @Html.LabelFor(m=>m.StoreId)
+
+    foreach (var item in Model.AvailableLocations)
+    {
+        <br>
+        <span>@item.id.ToString()</span>
+        @Html.RadioButtonFor(m => m.StoreId,item.id);
+    }
+    <br>
+    <button type="submit">submit</button>
+}
+
+
+

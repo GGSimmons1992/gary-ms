@@ -9,10 +9,12 @@ using dat = PizzaStore.Data.Models;
 
 namespace PizzaStore.MVCClient.Models
 {
-    public class User: dom.User
+    public class User : dom.User
     {
         [Required]
         public new string name { get; set; }
+        public new int Id { get; set; }
+        public new List<Order> History {get;set;}
 
         public User()
         {
@@ -20,8 +22,15 @@ namespace PizzaStore.MVCClient.Models
 
         public User(dom.User domuser)
         {
-            Id = Id;
-            name = name;
+            if (null != domuser)
+            {
+                Id = domuser.Id;
+                name = domuser.name;
+                foreach (var item in domuser.History)
+                {
+                    History.Add(new Order(item));
+                }
+            }
 
         }
 

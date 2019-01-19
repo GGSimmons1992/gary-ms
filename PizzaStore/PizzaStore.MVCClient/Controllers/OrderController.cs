@@ -4,20 +4,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PizzaStore.MVCClient.Models;
 
 namespace PizzaStore.MVCClient.Controllers
 {
+    [Route("Order")]
     public class OrderController : Controller
     {
         // GET: Order
+        [HttpGet("OrderMenu")]
         public ActionResult OrderMenu()
         {
             return View();
         }
 
+        [HttpGet("UserLocationMenu")]
         public ActionResult UserLocationMenu()
         {
-            return View();
+            var locationuser = new LocationUser();
+            locationuser.AvailableLocations= locationuser.GetLocations();
+
+
+            return View("ChooseLocation",locationuser);
         }
 
         // GET: Order/Details/5
@@ -33,20 +41,18 @@ namespace PizzaStore.MVCClient.Controllers
         }
 
         // POST: Order/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [HttpPost("ValidatePair")]
+        public ActionResult ValidatePair(LocationUser locationuser)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            var newUser = (new User()).GetUserByName(locationuser.Name);
 
-                return RedirectToAction(nameof(OrderMenu));
-            }
-            catch
+            if (newUser != null)
             {
-                return View();
+                var newOrder = new Order() { UserID =(short) newUser.Id, StoreId = (byte)locationuser.StoreId };
+                return View("OrderMenu", newOrder);
             }
+
+            else return RedirectToAction("SignIn","Home");
         }
 
         // GET: Order/Edit/5
