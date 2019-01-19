@@ -17,18 +17,25 @@ namespace PizzaStore.Data.Helpers
         public static List<dom.Order> GetOrders()
         {
             var ls = new List<dom.Order>();
-
             foreach (var l in _db.Order.ToList())
             {
-                var newOrder = new dom.Order()
+                if (l.Active == true)
                 {
-                Id = l.OrderId
-                ,StoreID = (byte) l.StoreId
-                ,TimeStamp = l.TimeStamp
-                ,UserID = (short) l.UserId
-                ,Voidable = (bool) l.Voidable
-                };
-                ls.Add(newOrder);
+                    var newOrder = new dom.Order()
+                    {
+                        Id = l.OrderId
+                ,
+                        StoreID = (byte)l.StoreId
+                ,
+                        TimeStamp = l.TimeStamp
+                ,
+                        UserID = (short)l.UserId
+                ,
+                        Voidable = (bool)l.Voidable
+                    };
+                    ls.Add(newOrder);
+                }
+
             }
 
             return ls;
@@ -45,16 +52,20 @@ namespace PizzaStore.Data.Helpers
 
                 foreach (var item in dataUser.Order.ToList())
                 {
-                    var domOrder = new dom.Order()
+                    if (item.Active ==true)
                     {
-                        Id = item.OrderId,
-                        TimeStamp = item.TimeStamp,
-                        Voidable = (bool) item.Voidable,
-                        UserID = (short)item.UserId,
-                        StoreID = (byte)item.StoreId
-                    };
+                        var domOrder = new dom.Order()
+                        {
+                            Id = item.OrderId,
+                            TimeStamp = item.TimeStamp,
+                            Voidable = (bool)item.Voidable,
+                            UserID = (short)item.UserId,
+                            StoreID = (byte)item.StoreId
+                        };
+                        orders.Add(domOrder);
+                    }
 
-                    orders.Add(domOrder);
+                    
                 }
                 return orders;
             }
@@ -70,18 +81,21 @@ namespace PizzaStore.Data.Helpers
 
             foreach (var item in dataorders)
             {
-                var domorder = new dom.Order()
+                if (item.Active == true)
                 {
-                    Id=item.OrderId,
-                    TimeStamp=item.TimeStamp,
-                    StoreID=(byte)item.StoreId,
-                    Voidable=(bool) item.Voidable,
-                    UserID=(short) item.UserId,
-                    Store=LocationHelper.GetLocationByOrder(item),
-                    PizzaList=GetPizzasByOrder(item),
-                    finalCost=GetCostByOrder(item)
-                };
-                orderlist.Add(domorder);
+                    var domorder = new dom.Order()
+                    {
+                        Id = item.OrderId,
+                        TimeStamp = item.TimeStamp,
+                        StoreID = (byte)item.StoreId,
+                        Voidable = (bool)item.Voidable,
+                        UserID = (short)item.UserId,
+                        Store = LocationHelper.GetLocationByOrder(item),
+                        PizzaList = GetPizzasByOrder(item),
+                        finalCost = GetCostByOrder(item)
+                    };
+                    orderlist.Add(domorder);
+                }
                 
             }
 
@@ -95,26 +109,31 @@ namespace PizzaStore.Data.Helpers
             var dataPizzas = _db.Pizza.Where(p => p.OrderId == dr.OrderId).ToList();
             foreach (var item in dataPizzas)
             {
-                var crust = _db.Crust.Where(c => c.CrustId == item.CrustId).FirstOrDefault();
-                if (crust == null)
+                if (item.Active == true)
                 {
-                    crust = _db.Crust.Where(c => c.Name == "Regular").FirstOrDefault();
-                    item.CrustId = crust.CrustId;
+                    var crust = _db.Crust.Where(c => c.CrustId == item.CrustId).FirstOrDefault();
+                    if (crust == null)
+                    {
+                        crust = _db.Crust.Where(c => c.Name == "Regular").FirstOrDefault();
+                        item.CrustId = crust.CrustId;
+                    }
+
+                    var dompizza = new dom.Pizza()
+                    {
+                        Id = (int)item.PizzaId,
+                        crustSize = (int)item.Size,
+                        ModifiedDate = item.ModifiedDate,
+                        OrderId = (int)item.OrderId,
+                        Toppings = PizzaHelper.GetIngredientsByPizza(item),
+                        price = PizzaHelper.GetPriceByPizza(item),
+                        CrustId = (byte)item.CrustId,
+                        CrustFactor = (double)crust.CrustFactor
+                    };
+
+                    pizzalist.Add(dompizza);
                 }
 
-                var dompizza = new dom.Pizza()
-                {
-                    Id = (int)item.PizzaId,
-                    crustSize = (int)item.Size,
-                    ModifiedDate = item.ModifiedDate,
-                    OrderId = (int)item.OrderId,
-                    Toppings = PizzaHelper.GetIngredientsByPizza(item),
-                    price = PizzaHelper.GetPriceByPizza(item),
-                    CrustId = (byte)item.CrustId,
-                    CrustFactor = (double)crust.CrustFactor
-                };
-
-                pizzalist.Add(dompizza);
+                
             }
             return pizzalist;
         }

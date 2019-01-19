@@ -10,14 +10,17 @@ namespace PizzaStore.MVCClient.Controllers
 {
     public class HomeController : Controller
     {
+        
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+
+        [HttpGet("/Home/SignUp")]
+        public IActionResult SignUp()
         {
-            return View();
+            return View("SignUp");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

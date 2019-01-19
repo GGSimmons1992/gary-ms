@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PizzaStore.Data.Helpers;
 using PizzaStore.MVCClient.Models;
+using dom=PizzaStore.Domain.Models;
 
 namespace PizzaStore.MVCClient.Controllers
 {
@@ -13,9 +15,15 @@ namespace PizzaStore.MVCClient.Controllers
     {
         // GET: Order
         [HttpGet("OrderMenu")]
-        public ActionResult OrderMenu()
+        public ActionResult OrderMenu(int OrderId)
         {
-            return View();
+            var orderID = HttpContext.Session.GetInt32("orderID");
+            var OrderList = OrderHelper.GetOrders();
+            var ThisOrder = OrderList.FirstOrDefault(o => o.Id == orderID);
+
+            ViewBag.ThisOrder = ThisOrder;
+
+            return View("OrderMenu");
         }
 
         [HttpGet("UserLocationMenu")]
@@ -40,19 +48,21 @@ namespace PizzaStore.MVCClient.Controllers
             return View();
         }
 
-        // POST: Order/Create
+        // POST: Order/ValidatePair
         [HttpPost("ValidatePair")]
         public ActionResult ValidatePair(LocationUser locationuser)
         {
-            var newUser = (new User()).GetUserByName(locationuser.Name);
+            var newUser = OrderViewModel.GetUserByName(locationuser.Name);
 
             if (newUser != null)
             {
-                var newOrder = new Order() { UserID =(short) newUser.Id, StoreId = (byte)locationuser.StoreId };
-                return View("OrderMenu", newOrder);
+                var orderID=OrderViewModel.SetDefaultOrder(locationuser.StoreId,locationuser.Name);
+                HttpContext.Session.SetInt32("orderID",orderID);
+
+                return OrderMenu(orderID);
             }
 
-            else return RedirectToAction("SignIn","Home");
+            else return RedirectToAction("SignUp","Home");
         }
 
         // GET: Order/Edit/5

@@ -17,12 +17,16 @@ namespace PizzaStore.Data.Helpers
 
             foreach (var l in _db.Location.ToList())
             {
-                dom.Location store = new dom.Location()
+                if (l.Active == true)
                 {
-                    Id = l.LocationId,
-                    ModifiedDate = l.ModifiedDate
-                };
-                ls.Add(store);
+                    dom.Location store = new dom.Location()
+                    {
+                        Id = l.LocationId,
+                        ModifiedDate = l.ModifiedDate
+                    };
+                    ls.Add(store);
+                }
+                
             }
 
             return ls;
@@ -55,15 +59,19 @@ namespace PizzaStore.Data.Helpers
 
             foreach (var item in DesiredLUPairs)
             {
-                var myuser = _db.User.Where(u => u.UserId == item.UserId).FirstOrDefault();
-                var domuser = new dom.User()
+                if (item.Active == true)
                 {
-                    Id = myuser.UserId,
-                    name = myuser.Name,
-                    password = myuser.Password,
-                    ModifiedDate = myuser.ModifiedDate
-                };
-                userlist.Add(domuser);
+                    var myuser = _db.User.Where(u => u.UserId == item.UserId).FirstOrDefault();
+                    var domuser = new dom.User()
+                    {
+                        Id = myuser.UserId,
+                        name = myuser.Name,
+                        password = myuser.Password,
+                        ModifiedDate = myuser.ModifiedDate
+                    };
+                    userlist.Add(domuser);
+                }
+                
             }
 
             return userlist;
@@ -77,15 +85,19 @@ namespace PizzaStore.Data.Helpers
 
             foreach (var item in desiredOrders)
             {
-                var newOrder = new dom.Order()
+                if (item.Active == true)
                 {
-                    Id = item.OrderId,
-                    StoreID = (byte)item.StoreId,
-                    TimeStamp = item.TimeStamp,
-                    UserID = (short)item.UserId,
-                    Voidable = (bool) item.Voidable
-                };
-                orders.Add(newOrder);
+                    var newOrder = new dom.Order()
+                    {
+                        Id = item.OrderId,
+                        StoreID = (byte)item.StoreId,
+                        TimeStamp = item.TimeStamp,
+                        UserID = (short)item.UserId,
+                        Voidable = (bool)item.Voidable
+                    };
+                    orders.Add(newOrder);
+                }
+                
             }
 
             return orders;

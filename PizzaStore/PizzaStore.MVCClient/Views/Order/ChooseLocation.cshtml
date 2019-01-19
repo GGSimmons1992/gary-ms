@@ -1,10 +1,10 @@
 ﻿@model PizzaStore.MVCClient.Models.LocationUser
 
 @{
-    ViewData["Title"] = "Choose Location";
+    ViewData["Title"] = "Initalize Order";
 }
 
-<h1>ChooseLocation</h1>
+<h1>Initialize Order</h1>
 
 @using (Html.BeginForm("ValidatePair", "Order"))
 {
@@ -17,8 +17,8 @@
     foreach (var item in Model.AvailableLocations)
     {
         <br>
-        <span>@item.id.ToString()</span>
-        @Html.RadioButtonFor(m => m.StoreId,item.id);
+        <span>@item.Id.ToString()</span>
+        @Html.RadioButtonFor(m => m.StoreId,item.Id);
     }
     <br>
     <button type="submit">submit</button>

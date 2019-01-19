@@ -17,24 +17,33 @@ namespace PizzaStore.Data.Helpers
 
             foreach (var l in _db.Pizza.ToList())
             {
-                var crust = _db.Crust.Where(c => c.CrustId == l.CrustId).FirstOrDefault();
-
-                if (crust == null)
+                if (l.Active == true)
                 {
-                    crust = _db.Crust.Where(c => c.Name == "Regular").FirstOrDefault();
-                    l.CrustId = crust.CrustId;
+                    var crust = _db.Crust.Where(c => c.CrustId == l.CrustId).FirstOrDefault();
+
+                    if (crust == null)
+                    {
+                        crust = _db.Crust.Where(c => c.Name == "Regular").FirstOrDefault();
+                        l.CrustId = crust.CrustId;
+                    }
+
+                    var newPizza = new dom.Pizza()
+                    {
+                        Id = (int)l.PizzaId
+                        ,
+                        OrderId = (int)l.OrderId
+                        ,
+                        ModifiedDate = l.ModifiedDate
+                        ,
+                        crustSize = (int)l.Size
+                        ,
+                        CrustFactor = (double)crust.CrustId
+                        ,
+                        CrustId = (byte)l.CrustId
+                    };
+                    ls.Add(newPizza);
                 }
-
-                var newPizza = new dom.Pizza()
-                {
-                    Id = (int)l.PizzaId
-                    , OrderId = (int)l.OrderId
-                    , ModifiedDate = l.ModifiedDate
-                    , crustSize = (int)l.Size
-                    , CrustFactor = (double) crust.CrustId
-                    , CrustId =(byte) l.CrustId
-                };
-                ls.Add(newPizza);
+                
             }
 
             return ls;
@@ -50,8 +59,12 @@ namespace PizzaStore.Data.Helpers
             {
                 foreach (var item in piPairs)
                 {
-                    var myingredient = _db.Ingredient.Where(i => i.IngredientId == item.IngredientId).FirstOrDefault();
-                    { toppings.Add(myingredient.Name); }
+                    if (item.Active == true)
+                    {
+                        var myingredient = _db.Ingredient.Where(i => i.IngredientId == item.IngredientId).FirstOrDefault();
+                        { toppings.Add(myingredient.Name); }
+                    }
+                    
                 }
             }
                 
