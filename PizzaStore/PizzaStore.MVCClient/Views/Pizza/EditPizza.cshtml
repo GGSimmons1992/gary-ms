@@ -1,0 +1,35 @@
+﻿@model PizzaStore.MVCClient.Models.PizzaViewModel
+@{
+    ViewData["Title"] = "EditPizza";
+}
+
+<h1>Editting Pizza # @Model.Id </h1>
+
+@Html.BeginForm("Update/@Model.Id","Pizza")
+{
+<div class="row">
+    <div class="col">
+        <span>Crust=</span>
+    </div>
+    <div class="col">
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+    </div>
+    <div class="col">
+    </div>
+</div>
+
+@foreach (var item in Model.Toppings)
+{
+<div class="row">
+    <div class="col">
+    </div>
+    <div class="col">
+    </div>
+</div>
+}
+
+}
+

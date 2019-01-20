@@ -12,7 +12,7 @@
     <br>
     @Html.TextBoxFor(m=>m.Name);
     <br>
-    @Html.LabelFor(m=>m.StoreId)
+    @Html.LabelFor(m=>m.StoreId, "Choose a location")
 
     foreach (var item in Model.AvailableLocations)
     {
@@ -20,6 +20,8 @@
         <span>@item.Id.ToString()</span>
         @Html.RadioButtonFor(m => m.StoreId,item.Id);
     }
+    <br>
+    @Html.ValidationMessageFor(m=>m.StoreId)
     <br>
     <button type="submit">submit</button>
 }

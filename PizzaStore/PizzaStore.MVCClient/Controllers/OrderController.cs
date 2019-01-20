@@ -5,25 +5,47 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PizzaStore.Data.Helpers;
+using dat=PizzaStore.Data.Models;
 using PizzaStore.MVCClient.Models;
 using dom=PizzaStore.Domain.Models;
 
 namespace PizzaStore.MVCClient.Controllers
 {
+
     [Route("Order")]
     public class OrderController : Controller
     {
+        private static dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
+
         // GET: Order
         [HttpGet("OrderMenu")]
-        public ActionResult OrderMenu(int OrderId)
+        public ActionResult OrderMenu(int _OrderId)
+        {
+            
+            var OrderList = OrderHelper.GetOrders();
+            var ThisOrder = OrderList.FirstOrDefault(o => o.Id == _OrderId);
+            var dataOrder = new dat.Order() { OrderId = _OrderId };
+            ThisOrder.PizzaList = OrderHelper.GetPizzasByOrder(dataOrder);
+
+            var i = 0;
+            foreach (var item in ThisOrder.PizzaList)
+            {
+                ViewData[$"Crust{i}"] = PizzaHelper.GetCrustNameByPizza(item);
+                i++;
+            }
+
+            return View("OrderMenu",ThisOrder);
+        }
+
+        [HttpGet("ThankYou")]
+        public ActionResult ThankYou()
         {
             var orderID = HttpContext.Session.GetInt32("orderID");
-            var OrderList = OrderHelper.GetOrders();
-            var ThisOrder = OrderList.FirstOrDefault(o => o.Id == orderID);
+            var dataOrder = _db.Order.Where(o => o.OrderId == orderID).FirstOrDefault();
 
-            ViewBag.ThisOrder = ThisOrder;
-
-            return View("OrderMenu");
+            dataOrder.Voidable=false;
+            _db.SaveChanges();
+            return View("ThankYou");
         }
 
         [HttpGet("UserLocationMenu")]
@@ -34,6 +56,14 @@ namespace PizzaStore.MVCClient.Controllers
 
 
             return View("ChooseLocation",locationuser);
+        }
+
+        [HttpGet("AddPizza")]
+        public ActionResult AddPizza()
+        {
+            var orderID=HttpContext.Session.GetInt32("orderID");
+            PizzaHelper.PizzaSetter(new dom.Pizza() { OrderId = (int)orderID });
+            return OrderMenu((int) orderID);
         }
 
         // GET: Order/Details/5
@@ -53,6 +83,11 @@ namespace PizzaStore.MVCClient.Controllers
         public ActionResult ValidatePair(LocationUser locationuser)
         {
             var newUser = OrderViewModel.GetUserByName(locationuser.Name);
+
+            if (locationuser.StoreId == 0)
+            {
+                return RedirectToAction("UserLocationMenu", "Order");
+            }
 
             if (newUser != null)
             {
