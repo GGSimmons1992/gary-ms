@@ -5,8 +5,45 @@
 
 <h1>Editting Pizza # @Model.Id </h1>
 
-@Html.BeginForm("Update/@Model.Id","Pizza")
+@using (Html.BeginForm("Update/@Model.Id", "Pizza"))
 {
+    @Html.LabelFor(m => m.crustSize, "Choose your crust size")<br>
+    <div class="row">
 
+        @for (var i = 10; i <= 20; i += 2)
+        {
+            <div class="col">@Html.RadioButtonFor(m => m.crustSize, i) <span>@i Inches</span> </div>
+        }
+    </div><br>
+    @Html.LabelFor(m => m.CrustId, "Choose your crust type")<br>
+    <div class="row">
+        @foreach (var item in Model.AvailableCrusts)
+        {
+            <div class="col">@Html.RadioButtonFor(m => m.CrustName, item.CrustId) <span>@item.Name</span> </div>
+        }
+
+    </div><br>
+    @foreach (var item in Model.Toppings)
+    {
+        <div class="row">
+            <div class="col">@item</div>
+            <div class="col"><span>delete topping</span></div><br>
+        </div>
+    }
+    @for (var i = Model.Toppings.Count; i < 5; i++)
+    {
+        <div>Choose new topping. Default is None</div>
+        <div class="row">
+            <div class="col">@Html.RadioButtonFor(m => m.ToppingArray[i], "None") <span>None</span> </div>
+            @foreach (var item in Model.AvailableToppings)
+            {
+                <div class="col">
+                    @Html.RadioButtonFor(m => m.ToppingArray[i], item.IngredientId) <span>@item.Name</span>
+                </div>
+            }
+        </div>
+    }
+
+    <button type="submit">Submit Changes</button>
 }
 

@@ -20,7 +20,7 @@
             
         </div>
         <div class="col">
-            <span>Edit Pizza</span>
+            <a href="/Pizza/EditPizza/@Model.PizzaList[i].Id">Edit Pizza</a>
             <br>
             <span>Remove Pizza</span>
         </div>
@@ -28,6 +28,8 @@
 }
 
     <a asp-action="AddPizza" asp-controller="Order">Add Pizza</a>
+    <br>
     <a asp-action="ThankYou" asp-controller="Order">Submit Order</a>
+    <br>
     <span>Cancel Order</span>
 

@@ -4,9 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PizzaStore.Data.Helpers;
+using PizzaStore.MVCClient.Models;
+using dat = PizzaStore.Data.Models;
 
 namespace PizzaStore.MVCClient.Controllers
 {
+    
     public class PizzaController : Controller
     {
         // GET: Pizza
@@ -16,9 +20,11 @@ namespace PizzaStore.MVCClient.Controllers
         }
 
         // GET: Pizza/Details/5
-        public ActionResult Details(int id)
+        public ActionResult EditPizza(int id)
         {
-            return View();
+            var pvm = new PizzaViewModel(id);
+            HttpContext.Session.SetInt32("pizzaID", id);
+            return View("EditPizza",pvm);
         }
 
         // GET: Pizza/Create
