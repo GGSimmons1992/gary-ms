@@ -1,0 +1,15 @@
+﻿@model PizzaStore.MVCClient.Models.LocationUser
+@{
+    ViewData["Title"] = "EnterUser";
+}
+
+<h1>Enter User name</h1>
+
+@using (Html.BeginForm("ViewOrders", "Customer"))
+{
+    @Html.LabelFor(m=>m.Name)
+    @Html.TextBoxFor(m=>m.Name)
+    
+    <button type="submit">View Orders</button>
+}
+

@@ -5,7 +5,7 @@
 
 <h1>Editting Pizza # @Model.Id </h1>
 
-@using (Html.BeginForm("Update/@Model.Id", "Pizza"))
+@using (Html.BeginForm("Update", "Pizza"))
 {
     @Html.LabelFor(m => m.crustSize, "Choose your crust size")<br>
     <div class="row">
@@ -19,7 +19,7 @@
     <div class="row">
         @foreach (var item in Model.AvailableCrusts)
         {
-            <div class="col">@Html.RadioButtonFor(m => m.CrustName, item.CrustId) <span>@item.Name</span> </div>
+            <div class="col">@Html.RadioButtonFor(m => m.CrustId, item.CrustId) <span>@item.Name</span> </div>
         }
 
     </div><br>
@@ -30,15 +30,15 @@
             <div class="col"><span>delete topping</span></div><br>
         </div>
     }
-    @for (var i = Model.Toppings.Count; i < 5; i++)
+    @for (var i = 0; i < (5-Model.Toppings.Count); i++)
     {
         <div>Choose new topping. Default is None</div>
         <div class="row">
-            <div class="col">@Html.RadioButtonFor(m => m.ToppingArray[i], "None") <span>None</span> </div>
+            <div class="col">@Html.RadioButtonFor(m => m.ToppingIDArray[i], 0) <span>None</span> </div>
             @foreach (var item in Model.AvailableToppings)
             {
                 <div class="col">
-                    @Html.RadioButtonFor(m => m.ToppingArray[i], item.IngredientId) <span>@item.Name</span>
+                    @Html.RadioButtonFor(m => m.ToppingIDArray[i], (int) item.IngredientId) <span>@item.Name</span>
                 </div>
             }
         </div>

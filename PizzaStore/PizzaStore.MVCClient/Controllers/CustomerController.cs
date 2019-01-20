@@ -4,12 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using dat=PizzaStore.Data.Models;
 using PizzaStore.MVCClient.Models;
+using PizzaStore.Data.Helpers;
 
 namespace PizzaStore.MVCClient.Controllers
 {
+    
+
     public class CustomerController : Controller
     {
+        private static dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
 
         // GET: Customer
         public ActionResult CustomerMenu()
@@ -17,9 +22,18 @@ namespace PizzaStore.MVCClient.Controllers
             return View();
         }
 
-        public ActionResult ViewHistory()
+        public ActionResult EnterUser()
         {
-            return View("ViewOrders");
+            return View("EnterUser");
+        }
+
+        public ActionResult ViewOrders(LocationUser enteredUser)
+        {
+            var dataUser = _db.User.Where(u => u.Name == enteredUser.Name).FirstOrDefault();
+            enteredUser.History = UserHelper.GetOrdersByUser(dataUser);
+            enteredUser.AssignCrusts();
+
+            return View("ViewOrders",enteredUser);
         }
         // GET: Customer/Details/5
         public ActionResult Details(int id)

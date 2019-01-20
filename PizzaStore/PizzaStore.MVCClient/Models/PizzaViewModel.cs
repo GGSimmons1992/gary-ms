@@ -14,22 +14,18 @@ namespace PizzaStore.MVCClient.Models
         public List<dat.Crust> AvailableCrusts { get; set; }
         private static dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
         public string CrustName { get; set; }
-        public string[] ToppingArray { get; set; }
+        public int[] ToppingIDArray { get; set; }
 
-        public PizzaViewModel(int id)
+        public PizzaViewModel()
         {
-            Id = id;
             AvailableToppings = _db.Ingredient.ToList();
-            AvailableCrusts = _db.Crust.ToList();
-            var datpizza = _db.Pizza.Where(p => p.PizzaId == Id).FirstOrDefault();
-            Toppings = PizzaHelper.GetIngredientsByPizza(datpizza);
-            ToppingArray = new string[5];
+            AvailableCrusts = _db.Crust.ToList();            
+        }
 
-            for (var i = 0; i < Toppings.Count; i++)
-            {
-                ToppingArray[i] = Toppings[i];
-            }
-
+        public void AssignToppingsByID(int ID)
+        {
+            var datapizza = new dat.Pizza() {PizzaId=ID};
+            Toppings = PizzaHelper.GetIngredientsByPizza(datapizza);
         }
     }
 }

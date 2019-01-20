@@ -13,6 +13,8 @@ namespace PizzaStore.MVCClient.Controllers
     
     public class PizzaController : Controller
     {
+        private static dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
+
         // GET: Pizza
         public ActionResult Index()
         {
@@ -22,10 +24,13 @@ namespace PizzaStore.MVCClient.Controllers
         // GET: Pizza/Details/5
         public ActionResult EditPizza(int id)
         {
-            var pvm = new PizzaViewModel(id);
+            var pvm = new PizzaViewModel() { Id=id};
+            pvm.AssignToppingsByID(id);
             HttpContext.Session.SetInt32("pizzaID", id);
+            pvm.ToppingIDArray = new int[(5-pvm.Toppings.Count)];
             return View("EditPizza",pvm);
         }
+
 
         // GET: Pizza/Create
         public ActionResult Create()
@@ -34,20 +39,45 @@ namespace PizzaStore.MVCClient.Controllers
         }
 
         // POST: Pizza/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Update(PizzaViewModel pizzaview)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            var pizzaID = HttpContext.Session.GetInt32("pizzaID");
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            if (pizzaview.ToppingIDArray != null)
             {
-                return View();
+                foreach (var top in pizzaview.ToppingIDArray)
+                {
+                    if (top != 0)
+                    {
+                        var pipair = new dat.PizzaIngredient()
+                        {
+                            PizzaId = pizzaID
+                            ,
+                            IngredientId = (short)top
+                        };
+                        _db.PizzaIngredient.Add(pipair);
+                        _db.SaveChanges();
+                    }
+                }
             }
+            
+
+            var datapizza = _db.Pizza.Where(p => p.PizzaId == pizzaID).FirstOrDefault();
+
+            if (pizzaview.CrustId != 0)
+            {
+                datapizza.CrustId = (byte)pizzaview.CrustId;
+                _db.SaveChanges();
+            }
+            if (pizzaview.crustSize != 0)
+            {
+                datapizza.Size = (byte) pizzaview.crustSize;
+                _db.SaveChanges();
+            }
+            datapizza.Price=(decimal) PizzaHelper.GetPriceByPizza(datapizza);
+            _db.SaveChanges();
+
+            return RedirectToAction("OrderMenu","Order");
         }
 
         // GET: Pizza/Edit/5

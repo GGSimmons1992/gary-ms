@@ -43,5 +43,30 @@ namespace PizzaStore.MVCClient.Models
 
         }
 
+        public static List<dom.Pizza> GetPizzasByOrderID(int orderID)
+        {
+            var datapizzas = _db.Pizza.Where(p => p.OrderId == orderID).ToList();
+            var domPizzaList = new List<dom.Pizza>();
+
+            foreach (var item in datapizzas)
+            {
+                var dompizza = new dom.Pizza()
+                {
+                    CrustId=(int) item.CrustId
+                    ,crustSize=(int) item.Size
+                    ,OrderId=(int) item.OrderId
+                    ,ModifiedDate=item.ModifiedDate
+                    ,Id=(int) item.PizzaId
+                };
+
+                dompizza.Toppings = PizzaHelper.GetIngredientsByPizza(item);
+                dompizza.CrustFactor = PizzaHelper.GetFactorByCrustID(item.CrustId);
+                dompizza.price = dompizza.CalculateCost();
+
+                domPizzaList.Add(dompizza);
+            }
+            return domPizzaList;
+        }
+
     }
 }
