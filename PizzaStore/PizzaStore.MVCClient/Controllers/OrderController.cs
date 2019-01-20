@@ -33,6 +33,7 @@ namespace PizzaStore.MVCClient.Controllers
                 ViewData[$"Crust{i}"] = PizzaHelper.GetCrustNameByPizza(item);
                 i++;
             }
+            
 
             return View("OrderMenu",ThisOrder);
         }
@@ -54,6 +55,11 @@ namespace PizzaStore.MVCClient.Controllers
             var locationuser = new LocationUser();
             locationuser.AvailableLocations= locationuser.GetLocations();
 
+            if (HttpContext.Session.GetString("LocationError") != null)
+            {
+                ViewData["LocationError"] = HttpContext.Session.GetString("LocationError");
+                HttpContext.Session.Remove("LocationError");
+            }
 
             return View("ChooseLocation",locationuser);
         }
@@ -86,18 +92,24 @@ namespace PizzaStore.MVCClient.Controllers
 
             if (locationuser.StoreId == 0)
             {
+                HttpContext.Session.SetString("LocationError", "Location needs to be picked!");
                 return RedirectToAction("UserLocationMenu", "Order");
             }
 
             if (newUser != null)
             {
-                var orderID=OrderViewModel.SetDefaultOrder(locationuser.StoreId,locationuser.Name);
-                HttpContext.Session.SetInt32("orderID",orderID);
+                var orderID = OrderViewModel.SetDefaultOrder(locationuser.StoreId, locationuser.Name);
+                HttpContext.Session.SetInt32("orderID", orderID);
 
                 return OrderMenu(orderID);
             }
 
-            else return RedirectToAction("SignUp","Home");
+            else
+            {
+                HttpContext.Session.SetString("UserError","Your username is not found.");
+                return RedirectToAction("SignUp", "Home");
+            }
+                
         }
 
         // GET: Order/Edit/5

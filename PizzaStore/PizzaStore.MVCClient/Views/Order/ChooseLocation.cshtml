@@ -12,6 +12,12 @@
     <br>
     @Html.TextBoxFor(m=>m.Name);
     <br>
+
+    if ( ViewData["LocationError"] != null)
+    {
+        <h2>@ViewData["LocationError"]</h2>
+    }
+
     @Html.LabelFor(m=>m.StoreId, "Choose a location")
 
     foreach (var item in Model.AvailableLocations)

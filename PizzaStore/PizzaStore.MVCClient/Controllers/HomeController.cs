@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PizzaStore.MVCClient.Models;
 
@@ -20,6 +21,11 @@ namespace PizzaStore.MVCClient.Controllers
         [HttpGet("/Home/SignUp")]
         public IActionResult SignUp()
         {
+            if (HttpContext.Session.GetString("UserError") != null)
+            {
+                ViewData["UserError"] = HttpContext.Session.GetString("UserError");
+                HttpContext.Session.Remove("UserError");
+            }
             return View("SignUp");
         }
 

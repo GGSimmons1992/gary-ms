@@ -4,4 +4,7 @@
 }
 
 <h1>Create New User</h1>
-
+@if (ViewData["UserError"] != null)
+{
+    <h2>@ViewData["UserError"] !!</h2>
+}
