@@ -24,7 +24,12 @@
         <div class="col">
             <a href="/Pizza/EditPizza/@Model.PizzaList[i].Id">Edit Pizza</a>
             <br>
-            <a href="/Order/DeletePizza/@Model.PizzaList[i].Id">Cancel Pizza</a>
+            @if (Model.PizzaList.Count >= 2)
+            {
+                <a href="/Order/DeletePizza/@Model.PizzaList[i].Id">Cancel Pizza</a>
+            }
+
+
         </div>
     </div>
 }
@@ -34,7 +39,24 @@
     <a asp-action="AddPizza" asp-controller="Order">Add Pizza</a>
     <br>
 }
+else
+{
+    <span>Cannot add more pizzas</span>
+    <br>
+}
 
-<a asp-action="ThankYou" asp-controller="Order">Submit Order</a>
-<br>
-<!--Add Cancel orders for future iterations-->
+@ViewBag.Costlimit=100.00;
+
+@if (Model.Cost() < ViewBag.Costlimit)
+{
+    <a asp-action="ThankYou" asp-controller="Order">Submit Order</a>
+}
+else
+{
+    <span> Order exceeds $ @ViewBag.Costlimit.ToString(). Please edit your order to submit.</span>
+}
+
+
+
+
+

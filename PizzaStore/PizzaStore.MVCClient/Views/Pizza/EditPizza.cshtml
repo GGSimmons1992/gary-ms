@@ -26,7 +26,10 @@
     @foreach (var item in Model.Toppings)
     {
           <div class="row">
-              <div class="col">@item</div>
+              <div class="col"><span>@item</span></div>
+              <div class="col">
+                  <a href="/Pizza/DeleteTopping/@Model.ToppingDictionary[item]">delete @item</a>
+              </div>
               <!--Add Cancel toppings for future iterations-->
           </div>
     }

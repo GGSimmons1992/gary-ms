@@ -31,6 +31,19 @@ namespace PizzaStore.MVCClient.Controllers
             return View("EditPizza",pvm);
         }
 
+        public ActionResult DeleteTopping(int id)
+        {
+            var _db = new dat.PizzaStoreDbContext();
+            int pid = (int) HttpContext.Session.GetInt32("pizzaID");
+
+            var pipairs = _db.PizzaIngredient.Where(pi => pi.PizzaId == pid).ToList();
+            var targetTopping = pipairs.FirstOrDefault(pi => pi.IngredientId == id);
+            targetTopping.Active = false;
+            _db.SaveChanges();
+
+            return EditPizza(pid);
+        }
+
 
         // GET: Pizza/Create
         public ActionResult Create()
