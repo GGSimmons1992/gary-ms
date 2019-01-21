@@ -9,10 +9,11 @@ namespace PizzaStore.Data.Helpers
 {
     public static class UserHelper
     {
-        private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
+        //private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
 
         public static List<dom.User> GetUsers()
         {
+            var _db = new PizzaStoreDbContext();
             var ls = new List<dom.User>();
 
             foreach (var l in _db.User.ToList())
@@ -45,6 +46,7 @@ namespace PizzaStore.Data.Helpers
 
         public static List<dom.Order> GetOrdersByUser(User du)
         {
+            var _db = new PizzaStoreDbContext();
             var orderlist = new List<dom.Order>();
 
             var dataOrders = _db.Order.Where(u => u.UserId == du.UserId).ToList();
@@ -94,6 +96,7 @@ namespace PizzaStore.Data.Helpers
 
         public static int SetUser(dom.User u)
         {
+            var _db = new PizzaStoreDbContext();
             var datauser = new User() {
                 ModifiedDate=DateTime.Now
                 ,Name=u.name

@@ -14,7 +14,7 @@ namespace PizzaStore.MVCClient.Controllers
 
     public class CustomerController : Controller
     {
-        private static dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
+        //private static dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
 
         // GET: Customer
         public ActionResult CustomerMenu()
@@ -29,6 +29,7 @@ namespace PizzaStore.MVCClient.Controllers
 
         public ActionResult ViewOrders(LocationUser enteredUser)
         {
+            dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
             var dataUser = _db.User.Where(u => u.Name == enteredUser.Name).FirstOrDefault();
             enteredUser.History = UserHelper.GetOrdersByUser(dataUser);
             enteredUser.AssignCrusts();

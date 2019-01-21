@@ -10,12 +10,13 @@ namespace PizzaStore.Data.Helpers
     public static class OrderHelper
     {
 
-        private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
+        //private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
 
         
 
         public static List<dom.Order> GetOrders()
         {
+            var _db = new PizzaStoreDbContext();
             var ls = new List<dom.Order>();
             foreach (var l in _db.Order.ToList())
             {
@@ -44,6 +45,7 @@ namespace PizzaStore.Data.Helpers
         public static List<dom.Order> GetOrderByUser(User user)
         {
 
+            var _db = new PizzaStoreDbContext();
             var dataUser = _db.User.Where(u => u.UserId == user.UserId).FirstOrDefault();
 
             if (dataUser != null)
@@ -75,6 +77,7 @@ namespace PizzaStore.Data.Helpers
 
         public static List<dom.Order> GetOrderByLocation(Location Loc)
         {
+            var _db = new PizzaStoreDbContext();
             var dataorders = _db.Order.Where(o => o.StoreId == Loc.LocationId).ToList();
 
             var orderlist = new List<dom.Order>();
@@ -105,6 +108,7 @@ namespace PizzaStore.Data.Helpers
 
         public static List<dom.Pizza> GetPizzasByOrder(Order dr)
         {
+            var _db = new PizzaStoreDbContext();
             var pizzalist = new List<dom.Pizza>();
             var dataPizzas = _db.Pizza.Where(p => p.OrderId == dr.OrderId).ToList();
             foreach (var item in dataPizzas)
@@ -151,6 +155,7 @@ namespace PizzaStore.Data.Helpers
 
         public static int SetOrder(dom.Order r)
         {
+            var _db = new PizzaStoreDbContext();
             var loc = _db.Location.Where(l => l.LocationId == r.StoreID).FirstOrDefault();
             var myuser = _db.User.Where(u => u.UserId == r.UserID).FirstOrDefault();
 

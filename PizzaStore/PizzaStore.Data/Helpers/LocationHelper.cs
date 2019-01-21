@@ -9,10 +9,11 @@ namespace PizzaStore.Data.Helpers
 {
     public static class LocationHelper
     {
-        private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
+        //private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
 
         public static List<dom.Location> GetLocations()
         {
+            var _db = new PizzaStoreDbContext();
             var ls = new List<dom.Location>();
 
             foreach (var l in _db.Location.ToList())
@@ -34,7 +35,7 @@ namespace PizzaStore.Data.Helpers
 
         public static dom.Location GetLocationByOrder(Order dr)
         {
-
+            var _db = new PizzaStoreDbContext();
             var dataStore = _db.Location.Where(l => l.LocationId == dr.StoreId).FirstOrDefault();
 
             dom.Location domstore = new dom.Location()
@@ -53,6 +54,7 @@ namespace PizzaStore.Data.Helpers
 
         public static List<dom.User> GetUsersByLocation(Location dl)
         {
+            var _db = new PizzaStoreDbContext();
             var userlist = new List<dom.User>();
 
             var DesiredLUPairs = _db.LocationUser.Where(lu => lu.LocationId == dl.LocationId).ToList();
@@ -79,6 +81,7 @@ namespace PizzaStore.Data.Helpers
 
         public static List<dom.Order> GetOrdersByLocation(Location dl)
         {
+            var _db = new PizzaStoreDbContext();
             var orders = new List<dom.Order>();
 
             var desiredOrders = _db.Order.Where(r=>r.StoreId==dl.LocationId).ToList();
@@ -117,6 +120,7 @@ namespace PizzaStore.Data.Helpers
 
         public static int SetLocation(dom.Location domloc)
         {
+            var _db = new PizzaStoreDbContext();
             var dataloc = new Location() {
                 ModifiedDate=DateTime.Now
             };
@@ -127,6 +131,7 @@ namespace PizzaStore.Data.Helpers
 
         public static int SetIngredient(string newIngredient)
         {
+            var _db = new PizzaStoreDbContext();
             var dataIngredient = new Ingredient()
             {
                 Name=newIngredient,

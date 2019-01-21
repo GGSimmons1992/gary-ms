@@ -15,7 +15,7 @@ namespace PizzaStore.MVCClient.Controllers
     
     public class OrderController : Controller
     {
-        private static dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
+        //private static dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
 
         // GET: Order
         [HttpGet("/Order/OrderMenu")]
@@ -30,15 +30,15 @@ namespace PizzaStore.MVCClient.Controllers
 
             ThisOrder.PizzaList = OrderViewModel.GetPizzasByOrderID((int)_OrderId);
 
-            var newdb = new dat.PizzaStoreDbContext();
+            //var newdb = new dat.PizzaStoreDbContext();
 
             var i = 0;
             foreach (var item in ThisOrder.PizzaList)
             {
                 var pID = item.Id;
-                var updatedpizza = newdb.Pizza.Where(p => p.PizzaId == pID).FirstOrDefault();
-                item.CrustId = (int) updatedpizza.CrustId;
-                item.crustSize = (byte) updatedpizza.Size;
+                //var updatedpizza = newdb.Pizza.Where(p => p.PizzaId == pID).FirstOrDefault();
+                //item.CrustId = (int) updatedpizza.CrustId;
+                ///item.crustSize = (byte) updatedpizza.Size;
 
                 ViewData[$"Crust{i}"] = PizzaHelper.GetCrustNameByPizza(item);
                 i++;
@@ -51,6 +51,7 @@ namespace PizzaStore.MVCClient.Controllers
         [HttpGet("/Order/ThankYou")]
         public ActionResult ThankYou()
         {
+            dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
             var orderID = HttpContext.Session.GetInt32("orderID");
             var dataOrder = _db.Order.Where(o => o.OrderId == orderID).FirstOrDefault();
 

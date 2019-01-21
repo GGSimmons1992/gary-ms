@@ -10,7 +10,7 @@ namespace PizzaStore.MVCClient.Models
 {
     public static class OrderViewModel
     {
-        private static dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
+        //private static dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
 
         public static dom.User GetUserByName(string enteredName)
         {
@@ -30,7 +30,7 @@ namespace PizzaStore.MVCClient.Models
             domOrder.PizzaList.Add(new dom.Pizza());
 
             OrderHelper.SetOrder(domOrder);
-            var orderlist=OrderHelper.GetOrderByUser(new dat.User() {UserId=(short) domUser.Id});
+            var orderlist=UserHelper.GetOrdersByUser(new dat.User() {UserId=(short) domUser.Id});
             var lastOrder = orderlist[orderlist.Count - 1];
 
             foreach (var item in domOrder.PizzaList)
@@ -45,6 +45,7 @@ namespace PizzaStore.MVCClient.Models
 
         public static List<dom.Pizza> GetPizzasByOrderID(int orderID)
         {
+            var _db = new dat.PizzaStoreDbContext();
             var datapizzas = _db.Pizza.Where(p => p.OrderId == orderID).ToList();
             var domPizzaList = new List<dom.Pizza>();
 

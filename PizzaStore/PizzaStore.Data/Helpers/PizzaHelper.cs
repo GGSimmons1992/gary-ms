@@ -9,10 +9,11 @@ namespace PizzaStore.Data.Helpers
 {
     public static class PizzaHelper
     {
-        private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
+        //private static PizzaStoreDbContext _db = new PizzaStoreDbContext();
 
         public static List<dom.Pizza> GetPizzas()
         {
+            var _db = new PizzaStoreDbContext();
             var ls = new List<dom.Pizza>();
 
             foreach (var l in _db.Pizza.ToList())
@@ -53,6 +54,7 @@ namespace PizzaStore.Data.Helpers
         {
             var toppings = new List<string>();
 
+            var _db = new PizzaStoreDbContext();
             var piPairs = _db.PizzaIngredient.Where(pi => pi.PizzaId == dp.PizzaId).ToList();
 
             if (piPairs != null)
@@ -80,6 +82,7 @@ namespace PizzaStore.Data.Helpers
 
         public static double GetFactorByCrustID(short? crustid)
         {
+            var _db = new PizzaStoreDbContext();
             var crust = _db.Crust.Where(c=>c.CrustId == crustid).FirstOrDefault();
             if (crust == null)
             {
@@ -91,12 +94,14 @@ namespace PizzaStore.Data.Helpers
 
         public static string GetCrustNameByPizza(Pizza dp)
         {
+            var _db = new PizzaStoreDbContext();
             var crust = _db.Crust.Where(c => c.CrustId == dp.CrustId).FirstOrDefault();
             return crust.Name;
         }
 
         public static string GetCrustNameByPizza(dom.Pizza p)
         {
+            var _db = new PizzaStoreDbContext();
             var crust = _db.Crust.Where(c => c.CrustId == p.CrustId).FirstOrDefault();
 
             if (crust == null)
@@ -111,6 +116,7 @@ namespace PizzaStore.Data.Helpers
 
         public static int PizzaSetter(dom.Pizza p)
         {
+            var _db = new PizzaStoreDbContext();
             var myOrder = _db.Order.Where(o => o.OrderId == p.OrderId).FirstOrDefault();
             var myCrust = _db.Crust.Where(c => c.CrustId == p.CrustId).FirstOrDefault();
 
@@ -153,6 +159,7 @@ namespace PizzaStore.Data.Helpers
         {
             foreach (var top in p.Toppings)
             {
+                var _db = new PizzaStoreDbContext();
                 var topping = _db.Ingredient.Where(i => (i.Name).ToLower() == top.ToLower()).FirstOrDefault();
                 if (topping != null)
                 {
