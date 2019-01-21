@@ -3,31 +3,37 @@
 @{
     ViewData["Title"] = "Initalize Order";
 }
-
+@if (ViewData["ErrorMessage"] != null)
+{
+    <h2>@ViewData["ErrorMessage"] !!</h2>
+}
 <h1>Initialize Order</h1>
 
 @using (Html.BeginForm("ValidatePair", "Order"))
 {
-    @Html.LabelFor(m=>m.Name,"Insert Username")
+    @Html.LabelFor(m => m.Name, "Insert Username")
     <br>
-    @Html.TextBoxFor(m=>m.Name);
+    @Html.TextBoxFor(m => m.Name);
+    <br>
+    @Html.LabelFor(m => m.password, "Enter password")<br>
+    @Html.PasswordFor(m => m.password)
     <br>
 
-    if ( ViewData["LocationError"] != null)
+    if (ViewData["LocationError"] != null)
     {
         <h2>@ViewData["LocationError"]</h2>
     }
 
-    @Html.LabelFor(m=>m.StoreId, "Choose a location")
+    @Html.LabelFor(m => m.StoreId, "Choose a location")
 
     foreach (var item in Model.AvailableLocations)
     {
         <br>
-        <span>@item.Id.ToString()</span>
-        @Html.RadioButtonFor(m => m.StoreId,item.Id);
+        <span>Store # @item.Id.ToString()</span>
+        @Html.RadioButtonFor(m => m.StoreId, item.Id);
     }
     <br>
-    @Html.ValidationMessageFor(m=>m.StoreId)
+    @Html.ValidationMessageFor(m => m.StoreId)
     <br>
     <button type="submit">submit</button>
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model PizzaStore.MVCClient.Models.LocationUser
 @{
     ViewData["Title"] = "SignUp";
 }
@@ -7,4 +7,24 @@
 @if (ViewData["UserError"] != null)
 {
     <h2>@ViewData["UserError"] !!</h2>
+}
+@if (ViewData["ErrorMessage"] != null)
+{
+    <h2>@ViewData["ErrorMessage"] !!</h2>
+}
+
+
+@using (Html.BeginForm("login", "Home"))
+{
+    @Html.LabelFor(m => m.Name, "Enter new user name") <br>
+    @Html.TextBoxFor(m => m.Name)
+    <br>
+    @Html.LabelFor(m => m.password, "Enter new password") <br>
+    @Html.PasswordFor(m => m.password)
+    <br>
+    @Html.LabelFor(m=>m.secondary,"Confirm Password") <br>
+    @Html.PasswordFor(m => m.secondary)
+    <br>
+
+    <button type="submit">submit</button>
 }

@@ -12,11 +12,13 @@ namespace PizzaStore.MVCClient.Models
     public class LocationUser
     {
         public string Name { get; set; }
-        [Required(ErrorMessage ="Select One!")]
+        [Required(ErrorMessage = "Select One!")]
         public int StoreId { get; set; }
         public List<dom.Location> AvailableLocations { get; set; }
         public List<dom.Order> History { get; set; }
-        public Dictionary<int,string> CrustDictionary { get; set; }
+        public Dictionary<int, string> CrustDictionary { get; set; }
+        public string password { get; set; }
+        public string secondary { get; set; }
 
         public LocationUser()
         {

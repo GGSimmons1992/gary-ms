@@ -49,6 +49,15 @@ namespace PizzaStore.MVCClient.Controllers
             return View("OrderMenu",ThisOrder);
         }
 
+        public ActionResult DeletePizza(int id)
+        {
+            var _db = new dat.PizzaStoreDbContext();
+            var datapizza =_db.Pizza.Where(p=>p.PizzaId==id).FirstOrDefault();
+            datapizza.Active = false;
+            _db.SaveChanges();
+            return OrderMenu();
+        }
+
         [HttpGet("/Order/ThankYou")]
         public ActionResult ThankYou()
         {
@@ -71,6 +80,11 @@ namespace PizzaStore.MVCClient.Controllers
             {
                 ViewData["LocationError"] = HttpContext.Session.GetString("LocationError");
                 HttpContext.Session.Remove("LocationError");
+            }
+            if (HttpContext.Session.GetString("passworderror") != null)
+            {
+                ViewData["ErrorMessage"] = HttpContext.Session.GetString("passworderror");
+                HttpContext.Session.Remove("passworderror");
             }
 
             return View("ChooseLocation",locationuser);
@@ -110,6 +124,12 @@ namespace PizzaStore.MVCClient.Controllers
 
             if (newUser != null)
             {
+                if (newUser.password != locationuser.password)
+                {
+                    HttpContext.Session.SetString("passworderror", "Passwords don't match");
+                    return RedirectToAction("UserLocationMenu", "Order");
+                }
+
                 HttpContext.Session.SetString("lastuser", locationuser.Name);
                 HttpContext.Session.SetString("currentlocation", (locationuser.StoreId).ToString());
                 var orderID = OrderViewModel.SetDefaultOrder(locationuser.StoreId, locationuser.Name);

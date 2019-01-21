@@ -10,6 +10,7 @@
     if (item.Voidable == false)
     {
         <h3>Order # @item.Id </h3>
+        <h3>Store # @item.StoreID  </h3>
         <h3>Price: $ @item.Cost() </h3>
         <h3>Submitted: @item.TimeStamp.ToString()</h3>
         @for (var i = 0; i < item.PizzaList.Count; i++)
@@ -33,42 +34,4 @@
 
 
 }
-<p>-------------------------------------------</p><br>
-<h2> @ViewData["name"]'s Unfinished Orders</h2>
-@foreach (var item in Model.History)
-{
-    if (item.Voidable == true)
-    {
-        <div class="row">
-            <div class="col">
-                <h3>Order # @item.Id </h3>
-                <h3>Price: $ @item.Cost() </h3>
-                @for (var i = 0; i < item.PizzaList.Count; i++)
-                {
-                    <div>
-                        <div>
-                            <span> $ @item.PizzaList[i].CalculateCost() : @item.PizzaList[i].crustSize inch @Model.CrustDictionary[item.PizzaList[i].Id]</span>
-                            <br>
-
-                            @foreach (var p in @item.PizzaList[i].Toppings)
-                            {
-                                <span>@p</span>
-                            }
-
-                        </div>
-                    </div>
-                }
-            </div>
-            <div class="col">
-                <span>Return to order</span>
-            </div>
-        </div>
-
-        <br>
-        <br>
-    }
-
-
-}
-
 

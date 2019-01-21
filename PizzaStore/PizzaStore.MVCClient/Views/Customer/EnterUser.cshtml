@@ -2,14 +2,22 @@
 @{
     ViewData["Title"] = "EnterUser";
 }
+@if (ViewData["ErrorMessage"] != null)
+{
+    <h2>@ViewData["ErrorMessage"] !!</h2>
+}
 
 <h1>Enter User name</h1>
 
 @using (Html.BeginForm("ViewOrders", "Customer"))
 {
-    @Html.LabelFor(m=>m.Name)
-    @Html.TextBoxFor(m=>m.Name)
-    
+    @Html.LabelFor(m => m.Name)<br>
+    @Html.TextBoxFor(m => m.Name)
+    <br>
+    @Html.LabelFor(m => m.password, "Enter password")<br>
+    @Html.PasswordFor(m => m.password)
+    <br>
+
     <button type="submit">View Orders</button>
 }
 
