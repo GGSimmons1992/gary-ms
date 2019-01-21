@@ -1,30 +1,74 @@
 ﻿@model PizzaStore.MVCClient.Models.LocationUser
 @{
-    ViewData["Title"] = "Order history of @m.name";
+    ViewData["Title"] = $"Order history of {ViewData["name"]}";
 }
 
 <h1>View Orders</h1>
-
+<h2> @ViewData["name"]'s Submitted Orders</h2>
 @foreach (var item in Model.History)
 {
-    <h3>Order # @item.Id </h3>
-    <h3>Price: $ @item.Cost() </h3>
-    @for (var i = 0; i < item.PizzaList.Count; i++)
+    if (item.Voidable == false)
+    {
+        <h3>Order # @item.Id </h3>
+        <h3>Price: $ @item.Cost() </h3>
+        <h3>Submitted: @item.TimeStamp.ToString()</h3>
+        @for (var i = 0; i < item.PizzaList.Count; i++)
+        {
+            <div class="row">
+                <div>
+                    <span> $ @item.PizzaList[i].CalculateCost() : @item.PizzaList[i].crustSize inch @Model.CrustDictionary[item.PizzaList[i].Id]</span>
+                    <br>
+
+                    @foreach (var p in @item.PizzaList[i].Toppings)
+                    {
+                        <span>@p</span>
+                    }
+
+                </div>
+            </div>
+        }
+        <br>
+        <br>
+    }
+
+
+}
+<p>-------------------------------------------</p><br>
+<h2> @ViewData["name"]'s Unfinished Orders</h2>
+@foreach (var item in Model.History)
+{
+    if (item.Voidable == true)
     {
         <div class="row">
-            <div>
-                <span> $ @item.PizzaList[i].CalculateCost() : @item.PizzaList[i].crustSize inch @Model.CrustDictionary[item.PizzaList[i].Id]</span>
-                <br>
-
-                @foreach (var p in @item.PizzaList[i].Toppings)
+            <div class="col">
+                <h3>Order # @item.Id </h3>
+                <h3>Price: $ @item.Cost() </h3>
+                @for (var i = 0; i < item.PizzaList.Count; i++)
                 {
-                    <span>@p</span>
-                }
+                    <div>
+                        <div>
+                            <span> $ @item.PizzaList[i].CalculateCost() : @item.PizzaList[i].crustSize inch @Model.CrustDictionary[item.PizzaList[i].Id]</span>
+                            <br>
 
+                            @foreach (var p in @item.PizzaList[i].Toppings)
+                            {
+                                <span>@p</span>
+                            }
+
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col">
+                <span>Return to order</span>
             </div>
         </div>
+
+        <br>
+        <br>
     }
-    <br>
-    <br>
+
+
 }
+
 

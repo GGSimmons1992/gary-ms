@@ -25,10 +25,10 @@
     </div><br>
     @foreach (var item in Model.Toppings)
     {
-        <div class="row">
-            <div class="col">@item</div>
-            <div class="col"><span>delete topping</span></div><br>
-        </div>
+          <div class="row">
+              <div class="col">@item</div>
+              <!--Add Cancel toppings for future iterations-->
+          </div>
     }
     @for (var i = 0; i < (5-Model.Toppings.Count); i++)
     {

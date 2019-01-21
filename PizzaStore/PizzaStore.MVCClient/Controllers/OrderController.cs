@@ -22,7 +22,8 @@ namespace PizzaStore.MVCClient.Controllers
         public ActionResult OrderMenu()
         {
             var _OrderId = HttpContext.Session.GetInt32("orderID");
-            
+            ViewData["name"] = HttpContext.Session.GetString("lastuser");
+            ViewData["currentlocation"]= HttpContext.Session.GetString("currentlocation");
             var OrderList = OrderHelper.GetOrders();
             var ThisOrder = OrderList.FirstOrDefault(o => o.Id == _OrderId);
             var dataOrder = new dat.Order() { OrderId = (int) _OrderId };
@@ -54,7 +55,7 @@ namespace PizzaStore.MVCClient.Controllers
             dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
             var orderID = HttpContext.Session.GetInt32("orderID");
             var dataOrder = _db.Order.Where(o => o.OrderId == orderID).FirstOrDefault();
-
+            dataOrder.TimeStamp =DateTime.Now;
             dataOrder.Voidable=false;
             _db.SaveChanges();
             return View("ThankYou");
@@ -109,6 +110,8 @@ namespace PizzaStore.MVCClient.Controllers
 
             if (newUser != null)
             {
+                HttpContext.Session.SetString("lastuser", locationuser.Name);
+                HttpContext.Session.SetString("currentlocation", (locationuser.StoreId).ToString());
                 var orderID = OrderViewModel.SetDefaultOrder(locationuser.StoreId, locationuser.Name);
                 HttpContext.Session.SetInt32("orderID", orderID);
 

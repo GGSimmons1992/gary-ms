@@ -34,6 +34,8 @@ namespace PizzaStore.MVCClient.Controllers
             enteredUser.History = UserHelper.GetOrdersByUser(dataUser);
             enteredUser.AssignCrusts();
 
+            ViewData["name"] = enteredUser.Name;
+
             return View("ViewOrders",enteredUser);
         }
         // GET: Customer/Details/5
