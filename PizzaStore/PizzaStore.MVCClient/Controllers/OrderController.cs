@@ -22,19 +22,24 @@ namespace PizzaStore.MVCClient.Controllers
         public ActionResult OrderMenu()
         {
             var _OrderId = HttpContext.Session.GetInt32("orderID");
-            var dataorder = _db.Order.Where(o => o.OrderId == _OrderId).FirstOrDefault();
-            var datauser = _db.User.Where(u => u.UserId == dataorder.UserId).FirstOrDefault();
-
-            var OrderList = UserHelper.GetOrdersByUser(datauser);
+            
+            var OrderList = OrderHelper.GetOrders();
             var ThisOrder = OrderList.FirstOrDefault(o => o.Id == _OrderId);
             var dataOrder = new dat.Order() { OrderId = (int) _OrderId };
             //ThisOrder.PizzaList = OrderHelper.GetPizzasByOrder(dataOrder);
 
             ThisOrder.PizzaList = OrderViewModel.GetPizzasByOrderID((int)_OrderId);
 
+            var newdb = new dat.PizzaStoreDbContext();
+
             var i = 0;
             foreach (var item in ThisOrder.PizzaList)
             {
+                var pID = item.Id;
+                var updatedpizza = newdb.Pizza.Where(p => p.PizzaId == pID).FirstOrDefault();
+                item.CrustId = (int) updatedpizza.CrustId;
+                item.crustSize = (byte) updatedpizza.Size;
+
                 ViewData[$"Crust{i}"] = PizzaHelper.GetCrustNameByPizza(item);
                 i++;
             }
