@@ -15,7 +15,6 @@ namespace PizzaStore.MVCClient.Controllers
 
     public class OrderController : Controller
     {
-        //private static dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
 
         // GET: Order
         [HttpGet("/Order/OrderMenu")]
@@ -70,26 +69,6 @@ namespace PizzaStore.MVCClient.Controllers
             dataOrder.Voidable = false;
             _db.SaveChanges();
             return View("ThankYou");
-        }
-
-        [HttpGet("/Order/UserLocationMenu")]
-        public ActionResult UserLocationMenu()
-        {
-            var locationuser = new LocationUser();
-            locationuser.AvailableLocations = locationuser.GetLocations();
-
-            if (HttpContext.Session.GetString("LocationError") != null)
-            {
-                ViewData["LocationError"] = HttpContext.Session.GetString("LocationError");
-                HttpContext.Session.Remove("LocationError");
-            }
-            if (HttpContext.Session.GetString("passworderror") != null)
-            {
-                ViewData["ErrorMessage"] = HttpContext.Session.GetString("passworderror");
-                HttpContext.Session.Remove("passworderror");
-            }
-
-            return View("ChooseLocation", locationuser);
         }
 
         [HttpGet("/Order/AddPizza")]
@@ -175,65 +154,6 @@ namespace PizzaStore.MVCClient.Controllers
             { return StartOrder(mylocation.StoreId); }
         }
 
-        // POST: Order/ValidatePair
-        [HttpPost("/Order/ValidatePair")]
-        public ActionResult ValidatePair(LocationUser locationuser)
-        {
-            var newUser = OrderViewModel.GetUserByName(locationuser.Name);
-
-            if (locationuser.StoreId == 0)
-            {
-                HttpContext.Session.SetString("LocationError", "Location needs to be picked!");
-                return RedirectToAction("UserLocationMenu", "Order");
-            }
-
-            if (newUser != null)
-            {
-                if (newUser.password != locationuser.password)
-                {
-                    HttpContext.Session.SetString("passworderror", "Passwords don't match");
-                    return RedirectToAction("UserLocationMenu", "Order");
-                }
-
-                var datauser = new dat.User() { UserId=(short) newUser.Id};
-                var allOrders = UserHelper.GetOrdersByUser(datauser);
-                foreach (var item in allOrders)
-                {
-                    if (item.Voidable == false)
-                    { newUser.History.Add(item); }
-                }
-                if (newUser.TimeTest() == false)
-                {
-                    ViewData["Name"] = locationuser.Name;
-                    ViewData["OpenTime"] = (newUser.History[(newUser.History.Count) - 1].TimeStamp.AddHours(2).ToString());
-                    return View("Timeout");
-                }
-
-                if (newUser.History.Count != 0)
-                {
-                    var now = DateTime.Now;
-                    if (newUser.History[(newUser.History.Count) - 1].TimeStamp.Date == now.Date)
-                    {
-                        locationuser.StoreId = newUser.History[(newUser.History.Count) - 1].StoreID;
-                        HttpContext.Session.SetString("forcelocation", $" {locationuser.Name} can only order from store {locationuser.StoreId} until midnight");
-                    }
-                }
-
-                HttpContext.Session.SetString("lastuser", locationuser.Name);
-                HttpContext.Session.SetString("currentlocation", (locationuser.StoreId).ToString());
-                var orderID = OrderViewModel.SetDefaultOrder(locationuser.StoreId, locationuser.Name);
-                HttpContext.Session.SetInt32("orderID", orderID);
-
-                return OrderMenu();
-            }
-
-            else
-            {
-                HttpContext.Session.SetString("UserError","Your username is not found.");
-                return RedirectToAction("SignUp", "Home");
-            }
-                
-        }
 
         
     }
