@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using PizzaStore.Data.Helpers;
 using PizzaStore.MVCClient.Models;
 using dom=PizzaStore.Domain.Models;
+using dat = PizzaStore.Data.Models;
 
 namespace PizzaStore.MVCClient.Controllers
 {
@@ -29,6 +30,18 @@ namespace PizzaStore.MVCClient.Controllers
                 HttpContext.Session.Remove("UserError");
             }
             return View("SignUp");
+        }
+
+
+        public IActionResult SignIn()
+        {
+            return View("SignIn");
+        }
+
+        public IActionResult SignOut()
+        {
+            HttpContext.Session.Remove("ActiveUser");
+            return View("Index");
         }
 
         [HttpPost("/Home/login")]
@@ -56,11 +69,28 @@ namespace PizzaStore.MVCClient.Controllers
             return View("userexists");
         }
 
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost("/Home/loguserin")]
+        public IActionResult loguserin(LocationUser enteredUser)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
+            var dataUser = _db.User.Where(u => u.Name == enteredUser.Name).FirstOrDefault();
+
+            if (dataUser == null)
+            {
+                HttpContext.Session.SetString("UserError", "Your username is not found.");
+                return RedirectToAction("SignUp", "Home");
+            }
+
+            if (dataUser.Password != enteredUser.password)
+            {
+                ViewData["ErrorMessage"] = "Passwords don't match";
+                return View("signIn");
+            }
+
+            HttpContext.Session.SetString("ActiveUser",dataUser.Name);
+            return View("Index");
         }
+
+
     }
 }

@@ -27,22 +27,11 @@ namespace PizzaStore.MVCClient.Controllers
             return View("EnterUser");
         }
 
-        public ActionResult ViewOrders(LocationUser enteredUser)
+        public ActionResult ViewOrders()
         {
+            var enteredUser = new LocationUser() { Name=HttpContext.Session.GetString("ActiveUser")};
             dat.PizzaStoreDbContext _db = new dat.PizzaStoreDbContext();
             var dataUser = _db.User.Where(u => u.Name == enteredUser.Name).FirstOrDefault();
-
-            if (dataUser == null)
-            {
-                HttpContext.Session.SetString("UserError", "Your username is not found.");
-                return RedirectToAction("SignUp", "Home");
-            }
-
-            if (dataUser.Password != enteredUser.password)
-            {
-                ViewData["ErrorMessage"] = "Passwords don't match";
-                return View("EnterUser");
-            }
 
             enteredUser.History = UserHelper.GetOrdersByUser(dataUser);
             enteredUser.AssignCrusts();
