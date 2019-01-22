@@ -85,3 +85,7 @@ values
 
 --Trial stuff
 select sysdatetime() as regular,[dbo].fn_EST(GetDate()) as offset,[dbo].ESTNow() as test;
+
+update PizzaStore.[Order]
+set Active=0
+where OrderId=42;
