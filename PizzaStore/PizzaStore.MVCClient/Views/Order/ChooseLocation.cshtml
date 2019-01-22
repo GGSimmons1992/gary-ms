@@ -7,17 +7,10 @@
 {
     <h2>@ViewData["ErrorMessage"] !!</h2>
 }
-<h1>Initialize Order</h1>
+<h1>Choose Location</h1>
 
-@using (Html.BeginForm("ValidatePair", "Order"))
+@using (Html.BeginForm("CheckLocation", "Order"))
 {
-    @Html.LabelFor(m => m.Name, "Insert Username")
-    <br>
-    @Html.TextBoxFor(m => m.Name);
-    <br>
-    @Html.LabelFor(m => m.password, "Enter password")<br>
-    @Html.PasswordFor(m => m.password)
-    <br>
 
     if (ViewData["LocationError"] != null)
     {
