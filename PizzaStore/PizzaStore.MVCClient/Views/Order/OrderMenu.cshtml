@@ -2,6 +2,10 @@
 @{
     ViewData["Title"] = "Order Menu";
 }
+@if (ViewData["forcelocation"] != null)
+{
+    <h2>@ViewData["forcelocation"]</h2>
+}
 
 <h1>Current Order</h1>
 <h2>User=@ViewData["name"]</h2>
@@ -15,9 +19,14 @@
             <span> $ @Model.PizzaList[i].CalculateCost() : @Model.PizzaList[i].crustSize inch @ViewData[$"Crust{i}"]</span>
             <br>
 
+            @if (@Model.PizzaList[i].Toppings.Count == 0)
+            {
+                <span>No topping "None Pizza"</span>
+            }
+
             @foreach (var item in @Model.PizzaList[i].Toppings)
             {
-                <span>@item</span>
+                <span>@item </span>
             }
 
         </div>
@@ -45,15 +54,13 @@ else
     <br>
 }
 
-@ViewBag.Costlimit=100.00;
-
-@if (Model.Cost() < ViewBag.Costlimit)
+@if (Model.Cost() < 100)
 {
     <a asp-action="ThankYou" asp-controller="Order">Submit Order</a>
 }
 else
 {
-    <span> Order exceeds $ @ViewBag.Costlimit.ToString(). Please edit your order to submit.</span>
+    <span> Order exceeds $ 100 . Please edit your order to submit.</span>
 }
 
 

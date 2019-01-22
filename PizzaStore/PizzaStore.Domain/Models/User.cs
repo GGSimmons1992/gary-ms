@@ -67,7 +67,7 @@ namespace PizzaStore.Domain.Models
                 DateTime lastOrderTime = History[(History.Count - 1)].TimeStamp;
                 DateTime now = DateTime.Now;
                 TimeSpan span = now - lastOrderTime;
-                if (span.Hours < 1)
+                if (span.Hours < 2)
                 { return false; }
                 else
                 { return true; }

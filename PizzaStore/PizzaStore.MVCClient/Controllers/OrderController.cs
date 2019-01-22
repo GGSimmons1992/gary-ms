@@ -27,24 +27,26 @@ namespace PizzaStore.MVCClient.Controllers
             var OrderList = OrderHelper.GetOrders();
             var ThisOrder = OrderList.FirstOrDefault(o => o.Id == _OrderId);
             var dataOrder = new dat.Order() { OrderId = (int) _OrderId };
-            //ThisOrder.PizzaList = OrderHelper.GetPizzasByOrder(dataOrder);
-
+            
             ThisOrder.PizzaList = OrderViewModel.GetPizzasByOrderID((int)_OrderId);
 
-            //var newdb = new dat.PizzaStoreDbContext();
-
+            
             var i = 0;
             foreach (var item in ThisOrder.PizzaList)
             {
                 var pID = item.Id;
-                //var updatedpizza = newdb.Pizza.Where(p => p.PizzaId == pID).FirstOrDefault();
-                //item.CrustId = (int) updatedpizza.CrustId;
-                ///item.crustSize = (byte) updatedpizza.Size;
+                
 
                 ViewData[$"Crust{i}"] = PizzaHelper.GetCrustNameByPizza(item);
                 i++;
             }
-            
+
+            var forcelocation = HttpContext.Session.GetString("forcelocation");
+            if (forcelocation != null)
+            {
+                ViewData["forcelocation"] = forcelocation;
+                HttpContext.Session.Remove("forcelocation");
+            }
 
             return View("OrderMenu",ThisOrder);
         }
@@ -98,18 +100,7 @@ namespace PizzaStore.MVCClient.Controllers
             return OrderMenu();
         }
 
-        // GET: Order/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Order/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
+        
         // POST: Order/ValidatePair
         [HttpPost("/Order/ValidatePair")]
         public ActionResult ValidatePair(LocationUser locationuser)
@@ -130,6 +121,27 @@ namespace PizzaStore.MVCClient.Controllers
                     return RedirectToAction("UserLocationMenu", "Order");
                 }
 
+                var datauser = new dat.User() { UserId=(short) newUser.Id};
+                var allOrders = UserHelper.GetOrdersByUser(datauser);
+                foreach (var item in allOrders)
+                {
+                    if (item.Voidable == false)
+                    { newUser.History.Add(item); }
+                }
+                if (newUser.TimeTest() == false)
+                {
+                    ViewData["Name"] = locationuser.Name;
+                    ViewData["OpenTime"] = (newUser.History[(newUser.History.Count) - 1].TimeStamp.AddHours(2).ToString());
+                    return View("Timeout");
+                }
+
+                var now = DateTime.Now;
+                if (newUser.History[(newUser.History.Count) - 1].TimeStamp.Date==now.Date)
+                {
+                    locationuser.StoreId = newUser.History[(newUser.History.Count) - 1].StoreID;
+                    HttpContext.Session.SetString("forcelocation", $" {locationuser.Name} can only order from store {locationuser.StoreId} until midnight");
+                }
+
                 HttpContext.Session.SetString("lastuser", locationuser.Name);
                 HttpContext.Session.SetString("currentlocation", (locationuser.StoreId).ToString());
                 var orderID = OrderViewModel.SetDefaultOrder(locationuser.StoreId, locationuser.Name);
@@ -146,50 +158,6 @@ namespace PizzaStore.MVCClient.Controllers
                 
         }
 
-        // GET: Order/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Order/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(OrderMenu));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Order/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Order/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(OrderMenu));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }

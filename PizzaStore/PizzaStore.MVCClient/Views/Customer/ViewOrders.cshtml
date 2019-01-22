@@ -20,9 +20,14 @@
                     <span> $ @item.PizzaList[i].CalculateCost() : @item.PizzaList[i].crustSize inch @Model.CrustDictionary[item.PizzaList[i].Id]</span>
                     <br>
 
+                    @if (@item.PizzaList[i].Toppings.Count==0)
+                    {
+                        <span>No topping "None Pizza"</span>
+                    }
+
                     @foreach (var p in @item.PizzaList[i].Toppings)
                     {
-                        <span>@p</span>
+                        <span>@p </span>
                     }
 
                 </div>
