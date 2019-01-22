@@ -135,11 +135,14 @@ namespace PizzaStore.MVCClient.Controllers
                     return View("Timeout");
                 }
 
-                var now = DateTime.Now;
-                if (newUser.History[(newUser.History.Count) - 1].TimeStamp.Date==now.Date)
+                if (newUser.History.Count != 0)
                 {
-                    locationuser.StoreId = newUser.History[(newUser.History.Count) - 1].StoreID;
-                    HttpContext.Session.SetString("forcelocation", $" {locationuser.Name} can only order from store {locationuser.StoreId} until midnight");
+                    var now = DateTime.Now;
+                    if (newUser.History[(newUser.History.Count) - 1].TimeStamp.Date == now.Date)
+                    {
+                        locationuser.StoreId = newUser.History[(newUser.History.Count) - 1].StoreID;
+                        HttpContext.Session.SetString("forcelocation", $" {locationuser.Name} can only order from store {locationuser.StoreId} until midnight");
+                    }
                 }
 
                 HttpContext.Session.SetString("lastuser", locationuser.Name);
