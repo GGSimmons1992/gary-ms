@@ -329,3 +329,4 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 /PizzaStore/PizzaStore.Data/PizzaStoreDbContext.cs
+/MovieNight/MovieNight.Data/Entities/MovieNightDbContext.cs
