@@ -17,9 +17,9 @@ namespace MovieNight.Domain.Models
 
         public User()
         {
-            var lib = new Library();
-
-            lib.OutOfStockNotice += HandleOutOfStockNotice;
+            (new Library()).OutOfStockNotice += HandleOutOfStockNotice;
+            Queue = new List<Movie>();
+            Collection = new List<Movie>();
         }
 
         public override bool IsValid()
@@ -31,24 +31,24 @@ namespace MovieNight.Domain.Models
             
         }
 
-        public bool ReturnMovie(Movie movie)
+        public bool ReturnMovie(Movie movie, Library lib)
         {
-            var lib = new Library();
+            //var lib = new Library();
 
 
             if (lib.Checkin(movie))
             {
                 Collection.Remove(movie);
-                NextMovie();
+                NextMovie(lib);
                 return true;
             }
 
             return false;
         }
 
-        public void NextMovie()
+        public void NextMovie(Library lib)
         {
-            var lib = new Library();
+            
             Movie movie=null;
 
             if (Collection.Count < Membership.Level)

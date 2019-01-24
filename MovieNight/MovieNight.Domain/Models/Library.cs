@@ -13,7 +13,7 @@ namespace MovieNight.Domain.Models
         public delegate void OutOfStock(OutOfStockArgs args);
         public event OutOfStock OutOfStockNotice;
 
-        public static Dictionary<Movie, int> Content {get;set;}
+        public Dictionary<Movie, int> Content {get;set;}
         public Address Address { get; set; }
 
         public override bool IsValid()
