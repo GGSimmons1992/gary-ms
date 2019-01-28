@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MovieNight.Code\MovieNight.Code.csproj" />
     <ProjectReference Include="..\MovieNight.Data\MovieNight.Data.csproj" />
   </ItemGroup>
 

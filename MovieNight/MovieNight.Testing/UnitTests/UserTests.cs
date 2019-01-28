@@ -1,14 +1,19 @@
-﻿using MovieNight.Domain.Models;
+﻿using MovieNight.Data.Helpers;
+using MovieNight.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
+using cd=MovieNight.Code.Helpers;
 
 namespace MovieNight.Testing.UnitTests
 {
     public class UserTests
     {
         private User Sut;
+        private Data.Helpers.UserHelper uh;
+        private cd.UserHelper cuh;
         public Name Name { get; set; }
         public Address Address { get; set; }
         public Payment Payment { get; set; }
@@ -21,7 +26,7 @@ namespace MovieNight.Testing.UnitTests
         {
             Name = new Name()
             {
-                Title = new Prefix()
+                Prefix = new Prefix()
                 {
                     Name = "Ms."
                 },
@@ -76,6 +81,8 @@ namespace MovieNight.Testing.UnitTests
             Library = new Library();
             Library.Content = Content;
 
+            uh = new Data.Helpers.UserHelper();
+            cuh = new cd.UserHelper();
         }
 
         [Fact]
@@ -90,5 +97,42 @@ namespace MovieNight.Testing.UnitTests
             Assert.True(Sut.Collection.Count == 1);
             Assert.True(Sut.Queue.Count == 0);
         }
+
+        [Fact]
+        public void Test_SetUser()
+        {
+            Assert.True(cuh.SetUser(Sut)>=1);
+        }
+
+        [Fact]
+        public void Test_GetUsers()
+        {
+            var actual = cuh.GetUser();
+
+            Assert.NotNull(actual);
+            Assert.True(actual.Count == 3);
+
+            var firstUser = actual.First();
+
+            Assert.True(firstUser.Name != null);
+        }
+
+
+        /*[Fact]
+        public void Test_GetUsers()
+        {
+            var actual = uh.GetUser();
+
+            Assert.NotNull(actual);
+            Assert.True(actual.Count > 0);
+            Assert.True(actual.First().Name.Prefix.Name == "Spkr");
+
+            //var uh = new UserHelper();
+            //var userlist = uh.GetUser();
+            //Assert.True(userlist != null);
+            //Assert.True(userlist.GetType() == (new List<User>()).GetType());
+            //Assert.True(userlist.Count==1);
+        }*/
+
     }
 }

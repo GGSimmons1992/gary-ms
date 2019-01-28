@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MovieNight.Code\MovieNight.Code.csproj" />
+    <ProjectReference Include="..\MovieNight.Data\MovieNight.Data.csproj" />
     <ProjectReference Include="..\MovieNight.Domain\MovieNight.Domain.csproj" />
   </ItemGroup>
 

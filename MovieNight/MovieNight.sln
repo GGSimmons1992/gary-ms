@@ -5,11 +5,15 @@ VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieNight.Domain", "MovieNight.Domain\MovieNight.Domain.csproj", "{C6253166-966B-483F-8B80-907FD85D1ABC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieNight.Testing", "MovieNight.Testing\MovieNight.Testing.csproj", "{EA107FB0-02BC-4420-B409-9E0EF8071BE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieNight.Testing", "MovieNight.Testing\MovieNight.Testing.csproj", "{EA107FB0-02BC-4420-B409-9E0EF8071BE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieNight.Migration", "MovieNight.Migration\MovieNight.Migration.csproj", "{2EBF7E52-051E-45BA-8C08-FFE07856D1CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieNight.Migration", "MovieNight.Migration\MovieNight.Migration.csproj", "{2EBF7E52-051E-45BA-8C08-FFE07856D1CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieNight.Data", "MovieNight.Data\MovieNight.Data.csproj", "{75620634-76F5-4981-9FB2-451983227D99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieNight.Data", "MovieNight.Data\MovieNight.Data.csproj", "{75620634-76F5-4981-9FB2-451983227D99}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieNight.Code", "MovieNight.Code\MovieNight.Code.csproj", "{E8787BD0-53DB-4023-AF34-4C2E4492F44B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieNight.MVCClient", "MovieNight.MVCClient\MovieNight.MVCClient.csproj", "{C0E127F6-8183-4134-A009-84BBDC9166E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{75620634-76F5-4981-9FB2-451983227D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75620634-76F5-4981-9FB2-451983227D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75620634-76F5-4981-9FB2-451983227D99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8787BD0-53DB-4023-AF34-4C2E4492F44B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8787BD0-53DB-4023-AF34-4C2E4492F44B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8787BD0-53DB-4023-AF34-4C2E4492F44B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8787BD0-53DB-4023-AF34-4C2E4492F44B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0E127F6-8183-4134-A009-84BBDC9166E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E127F6-8183-4134-A009-84BBDC9166E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E127F6-8183-4134-A009-84BBDC9166E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0E127F6-8183-4134-A009-84BBDC9166E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

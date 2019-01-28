@@ -1,0 +1,14 @@
+﻿@model IEnumerable<MovieNight.Domain.Models.User>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            @*<span style="text-decoration:underline"> @item.Name.Prefix.Name </span>*@
+            <em>@item.Name.First</em>
+            <strong> @item.Name.Last</strong>
+    
+        </li>
+    }
+</ul>
+
